@@ -1,0 +1,23 @@
+Comandos para git:
+
+	git status - Para ver el estado de la rama en la que te encuentras
+	git pull nombre_rama - Para "descargar" los últimos commits de la rama que se especifica
+
+
+
+Para crear una rama:
+
+	git checkout -b nombre_rama - Crea una rama en tu ordenador sobre la que puedes trabajar
+	git checkout nombre_rama - Para cambiar a la rama especificada. Sin "-b" no crea una rama en caso de existir
+	git branch -l - Para ver una lista de las ramas.
+
+
+
+Para crear un commit:
+
+	git add nombre_archivo - Para empezar el commit. Solo sube los cambios del archivo especificado. Normalmente 
+para enviar todos los cambios se usa "git add carpeta_raiz_repositorio".
+
+	Después de git add se usa -> git commit -m "Descripción de una línea de los cambios". Después de todo eso los cambios aplicados
+y el último commit solo estará en el ordenador local. Para enviarlo al repositorio de github se usa "git push origin nombre_rama_actual".
+
