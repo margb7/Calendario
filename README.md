@@ -7,3 +7,7 @@ Aplicación feita en java con swing. Aplicación de calendario con varios usuari
 por día do usuario e tamén eventos "públicos" ou compartidos.
 - Os usuarios poden pedir unha lista de eventos próximos.
 - Pódese elixir entre tema claro e escuro.
+
+## Enlaces
+
+- [Iconos con UIManager](http://en-human-begin.blogspot.com/2007/11/javas-icons-by-default.html)
