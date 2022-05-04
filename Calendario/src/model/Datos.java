@@ -50,16 +50,20 @@ public class Datos {
 
         // TODO: gardar contido nun array de eventos
 
-        if(dataEvento.equals(LocalDate.of(2022, Month.JUNE, 6)) ) {
+        if(dataEvento.equals(LocalDate.of(2022, Month.JUNE, 2)) ) {
 
             listaEventos = new Evento[2];
             listaEventos[0] = new EventoPrivado(0, "Vacaciones", data, tempo);
-            listaEventos[1] = new EventoPrivado(0, "No más examenes", data, tempo);
+            listaEventos[1] = new EventoPrivado(0, "examenes = null", data, tempo);
+
+        } else if(dataEvento.getMonthValue() == 12 && dataEvento.getDayOfMonth() == 25 ) {
+        
+            listaEventos = new Evento[1];
+            listaEventos[0] = new EventoPrivado(0, "Navidad", data, tempo);
 
         } else {
 
             listaEventos = new Evento[2];
-            listaEventos[0] = new EventoPrivado(0, "Acabar el modelo", data, tempo);
             listaEventos[1] = new EventoPrivado(0, "Tomar cafe", data, tempo);
 
         }
@@ -77,7 +81,15 @@ public class Datos {
 
         Usuario out = null;
 
-         out = new Usuario(0, "administrador", "renaido");  // TODO: valor temporal para probas
+        if(nome.equals("administrador") ) {
+
+            out = new Usuario(0, "administrador", "renaido");  // TODO: valor temporal para probas
+
+        } else {
+
+            throw new NameNotFoundException("Non se atopou o usuario");
+
+        }
 
         return out;
     }

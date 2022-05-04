@@ -17,4 +17,25 @@ public class Funciones {
         return lista;
     }
 
+    public static boolean contrasinalValida(String str) {
+
+        boolean out = false;
+
+        if(str.length() >= 3 ) {
+
+            if(!str.contains(" ") ) {
+
+                if(str.matches(".*[0-9].*") ) {
+
+                    out = true;
+
+                }
+
+            }
+
+        } 
+
+        return out;
+    }
+
 }

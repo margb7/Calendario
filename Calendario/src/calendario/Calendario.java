@@ -1,18 +1,19 @@
 package calendario;
 
 import utilidades.Dia;
+import utilidades.Funciones;
 import utilidades.Mes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.awt.CardLayout;
-import java.awt.event.KeyListener;
 
 import javax.naming.NameNotFoundException;
 import javax.swing.JButton;
 
 import model.Datos;
+import model.Evento;
 import model.Usuario;
 import ui.CalendarioUI;
 import ui.ErrorUI;
@@ -32,6 +33,8 @@ public class Calendario {
      */
     public static void main(String[] args) {
         
+        System.setProperty("awt.useSystemAAFontSettings","on"); // Para activar antialiasing nas fontes cando non están activadas por defecto
+
         // Iniciar componentes        
         initLogin();
         initCalendario();
@@ -119,16 +122,22 @@ public class Calendario {
                 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO : añadir una pestaña con la fecha del día seleccionado y los eventos abajo 
+                        // TODO : añadir una pestaña con la fecha del día seleccionado y los eventos abajo
 
                         //String dataString = Dia.values()[dc.getData().getDayOfWeek().ordinal()] + 
                         //    " " + dc.getData().getDayOfMonth() + " de " + Mes.values()[dc.getData().getMonthValue() - 1];
                         JButton boton = (JButton) e.getSource();
 
                         // Uso do nome do botón para obter o día que representa
-                        LocalDate dataDia = LocalDate.parse(boton.getName());   
+                        LocalDate dataDia = LocalDate.parse(boton.getName());
 
-                        CalendarioUI.getListaEventos().setListData(Datos.getEventosDia(dataDia));
+                        Evento[] listaEventos = Datos.getEventosDia(dataDia);
+
+                        if(listaEventos.length != 0 ) {
+
+                            CalendarioUI.getListaEventos().setListData(listaEventos);
+
+                        } 
     
                     }
         
@@ -200,12 +209,16 @@ public class Calendario {
                     } else {        // Usuario existe -> pero non é a contrasinal correcta
 
                         ErrorUI.mostrarErro(LoginUI.getFrame(), "Credenciais incorrectas");
+                        LoginUI.getPasswordLogin().setText("");
+                        LoginUI.getUsernameLogIn().setText("");
 
                     }
 
                 } catch(NameNotFoundException ex ) {        // Non existe o usuario 
 
                     ErrorUI.mostrarErro(LoginUI.getFrame(), "O usuario non está rexistrado");
+                    LoginUI.getPasswordLogin().setText("");
+                    LoginUI.getUsernameLogIn().setText("");
 
                 }
 
@@ -244,30 +257,45 @@ public class Calendario {
 
                     if(passwd.equals(confirm) ) {       // Rexistro correcto
 
-                        try {
+                        if(Funciones.contrasinalValida(passwd) ) {
 
+                            try {
+
+                                LoginUI.getFrame().setVisible(false);
+                                usuario = Datos.rexistrarUsuario(LoginUI.getUsernameSignUp().getText(), passwd);
+                                CalendarioUI.mostrarUI();
+    
+                            } catch(UnsupportedOperationException ex ) {
+    
+                                // Erro inesperado coa base de datos
+    
+                            } 
+    
                             LoginUI.getFrame().setVisible(false);
-                            usuario = Datos.rexistrarUsuario(LoginUI.getUsernameSignUp().getText(), passwd);
                             CalendarioUI.mostrarUI();
 
-                        } catch(UnsupportedOperationException ex ) {
+                        } else {
 
-                            // Erro inesperado coa base de datos
-
-                        } 
-
-                        LoginUI.getFrame().setVisible(false);
-                        CalendarioUI.mostrarUI();
+                            ErrorUI.mostrarErro(LoginUI.getFrame(), "A contrasinal non é válida");  // TODO : explicar que requerimentos fan falta
+                            LoginUI.getConfirmPassword().setText("");
+                            LoginUI.getPasswordSignUp().setText("");
+                            
+                        }
 
                     } else {    // Rexistro incorrecto (a contrasinal e a confirmación non concordan)
 
                         ErrorUI.mostrarErro(LoginUI.getFrame(), "As contrasinais non coinciden");
+                        LoginUI.getConfirmPassword().setText("");
+                        LoginUI.getPasswordSignUp().setText("");
 
                     }
 
                 } else { // Usuario previamente rexisrado
 
                     ErrorUI.mostrarErro(LoginUI.getFrame(), "Usuario xa rexistrado");
+                    LoginUI.getConfirmPassword().setText("");
+                    LoginUI.getPasswordSignUp().setText("");
+                    LoginUI.getUsernameSignUp().setText("");
 
                 }
 
