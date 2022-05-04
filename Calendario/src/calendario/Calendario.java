@@ -6,7 +6,7 @@ import utilidades.Mes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-
+import java.awt.CardLayout;
 import javax.swing.JButton;
 
 import model.Datos;
@@ -151,60 +151,33 @@ public class Calendario {
 
         LoginUI.init();
 
-        LoginUI.getBotonAceptar().addActionListener(new ActionListener() {
+        LoginUI.getSignUpButton().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                LoginUI.getFrame().setVisible(false);
-                LoginUI.getFrame().dispose();
-                CalendarioUI.mostrarUI();                
+                CardLayout cl = (CardLayout) LoginUI.getCards().getLayout();
 
+                cl.next(LoginUI.getCards());
+                
             }
-
 
         });
 
-        LoginUI.getBotonRegistro().addActionListener(new ActionListener() {
+        LoginUI.getLogInButton().addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                if(modoRegistro) {
+                CardLayout cl = (CardLayout) LoginUI.getCards().getLayout();
 
-                    modoRegistro = false;
-                    vistaLogin();
-
-                } else {
-
-                    modoRegistro = true;
-                    vistaRegistro();
-
-                }
+                cl.next(LoginUI.getCards());
 
             }
 
         });
 
-    }
-
-    /**
-     * Cambia a interfaz do login para que permita iniciar sesión
-     */
-    private static void vistaLogin() {
-
-        LoginUI.getFrame().setTitle("Login");
-        LoginUI.getBotonRegistro().setText("Registro");
-
-    }
-
-    /**
-     * Cambia a interfaz do login para que permita rexistrarse
-     */
-    private static void vistaRegistro() {
-
-        LoginUI.getFrame().setTitle("Registro");
-        LoginUI.getBotonRegistro().setText("Login");
+        
 
     }
     

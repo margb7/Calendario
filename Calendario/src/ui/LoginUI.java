@@ -1,79 +1,185 @@
 package ui;
 
+import java.awt.CardLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.Toolkit;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class LoginUI {
 
-    private static String titulo;
     private static JFrame frame;
-    private static JButton botonAceptar;
-    private static JButton botonRegistro;
+    private static JPanel cards;
+    private static JPanel logInCard;
+    private static JPanel signUpCard;
+    private static JButton logInButton;
+    private static JButton signUpButton;
+    private static JButton submitLogIn;
+    private static JButton submitSignUp;
+    private static JTextField usernameLogIn;
+    private static JLabel unameLogInLabel;
+    private static JPasswordField passwordLogin;
+    private static JLabel pswdLoginLabel;
+    private static JTextField usernameSignUp;
+    private static JLabel unameSignUpLabel;
+    private static JPasswordField passwordSignUp;
+    private static JLabel pswdSignUpLabel;
+    private static JPasswordField confirmPassword;
+    private static JLabel confirmPswdLabel;
 
-    /**
-     * Constructor privado para evitar instancias
-     */
     private LoginUI() {}
-
-    public static JButton getBotonAceptar() {
-        return botonAceptar;
-    }
-
-    public static JButton getBotonRegistro() {
-        return botonRegistro;
-    }
 
     public static JFrame getFrame() {
         return frame;
     }
-    
-    /**
-     * @return the titulo
-     */
-    public static String getTitulo() {
-        return titulo;
+
+    public static JPanel getCards() {
+        return cards;
     }
 
-    /**
-     * @param titulo the titulo to set
-     */
-    public static void setTitulo(String titulo) {
-        LoginUI.titulo = titulo;
+    public static JButton getLogInButton() {
+        return logInButton;
     }
-    
+
+    public static JButton getSignUpButton() {
+        return signUpButton;
+    }
+
+    public static JTextField getUsernameSignUp() {
+        return usernameSignUp;
+    }
 
     public static void init() {
-
-        titulo = "Login";
-
-        frame = new JFrame();//Ventá da aplicación
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame = new JFrame("Inicio Sesión");
         frame.setSize(600, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cards = new JPanel(new CardLayout());
+        frame.setContentPane(cards);
 
-        botonAceptar = new JButton("OK");
-        botonRegistro = new JButton("Registro");
+        initLogIn();
+        initSignUp();
 
-        frame.add(botonAceptar);
-        //frame.add(botonRegistro);
+        frame.add(logInCard, "Log in");
+        frame.add(signUpCard, "Sign up");
+
+    }
+
+    private static void initLogIn() {
+
+        logInCard = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        usernameLogIn = new JTextField(20);
+
+        unameLogInLabel = new JLabel("Usuario");
+        unameLogInLabel.setLabelFor(usernameLogIn);
+
+        passwordLogin = new JPasswordField(20);
+
+        pswdLoginLabel = new JLabel("Contrasinal");
+        pswdLoginLabel.setLabelFor(passwordLogin);
+
+        submitLogIn = new JButton("Log in");
+
+        signUpButton = new JButton("Crea unha nova conta");
+        
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        logInCard.add(unameLogInLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        logInCard.add(usernameLogIn, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        logInCard.add(pswdLoginLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        logInCard.add(passwordLogin, gbc);
+
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        logInCard.add(submitLogIn, gbc);
+
+        gbc.gridy = 3;
+        logInCard.add(signUpButton, gbc);
+
+    }
+
+    private static void initSignUp() {
+
+        signUpCard = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        usernameSignUp = new JTextField(20);
+
+        unameSignUpLabel = new JLabel("Usuario");
+        unameSignUpLabel.setLabelFor(usernameSignUp);
+
+        passwordSignUp = new JPasswordField(20);
+
+        pswdSignUpLabel = new JLabel("Contrasinal");
+        pswdSignUpLabel.setLabelFor(passwordSignUp);
+
+        confirmPassword = new JPasswordField(20);
+        confirmPswdLabel = new JLabel("Confirma o contrasinal");
+
+        submitSignUp = new JButton("Sign up");
+
+        logInButton = new JButton("Xa estás rexistrado?");
+        
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        signUpCard.add(unameSignUpLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        signUpCard.add(usernameSignUp, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        signUpCard.add(pswdSignUpLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        signUpCard.add(passwordSignUp, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        signUpCard.add(confirmPswdLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        signUpCard.add(confirmPassword, gbc);
+        
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        signUpCard.add(submitSignUp, gbc);
+
+        gbc.gridy = 4;
+        signUpCard.add(logInButton, gbc);
 
     }
 
     public static void mostrarUI() {
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                Toolkit tool = Toolkit.getDefaultToolkit();
-
-                frame.setSize(400, 400);
-                frame.setVisible(true);
-                frame.setTitle(titulo);
-                frame.setLocation((tool.getScreenSize().width - frame.getWidth()) / 2, (tool.getScreenSize().height - frame.getHeight() ) / 2 );
-            }
-        });
+        frame.setVisible(true);
 
     }
 
-    
+
 }
