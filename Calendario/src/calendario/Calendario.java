@@ -7,9 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.awt.CardLayout;
+
+import javax.naming.NameNotFoundException;
 import javax.swing.JButton;
 
 import model.Datos;
+import model.Usuario;
 import ui.CalendarioUI;
 import ui.LoginUI;
 
@@ -18,19 +21,18 @@ import ui.LoginUI;
  */
 public class Calendario {
 
-    private static Boolean modoRegistro;
     private static LocalDate dataCalendario;
     private static LocalDate primerDiaMes;
+    private static Usuario usuario;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
-        // Iniciar componentes
-        modoRegistro = false;
-        
+        // Iniciar componentes        
         initLogin();
+        initRexistro();
         initCalendario();
 
         // Mostrar a interfaz de usuario
@@ -151,19 +153,7 @@ public class Calendario {
 
         LoginUI.init();
 
-        LoginUI.getSignUpButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                CardLayout cl = (CardLayout) LoginUI.getCards().getLayout();
-
-                cl.next(LoginUI.getCards());
-                
-            }
-
-        });
-
+        // Evento para cambiar ao modo rexistro dende o modo inicio de sesión
         LoginUI.getLogInButton().addActionListener(new ActionListener() {
             
             @Override
@@ -177,7 +167,108 @@ public class Calendario {
 
         });
 
-        
+        // Evento ao clicar no botón para iniciar sesión
+        LoginUI.getSubmitLogIn().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Usuario user;
+                
+                
+                try {
+
+                    String passwd;
+
+                    user = Datos.getUsuarioPorNome(LoginUI.getUsernameLogIn().getText());
+
+                    passwd = new String(LoginUI.getPasswordLogin().getPassword());
+
+                    System.out.println(passwd);
+
+                    if(user.getContrasinal().equals(passwd) ) {     // Inicio de sesión correcto
+
+                        LoginUI.getFrame().setVisible(false);
+                        usuario = user;
+                        CalendarioUI.mostrarUI();
+
+                    } else {        // Usuario existe -> pero non é a contrasinal correcta
+
+
+
+                    }
+
+                } catch(NameNotFoundException ex ) {        // Non existe o usuario -> TODO: mensaxe para suxerir rexistro
+
+                    
+
+                }
+
+            }
+            
+        });
+
+    }
+
+    private static void initRexistro() {
+
+        // Evento para cambiar ao modo inicio de sesión dende o modo de rexistro
+        LoginUI.getSignUpButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                CardLayout cl = (CardLayout) LoginUI.getCards().getLayout();
+
+                cl.next(LoginUI.getCards());
+
+            }
+
+        });
+
+        // Evento ao clicar no botón para rexistrarse
+        LoginUI.getSubmitSignUp().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if(!Datos.usuarioEstaRexistrado(LoginUI.getUsernameSignUp().getText()) ) {  // Usuario non rexistrado
+
+                    String passwd = new String(LoginUI.getPasswordSignUp().getPassword());
+                    String confirm = new String(LoginUI.getConfirmPassword().getPassword());
+
+                    if(passwd.equals(confirm) ) {       // Rexistro correcto
+
+                        try {
+
+                            LoginUI.getFrame().setVisible(false);
+                            usuario = Datos.rexistrarUsuario(LoginUI.getUsernameSignUp().getText(), passwd);
+                            CalendarioUI.mostrarUI();
+
+                        } catch(UnsupportedOperationException ex ) {
+
+                            // Erro inesperado coa base de datos
+
+                        } 
+
+                        LoginUI.getFrame().setVisible(false);
+                        CalendarioUI.mostrarUI();
+
+                    } else {    // Rexistro incorrecto (a contrasinal e a confirmación non concordan)
+
+
+
+                    }
+
+                } else { // Usuario previamente rexisrado
+
+
+
+                }
+
+            }
+
+        });
 
     }
     

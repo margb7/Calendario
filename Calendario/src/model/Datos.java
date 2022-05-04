@@ -8,6 +8,8 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.naming.NameNotFoundException;
+
 /**
  * Clase para consultas de datos (BBDD / ficheros). 
  */
@@ -63,6 +65,46 @@ public class Datos {
         }
 
         return listaEventos;
+    }
+
+    /**
+     * Devolve un usuario da base de datos. 
+     * @param nome o nome de usuario
+     * @return o usuario
+     * @throws NameNotFoundException se non se atopa o usuario
+     */
+    public static Usuario getUsuarioPorNome(String nome ) throws NameNotFoundException{
+
+        Usuario out = null;
+
+         out = new Usuario(0, "administrador", "renaido");  // TODO: valor temporal para probas
+
+        return out;
+    }
+
+    public static boolean usuarioEstaRexistrado(String nome ) {
+
+        boolean out = false;
+
+        out = nome.equals("administrador");
+
+        return out;
+    } 
+
+    public static Usuario rexistrarUsuario(String nome, String contrasinal ) throws UnsupportedOperationException{
+
+        Usuario out;
+
+        if(usuarioEstaRexistrado(nome) ) {
+
+            throw new UnsupportedOperationException("O usuario xa está rexistrado");
+
+        }
+
+        // TODO: id proporcionado pola base de datos
+        out = new Usuario(0, nome, contrasinal);
+
+        return out;
     }
 
     public static String[] leerFichero(String path ) {

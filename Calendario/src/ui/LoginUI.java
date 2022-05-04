@@ -55,6 +55,30 @@ public class LoginUI {
         return usernameSignUp;
     }
 
+    public static JTextField getUsernameLogIn() {
+        return usernameLogIn;
+    }
+
+    public static JPasswordField getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public static JPasswordField getPasswordLogin() {
+        return passwordLogin;
+    }
+
+    public static JPasswordField getPasswordSignUp() {
+        return passwordSignUp;
+    }
+
+    public static JButton getSubmitLogIn() {
+        return submitLogIn;
+    }
+
+    public static JButton getSubmitSignUp() {
+        return submitSignUp;
+    }
+
     public static void init() {
         frame = new JFrame("Inicio Sesión");
         frame.setSize(600, 400);

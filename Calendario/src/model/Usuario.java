@@ -3,12 +3,14 @@ package model;
 public class Usuario {
     
     private String nome;
+    private String contrasinal;
     private final int ID;
 
-    public Usuario(int id, String nome ) {
+    public Usuario(int id, String nome, String contrasinal ) {
 
         this.ID = id;
         this.nome = nome;
+        this.contrasinal = contrasinal;
 
     }
 
@@ -24,6 +26,10 @@ public class Usuario {
      */
     public String getNome() {
         return nome;
+    }
+
+    public String getContrasinal() {
+        return contrasinal;
     }
 
 }
