@@ -35,6 +35,10 @@ public class LoginUI {
 
     private LoginUI() {}
 
+    static {
+        init();
+    }
+
     public static JFrame getFrame() {
         return frame;
     }

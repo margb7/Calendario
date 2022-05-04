@@ -36,6 +36,10 @@ public class CalendarioUI {
      */
     private CalendarioUI() {}
 
+    static {
+        init();
+    }
+
     public static void mostrarUI() {
         
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

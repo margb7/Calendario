@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.awt.CardLayout;
+import java.awt.event.KeyListener;
 
 import javax.naming.NameNotFoundException;
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ import javax.swing.JButton;
 import model.Datos;
 import model.Usuario;
 import ui.CalendarioUI;
+import ui.ErrorUI;
 import ui.LoginUI;
 
 /**
@@ -32,8 +34,9 @@ public class Calendario {
         
         // Iniciar componentes        
         initLogin();
-        initRexistro();
         initCalendario();
+
+        // 
 
         // Mostrar a interfaz de usuario
         LoginUI.mostrarUI();
@@ -46,9 +49,6 @@ public class Calendario {
     private static void initCalendario() {
 
         dataCalendario = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
-
-        // Crear instancias iniciais da interfaz
-        CalendarioUI.init();    
 
         // Botón (">") na dereita para avanzar o mes
         CalendarioUI.getAvanzarMes().addActionListener(new ActionListener() {
@@ -146,10 +146,17 @@ public class Calendario {
 
     }
 
+    public static void initLogin() {
+
+        initLoginCard();
+        initRexistroCard();
+
+    }
+
     /**
      * Prepara a interfaz do login antes de mostrala.
      */
-    private static void initLogin() {
+    private static void initLoginCard() {
 
         LoginUI.init();
 
@@ -184,8 +191,6 @@ public class Calendario {
 
                     passwd = new String(LoginUI.getPasswordLogin().getPassword());
 
-                    System.out.println(passwd);
-
                     if(user.getContrasinal().equals(passwd) ) {     // Inicio de sesión correcto
 
                         LoginUI.getFrame().setVisible(false);
@@ -194,13 +199,13 @@ public class Calendario {
 
                     } else {        // Usuario existe -> pero non é a contrasinal correcta
 
-
+                        ErrorUI.mostrarErro(LoginUI.getFrame(), "Credenciais incorrectas");
 
                     }
 
-                } catch(NameNotFoundException ex ) {        // Non existe o usuario -> TODO: mensaxe para suxerir rexistro
+                } catch(NameNotFoundException ex ) {        // Non existe o usuario 
 
-                    
+                    ErrorUI.mostrarErro(LoginUI.getFrame(), "O usuario non está rexistrado");
 
                 }
 
@@ -210,7 +215,7 @@ public class Calendario {
 
     }
 
-    private static void initRexistro() {
+    private static void initRexistroCard() {
 
         // Evento para cambiar ao modo inicio de sesión dende o modo de rexistro
         LoginUI.getSignUpButton().addActionListener(new ActionListener() {
@@ -256,13 +261,13 @@ public class Calendario {
 
                     } else {    // Rexistro incorrecto (a contrasinal e a confirmación non concordan)
 
-
+                        ErrorUI.mostrarErro(LoginUI.getFrame(), "As contrasinais non coinciden");
 
                     }
 
                 } else { // Usuario previamente rexisrado
 
-
+                    ErrorUI.mostrarErro(LoginUI.getFrame(), "Usuario xa rexistrado");
 
                 }
 
