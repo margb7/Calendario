@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginUI {
+public class LoginUI extends ElementoUI {
 
     private static JFrame frame;
     private static JPanel cards;
@@ -33,13 +32,8 @@ public class LoginUI {
     private static JLabel pswdSignUpLabel;
     private static JPasswordField confirmPassword;
     private static JLabel confirmPswdLabel;
-    public static ModoColorUI modoColor;
 
     private LoginUI() {}
-
-    static {
-        modoColor = ModoColorUI.MODO_CLARO;
-    }
 
     public static JFrame getFrame() {
         return frame;
@@ -83,20 +77,6 @@ public class LoginUI {
 
     public static JButton getSubmitSignUp() {
         return submitSignUp;
-    }
-
-    /**
-     * @return the modoColor
-     */
-    public static ModoColorUI getModoColor() {
-        return modoColor;
-    }
-
-    /**
-     * @param modoColor the modoColor to set
-     */
-    public static void setModoColor(ModoColorUI modoColor) {
-        LoginUI.modoColor = modoColor;
     }
 
     public static void init() {

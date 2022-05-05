@@ -17,7 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-public class CalendarioUI {
+public class CalendarioUI extends ElementoUI{
 
     private static JList<Evento> listaEventos;
     private static JFrame frame;
@@ -29,7 +29,6 @@ public class CalendarioUI {
     private static JButton[] celdasDias;
     private static JButton avanzarMes;
     private static JButton retrocederMes;
-    private static ModoColorUI modoColor;
 
     /**
      * Constructor privado para evitar instancias
@@ -66,20 +65,6 @@ public class CalendarioUI {
      */
     public static JLabel getTextoMes() {
         return textoMes;
-    }
-
-    /**
-     * @return the modoColor
-     */
-    public static ModoColorUI getModoColor() {
-        return modoColor;
-    }
-
-    /**
-     * @param modoColor the modoColor to set
-     */
-    public static void setModoColor(ModoColorUI modoColor) {
-        CalendarioUI.modoColor = modoColor;
     }
     
     public static void mostrarUI() {

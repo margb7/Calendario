@@ -1,8 +1,5 @@
 package ui;
 
-
-import java.awt.Color;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,11 +8,10 @@ import javax.swing.UIManager;
 /**
  * Clase para mostrar nunha ventá os diferentes erros do programa
  */
-public class ErrorUI {
+public class ErrorUI extends ElementoUI{
     
     private static JDialog dialog;
     private static JLabel label;
-    private static ModoColorUI modoColor;
 
     private ErrorUI() {}
 
@@ -23,8 +19,7 @@ public class ErrorUI {
      * Constructor estático para a interface
      */
     static {
-
-        modoColor = ModoColorUI.MODO_CLARO;
+        
         label = new JLabel("", JLabel.CENTER);
         label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
         label.setForeground(modoColor.getTexto());

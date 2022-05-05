@@ -23,6 +23,7 @@ import model.Evento;
 import model.Usuario;
 
 import ui.CalendarioUI;
+import ui.ElementoUI;
 import ui.ErrorUI;
 import ui.LoginUI;
 import ui.ModoColorUI;
@@ -35,23 +36,23 @@ public class Calendario {
     private static LocalDate dataCalendario;
     private static LocalDate primerDiaMes;
     private static Usuario usuario;
-    private static ModoColorUI temaColorGlobal;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
-        temaColorGlobal = ModoColorUI.MODO_OSCURO;
+        // Tema de color para todos os elementos
+        ElementoUI.setModoColor(ModoColorUI.MODO_OSCURO);
         
-        System.setProperty("awt.useSystemAAFontSettings","on"); // Para activar antialiasing nas fontes cando non están activadas por defecto
+        // Para activar antialiasing nas fontes cando non están activadas por defecto
+        System.setProperty("awt.useSystemAAFontSettings","on");
 
         // Iniciar componentes        
         initLogin();
         initCalendario();
-        ErrorUI.setModoColor(temaColorGlobal);
 
-        // Mostrar a interfaz de usuario
+        // Mostrar a interfaz
         LoginUI.mostrarUI();
         
     }
@@ -61,7 +62,6 @@ public class Calendario {
      */
     private static void initCalendario() {
 
-        CalendarioUI.setModoColor(temaColorGlobal);
         CalendarioUI.init();
 
         dataCalendario = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
@@ -180,7 +180,6 @@ public class Calendario {
      */
     private static void initLoginCard() {
 
-        LoginUI.setModoColor(temaColorGlobal);
         LoginUI.init();
 
         // Evento para cambiar ao modo rexistro dende o modo inicio de sesión
