@@ -11,7 +11,15 @@ Para crear una rama:
 	git checkout nombre_rama - Para cambiar a la rama especificada. Sin "-b" no crea una rama en caso de existir
 	git branch -l - Para ver una lista de las ramas.
 
+Para borrar una rama:
 
+	- En local:
+
+		git checkout -d nombre_rama
+
+	- En remoto:
+
+		git push --delete nombre_rama
 
 Para crear un commit:
 
@@ -21,3 +29,13 @@ para enviar todos los cambios se usa "git add carpeta_raiz_repositorio".
 	Después de git add se usa -> git commit -m "Descripción de una línea de los cambios". Después de todo eso los cambios aplicados
 y el último commit solo estará en el ordenador local. Para enviarlo al repositorio de github se usa "git push origin nombre_rama_actual".
 
+Para volver atrás un commit en local:
+
+	git reset --hard "nombre_de_commit". El nombre del commit es una cadena con números (por ejemplo "07a6675")
+
+Crear un merge:
+
+	Primero hay que situarse en la rama sobre la cual se incluirán los contenidos de la otra.
+	Después se ejecuta "git merge nombre_rama" donde nombre_rama es una rama de local o una rama de remoto.
+	Así en el caso de estar en la rama "main" y hacer "git commit test", los contenidos de test
+	se añadirán a main.

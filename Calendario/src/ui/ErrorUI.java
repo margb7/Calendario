@@ -13,27 +13,50 @@ public class ErrorUI {
 
     private ErrorUI() {}
 
-    public static void mostrarErro(JFrame frame, String str) {
+    static {
 
-        dialog = new JDialog(frame, "Erro");
-        label = new JLabel(str);
-
+        label = new JLabel();
         label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
 
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.add(label);
-        dialog.setVisible(true);
-        dialog.setSize(300, 100);
-
-        int x = frame.getX() + (frame.getWidth() / 2) - (dialog.getWidth() / 2);
-        int y = frame.getY() + (frame.getHeight() / 2) - (dialog.getHeight() / 2);
-
-        dialog.setLocation(x, y);
-        
     }
 
     public static JDialog getDialog() {
         return dialog;
+    }
+
+    /**
+     * @return the label
+     */
+    public static JLabel getLabel() {
+        return label;
+    }
+
+    /**
+     * @param label the label to set
+     */
+    public static void setLabel(JLabel label) {
+        ErrorUI.label = label;
+    }
+
+    /**
+     * @param dialog the dialog to set
+     */
+    public static void setDialog(JDialog dialog) {
+        ErrorUI.dialog = dialog;
+    }
+
+    public static void mostrarUI(JFrame frame ) {
+
+        int x,y;
+
+        dialog.setVisible(true);
+        dialog.setSize(300, 100);
+
+        x = frame.getX() + (frame.getWidth() / 2) - (dialog.getWidth() / 2);
+        y = frame.getY() + (frame.getHeight() / 2) - (dialog.getHeight() / 2);
+
+        dialog.setLocation(x, y);
+
     }
 
 }

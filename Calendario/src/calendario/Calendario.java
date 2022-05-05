@@ -6,11 +6,16 @@ import utilidades.Mes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.time.LocalDate;
 import java.awt.CardLayout;
 
 import javax.naming.NameNotFoundException;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import model.Datos;
 import model.Evento;
@@ -208,7 +213,7 @@ public class Calendario {
 
                     } else {        // Usuario existe -> pero non é a contrasinal correcta
 
-                        ErrorUI.mostrarErro(LoginUI.getFrame(), "Credenciais incorrectas");
+                        mostrarErro(LoginUI.getFrame(), "Credenciais incorrectas");
                         LoginUI.getPasswordLogin().setText("");
                         LoginUI.getUsernameLogIn().setText("");
 
@@ -216,7 +221,7 @@ public class Calendario {
 
                 } catch(NameNotFoundException ex ) {        // Non existe o usuario 
 
-                    ErrorUI.mostrarErro(LoginUI.getFrame(), "O usuario non está rexistrado");
+                    mostrarErro(LoginUI.getFrame(), "O usuario non está rexistrado");
                     LoginUI.getPasswordLogin().setText("");
                     LoginUI.getUsernameLogIn().setText("");
 
@@ -276,7 +281,7 @@ public class Calendario {
 
                         } else {
 
-                            ErrorUI.mostrarErro(LoginUI.getFrame(), "A contrasinal non é válida");  // TODO : explicar que requerimentos fan falta
+                            mostrarErro(LoginUI.getFrame(), "A contrasinal non é válida");  // TODO : explicar que requerimentos fan falta
                             LoginUI.getConfirmPassword().setText("");
                             LoginUI.getPasswordSignUp().setText("");
                             
@@ -284,7 +289,7 @@ public class Calendario {
 
                     } else {    // Rexistro incorrecto (a contrasinal e a confirmación non concordan)
 
-                        ErrorUI.mostrarErro(LoginUI.getFrame(), "As contrasinais non coinciden");
+                        mostrarErro(LoginUI.getFrame(), "As contrasinais non coinciden");
                         LoginUI.getConfirmPassword().setText("");
                         LoginUI.getPasswordSignUp().setText("");
 
@@ -292,7 +297,7 @@ public class Calendario {
 
                 } else { // Usuario previamente rexisrado
 
-                    ErrorUI.mostrarErro(LoginUI.getFrame(), "Usuario xa rexistrado");
+                    mostrarErro(LoginUI.getFrame(), "Usuario xa rexistrado");
                     LoginUI.getConfirmPassword().setText("");
                     LoginUI.getPasswordSignUp().setText("");
                     LoginUI.getUsernameSignUp().setText("");
@@ -302,6 +307,62 @@ public class Calendario {
             }
 
         });
+
+    }
+
+    public static void mostrarErro(JFrame owner, String str ) {
+
+        ErrorUI.setDialog(new JDialog(owner, "Error"));
+        ErrorUI.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        ErrorUI.getLabel().setText(str);
+        ErrorUI.getDialog().add(ErrorUI.getLabel());
+
+        ErrorUI.getDialog().addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                
+                owner.setEnabled(true);
+                
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                
+                owner.setEnabled(false);
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+
+            }
+
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            
+                
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+        });
+
+        ErrorUI.mostrarUI(owner);
 
     }
     
