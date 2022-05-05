@@ -46,7 +46,7 @@ public class Calendario {
     public static void main(String[] args) {
 
         // Tema de color para todos os elementos
-        ElementoUI.setModoColor(ModoColorUI.MODO_OSCURO);
+        ElementoUI.setModoColor(ModoColorUI.MODO_CLARO);
         
         // Para activar antialiasing nas fontes cando non están activadas por defecto
         System.setProperty("awt.useSystemAAFontSettings","on");

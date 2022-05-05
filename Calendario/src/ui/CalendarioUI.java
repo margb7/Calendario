@@ -117,13 +117,13 @@ public class CalendarioUI extends ElementoUI{
         avanzarMes = new JButton();
         avanzarMes.setText(">");
         avanzarMes.setForeground(modoColor.getAcento());
-        avanzarMes.setBackground(Color.WHITE);
+        avanzarMes.setBackground(modoColor.getSeparador());
         panelContido.add(avanzarMes, BorderLayout.EAST);
 
         retrocederMes = new JButton();
         retrocederMes.setText("<");
         retrocederMes.setForeground(modoColor.getAcento());
-        retrocederMes.setBackground(Color.WHITE);
+        retrocederMes.setBackground(modoColor.getSeparador());
         panelContido.add(retrocederMes, BorderLayout.WEST);
 
         panelCalendario = new JPanel(new GridBagLayout());
@@ -150,7 +150,7 @@ public class CalendarioUI extends ElementoUI{
 
             JLabel lab = new JLabel(Dia.values()[i].getNomeCorto(),javax.swing.SwingConstants.CENTER);
 
-            lab.setForeground(new Color(255,255,255));
+            lab.setForeground(modoColor.getTextoResalte());
 
             panelCalendario.add(lab, gbc);
 
