@@ -176,6 +176,7 @@ public class CalendarioUI {
                 celdasDias[contador] = new JButton();
 
                 celdasDias[contador].setBackground(fondo);
+                celdasDias[contador].setBorderPainted(false);
 
                 panelCalendario.add(celdasDias[contador], gbc);
                 contador++;
