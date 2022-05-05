@@ -177,6 +177,7 @@ public class CalendarioUI {
 
                 celdasDias[contador].setBackground(fondo);
                 celdasDias[contador].setBorderPainted(false);
+                celdasDias[contador].setFocusPainted(false);
 
                 panelCalendario.add(celdasDias[contador], gbc);
                 contador++;
