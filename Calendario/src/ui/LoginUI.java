@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginUI {
+public class LoginUI extends ElementoUI {
 
     private static JFrame frame;
     private static JPanel cards;
@@ -34,10 +34,6 @@ public class LoginUI {
     private static JLabel confirmPswdLabel;
 
     private LoginUI() {}
-
-    static {
-        init();
-    }
 
     public static JFrame getFrame() {
         return frame;
@@ -96,6 +92,9 @@ public class LoginUI {
         frame.add(logInCard, "Log in");
         frame.add(signUpCard, "Sign up");
 
+        logInCard.setBackground(modoColor.getFondo());
+        signUpCard.setBackground(modoColor.getFondo());
+
     }
 
     private static void initLogIn() {
@@ -107,11 +106,13 @@ public class LoginUI {
 
         unameLogInLabel = new JLabel("Usuario");
         unameLogInLabel.setLabelFor(usernameLogIn);
+        unameLogInLabel.setForeground(modoColor.getTexto());
 
         passwordLogin = new JPasswordField(20);
 
         pswdLoginLabel = new JLabel("Contrasinal");
         pswdLoginLabel.setLabelFor(passwordLogin);
+        pswdLoginLabel.setForeground(modoColor.getTexto());
 
         submitLogIn = new JButton("Log in");
 
@@ -154,11 +155,13 @@ public class LoginUI {
 
         unameSignUpLabel = new JLabel("Usuario");
         unameSignUpLabel.setLabelFor(usernameSignUp);
+        unameSignUpLabel.setForeground(modoColor.getTexto());
 
         passwordSignUp = new JPasswordField(20);
 
         pswdSignUpLabel = new JLabel("Contrasinal");
         pswdSignUpLabel.setLabelFor(passwordSignUp);
+        passwordSignUp.setForeground(modoColor.getTexto());
 
         confirmPassword = new JPasswordField(20);
         confirmPswdLabel = new JLabel("Confirma o contrasinal");

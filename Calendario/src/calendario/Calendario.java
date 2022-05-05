@@ -26,8 +26,10 @@ import model.Evento;
 import model.Usuario;
 
 import ui.CalendarioUI;
+import ui.ElementoUI;
 import ui.ErrorUI;
 import ui.LoginUI;
+import ui.ModoColorUI;
 
 /**
  *  TODO: funciona como controlador
@@ -42,16 +44,18 @@ public class Calendario {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        // Tema de color para todos os elementos
+        ElementoUI.setModoColor(ModoColorUI.MODO_OSCURO);
         
-        System.setProperty("awt.useSystemAAFontSettings","on"); // Para activar antialiasing nas fontes cando non están activadas por defecto
+        // Para activar antialiasing nas fontes cando non están activadas por defecto
+        System.setProperty("awt.useSystemAAFontSettings","on");
 
         // Iniciar componentes        
         initLogin();
         initCalendario();
 
-        // 
-
-        // Mostrar a interfaz de usuario
+        // Mostrar a interfaz
         LoginUI.mostrarUI();
         
     }
@@ -60,6 +64,8 @@ public class Calendario {
      * Inicializa os atributos e os eventos da ventá do calendario antes de mostralo.
      */
     private static void initCalendario() {
+
+        CalendarioUI.init();
 
         dataCalendario = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
 
@@ -141,7 +147,7 @@ public class Calendario {
                         // Uso do nome do botón para obter o día que representa
                         LocalDate dataDia = LocalDate.parse(boton.getName());
 
-                        Evento[] listaEventos = Datos.getEventosDia(dataDia);
+                        Evento[] listaEventos = Datos.getEventosDia(dataDia, usuario);
 
                         if(listaEventos.length != 0 ) {
 
