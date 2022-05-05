@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+/**
+ * Clase para mostrar nunha ventá os diferentes erros do programa
+ */
 public class ErrorUI {
     
     private static JDialog dialog;
@@ -13,6 +16,9 @@ public class ErrorUI {
 
     private ErrorUI() {}
 
+    /**
+     * Constructor estático para a interface
+     */
     static {
 
         label = new JLabel();
@@ -39,12 +45,18 @@ public class ErrorUI {
     }
 
     /**
-     * @param dialog the dialog to set
+     * Setter para o JDialog
+     * @param dialog o novo dialogo
      */
     public static void setDialog(JDialog dialog) {
         ErrorUI.dialog = dialog;
     }
 
+    /**
+     * Mostra a interface de erro
+     * @param frame a ventá que lanza o erro para que a interface de erro se coloque centrada
+     * no medio desa ventá.
+     */
     public static void mostrarUI(JFrame frame ) {
 
         int x,y;

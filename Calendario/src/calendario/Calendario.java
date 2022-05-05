@@ -11,15 +11,17 @@ import java.awt.event.WindowListener;
 import java.time.LocalDate;
 import java.awt.CardLayout;
 
-import javax.naming.NameNotFoundException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+
+import excepcions.UsuarioNonAtopadoException;
+import excepcions.UsuarioXaRexistradoException;
 
 import model.Datos;
 import model.Evento;
 import model.Usuario;
+
 import ui.CalendarioUI;
 import ui.ErrorUI;
 import ui.LoginUI;
@@ -219,7 +221,7 @@ public class Calendario {
 
                     }
 
-                } catch(NameNotFoundException ex ) {        // Non existe o usuario 
+                } catch(UsuarioNonAtopadoException ex ) {        // Non existe o usuario 
 
                     mostrarErro(LoginUI.getFrame(), "O usuario non está rexistrado");
                     LoginUI.getPasswordLogin().setText("");
@@ -270,7 +272,7 @@ public class Calendario {
                                 usuario = Datos.rexistrarUsuario(LoginUI.getUsernameSignUp().getText(), passwd);
                                 CalendarioUI.mostrarUI();
     
-                            } catch(UnsupportedOperationException ex ) {
+                            } catch(UsuarioXaRexistradoException ex ) {
     
                                 // Erro inesperado coa base de datos
     
@@ -310,6 +312,12 @@ public class Calendario {
 
     }
 
+    /**
+     * Lanza un diálogo mostrando información dun erro. Tamén bloquea a ventá que chama 
+     * ao erro ata que se pecha o erro.
+     * @param owner a ventá que lanza o erro e que quedará bloqueada.
+     * @param str a mensaxe de erro.
+     */
     public static void mostrarErro(JFrame owner, String str ) {
 
         ErrorUI.setDialog(new JDialog(owner, "Error"));
@@ -317,6 +325,9 @@ public class Calendario {
         ErrorUI.getLabel().setText(str);
         ErrorUI.getDialog().add(ErrorUI.getLabel());
 
+
+
+        // TODO : tiene que haber una mejor forma de hacer esto 
         ErrorUI.getDialog().addWindowListener(new WindowListener() {
 
             @Override

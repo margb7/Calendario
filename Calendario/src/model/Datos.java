@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 import javax.naming.NameNotFoundException;
 
+import excepcions.UsuarioNonAtopadoException;
+import excepcions.UsuarioXaRexistradoException;
+
 /**
  * Clase para consultas de datos (BBDD / ficheros). 
  */
@@ -77,7 +80,7 @@ public class Datos {
      * @return o usuario
      * @throws NameNotFoundException se non se atopa o usuario
      */
-    public static Usuario getUsuarioPorNome(String nome ) throws NameNotFoundException{
+    public static Usuario getUsuarioPorNome(String nome ) throws UsuarioNonAtopadoException{
 
         Usuario out = null;
 
@@ -87,7 +90,7 @@ public class Datos {
 
         } else {
 
-            throw new NameNotFoundException("Non se atopou o usuario");
+            throw new UsuarioNonAtopadoException("Para o nome : " + nome);
 
         }
 
@@ -103,13 +106,13 @@ public class Datos {
         return out;
     } 
 
-    public static Usuario rexistrarUsuario(String nome, String contrasinal ) throws UnsupportedOperationException{
+    public static Usuario rexistrarUsuario(String nome, String contrasinal ) throws UsuarioXaRexistradoException{
 
         Usuario out;
 
         if(usuarioEstaRexistrado(nome) ) {
 
-            throw new UnsupportedOperationException("O usuario xa está rexistrado");
+            throw new UsuarioXaRexistradoException("Para o usuario: " + nome);
 
         }
 
