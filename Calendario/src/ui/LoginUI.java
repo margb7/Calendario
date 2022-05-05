@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,11 +33,12 @@ public class LoginUI {
     private static JLabel pswdSignUpLabel;
     private static JPasswordField confirmPassword;
     private static JLabel confirmPswdLabel;
+    public static ModoColorUI modoColor;
 
     private LoginUI() {}
 
     static {
-        init();
+        modoColor = ModoColorUI.MODO_CLARO;
     }
 
     public static JFrame getFrame() {
@@ -83,6 +85,20 @@ public class LoginUI {
         return submitSignUp;
     }
 
+    /**
+     * @return the modoColor
+     */
+    public static ModoColorUI getModoColor() {
+        return modoColor;
+    }
+
+    /**
+     * @param modoColor the modoColor to set
+     */
+    public static void setModoColor(ModoColorUI modoColor) {
+        LoginUI.modoColor = modoColor;
+    }
+
     public static void init() {
         frame = new JFrame("Inicio Sesión");
         frame.setSize(600, 400);
@@ -96,6 +112,9 @@ public class LoginUI {
         frame.add(logInCard, "Log in");
         frame.add(signUpCard, "Sign up");
 
+        logInCard.setBackground(modoColor.getFondo());
+        signUpCard.setBackground(modoColor.getFondo());
+
     }
 
     private static void initLogIn() {
@@ -107,11 +126,13 @@ public class LoginUI {
 
         unameLogInLabel = new JLabel("Usuario");
         unameLogInLabel.setLabelFor(usernameLogIn);
+        unameLogInLabel.setForeground(modoColor.getTexto());
 
         passwordLogin = new JPasswordField(20);
 
         pswdLoginLabel = new JLabel("Contrasinal");
         pswdLoginLabel.setLabelFor(passwordLogin);
+        pswdLoginLabel.setForeground(modoColor.getTexto());
 
         submitLogIn = new JButton("Log in");
 
@@ -154,11 +175,13 @@ public class LoginUI {
 
         unameSignUpLabel = new JLabel("Usuario");
         unameSignUpLabel.setLabelFor(usernameSignUp);
+        unameSignUpLabel.setForeground(modoColor.getTexto());
 
         passwordSignUp = new JPasswordField(20);
 
         pswdSignUpLabel = new JLabel("Contrasinal");
         pswdSignUpLabel.setLabelFor(passwordSignUp);
+        passwordSignUp.setForeground(modoColor.getTexto());
 
         confirmPassword = new JPasswordField(20);
         confirmPswdLabel = new JLabel("Confirma o contrasinal");

@@ -29,32 +29,12 @@ public class CalendarioUI {
     private static JButton[] celdasDias;
     private static JButton avanzarMes;
     private static JButton retrocederMes;
-    public static Color fondo = new Color(20, 54, 66);
+    private static ModoColorUI modoColor;
 
     /**
      * Constructor privado para evitar instancias
      */
     private CalendarioUI() {}
-
-    static {
-        init();
-    }
-
-    public static void mostrarUI() {
-        
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-            public void run() {
-                Toolkit tool = Toolkit.getDefaultToolkit();
-
-                actualizarCalendario();
-                frame.setVisible(true);
-                frame.setLocation((tool.getScreenSize().width - frame.getWidth()) / 2, (tool.getScreenSize().height - frame.getHeight() ) / 2 );
-            }
-
-        });
-
-    }
 
     /**
      * @return the avanzarMes
@@ -88,7 +68,38 @@ public class CalendarioUI {
         return textoMes;
     }
 
+    /**
+     * @return the modoColor
+     */
+    public static ModoColorUI getModoColor() {
+        return modoColor;
+    }
+
+    /**
+     * @param modoColor the modoColor to set
+     */
+    public static void setModoColor(ModoColorUI modoColor) {
+        CalendarioUI.modoColor = modoColor;
+    }
+    
+    public static void mostrarUI() {
+        
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+            public void run() {
+                Toolkit tool = Toolkit.getDefaultToolkit();
+
+                actualizarCalendario();
+                frame.setVisible(true);
+                frame.setLocation((tool.getScreenSize().width - frame.getWidth()) / 2, (tool.getScreenSize().height - frame.getHeight() ) / 2 );
+            }
+
+        });
+
+    }
+
     public static void init() {
+
         frame = new JFrame("Calendario");//Ventá da aplicación
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +115,7 @@ public class CalendarioUI {
         gbc.fill = GridBagConstraints.BOTH;
         panelLateral = new JPanel();
         panelLateral.setOpaque(true);
-        panelLateral.setBackground(fondo);
+        panelLateral.setBackground(modoColor.getFondo());
         
         listaEventos = new JList<>();
         panelLateral.add(listaEventos);
@@ -120,19 +131,19 @@ public class CalendarioUI {
         
         avanzarMes = new JButton();
         avanzarMes.setText(">");
-        avanzarMes.setForeground(fondo);
+        avanzarMes.setForeground(modoColor.getAcento());
         avanzarMes.setBackground(Color.WHITE);
         panelContido.add(avanzarMes, BorderLayout.EAST);
 
         retrocederMes = new JButton();
         retrocederMes.setText("<");
-        retrocederMes.setForeground(fondo);
+        retrocederMes.setForeground(modoColor.getAcento());
         retrocederMes.setBackground(Color.WHITE);
         panelContido.add(retrocederMes, BorderLayout.WEST);
 
         panelCalendario = new JPanel(new GridBagLayout());
         panelCalendario.setOpaque(true);
-        panelCalendario.setBackground(fondo);
+        panelCalendario.setBackground(modoColor.getFondo());
         panelContido.add(panelCalendario, BorderLayout.CENTER);
 
         gbc.weightx = 1.0;
@@ -175,7 +186,7 @@ public class CalendarioUI {
 
                 celdasDias[contador] = new JButton();
 
-                celdasDias[contador].setBackground(fondo);
+                celdasDias[contador].setBackground(modoColor.getFondo());
 
                 panelCalendario.add(celdasDias[contador], gbc);
                 contador++;

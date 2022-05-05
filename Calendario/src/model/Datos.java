@@ -31,8 +31,6 @@ public class Datos {
      */
     static {
 
-        // TODO : borrar constructor estático, borrar "data" y borrar "tempo" 
-
         data = LocalDate.now();
         tempo = LocalTime.now();
 
@@ -40,10 +38,11 @@ public class Datos {
 
     /**
      * Obtén da base de datos todos os eventos dun usuario e dunha data en concreto
-     * @param dataEvento a data para buscar eventos
+     * @param dataEvento a data para buscar eventos.
+     * @param user o usuario dos eventos.
      * @return a lista de eventos con todos os eventos ou unha lista vacía de eventos
      */
-    public static Evento[] getEventosDia(LocalDate dataEvento) {    // Añadir usuario como parámetro
+    public static Evento[] getEventosDia(LocalDate dataEvento, Usuario user) {    // Añadir usuario como parámetro
 
         Evento[] listaEventos = new Evento[0];
 
@@ -66,8 +65,7 @@ public class Datos {
 
         } else {
 
-            listaEventos = new Evento[2];
-            listaEventos[1] = new EventoPrivado(0, "Tomar cafe", data, tempo);
+            listaEventos = getEventosPrivados(dataEvento, user);
 
         }
 
@@ -126,10 +124,12 @@ public class Datos {
         
         Scanner sc;
         ArrayList<String> lineas = new ArrayList<>();
+        String[] out;
 
         try {
 
-            sc = new Scanner(new File(path));
+            // TODO: HARDCODED
+            sc = new Scanner(new File("E:\\DAM\\Progr\\Entrega\\Calendario\\Test\\EjemplosEventos.txt"), "UTF-8");
             
             while(sc.hasNextLine() ) {
 
@@ -143,25 +143,31 @@ public class Datos {
 
         }
 
-        return (String[]) lineas.toArray();
+        out = new String[lineas.size()];
+
+        for (int i = 0; i < out.length; i++) {
+            
+            out[i] = lineas.get(i);
+
+        }
+
+        return out;
     }
 
     private static Evento[] getEventosPrivados(LocalDate dia, Usuario user ) {
 
         Evento[] out = null;
-        String[] consulta = null;       // consulta = pedirDatos() 
+        String[] consulta = null;
         
-        /*
-        
-        out = new String[consulta.length];
+        consulta = leerFichero("../../../Test/EjemplosEventos.txt");    // = pedirDatosBBDD() 
+
+        out = new Evento[consulta.length];
 
         for(int i = 0; i < consulta.length; i++ ) {
 
             out[i] = EventoPrivado.parse(consulta[i]);
 
         }
-
-        */
 
         return out;
     }

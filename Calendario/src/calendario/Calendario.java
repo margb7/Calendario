@@ -25,6 +25,7 @@ import model.Usuario;
 import ui.CalendarioUI;
 import ui.ErrorUI;
 import ui.LoginUI;
+import ui.ModoColorUI;
 
 /**
  *  TODO: funciona como controlador
@@ -34,19 +35,20 @@ public class Calendario {
     private static LocalDate dataCalendario;
     private static LocalDate primerDiaMes;
     private static Usuario usuario;
+    private static ModoColorUI temaColorGlobal;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        temaColorGlobal = ModoColorUI.MODO_CLARO;
         
         System.setProperty("awt.useSystemAAFontSettings","on"); // Para activar antialiasing nas fontes cando non están activadas por defecto
 
         // Iniciar componentes        
         initLogin();
         initCalendario();
-
-        // 
 
         // Mostrar a interfaz de usuario
         LoginUI.mostrarUI();
@@ -57,6 +59,9 @@ public class Calendario {
      * Inicializa os atributos e os eventos da ventá do calendario antes de mostralo.
      */
     private static void initCalendario() {
+
+        CalendarioUI.setModoColor(temaColorGlobal);
+        CalendarioUI.init();
 
         dataCalendario = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
 
@@ -138,7 +143,7 @@ public class Calendario {
                         // Uso do nome do botón para obter o día que representa
                         LocalDate dataDia = LocalDate.parse(boton.getName());
 
-                        Evento[] listaEventos = Datos.getEventosDia(dataDia);
+                        Evento[] listaEventos = Datos.getEventosDia(dataDia, usuario);
 
                         if(listaEventos.length != 0 ) {
 
@@ -174,6 +179,7 @@ public class Calendario {
      */
     private static void initLoginCard() {
 
+        LoginUI.setModoColor(temaColorGlobal);
         LoginUI.init();
 
         // Evento para cambiar ao modo rexistro dende o modo inicio de sesión
