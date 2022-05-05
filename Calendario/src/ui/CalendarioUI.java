@@ -153,7 +153,7 @@ public class CalendarioUI {
         gbc.gridy = 0;
         
         textoMes = new JLabel("default", javax.swing.SwingConstants.CENTER);//nome de mes
-        textoMes.setForeground(Color.WHITE);
+        textoMes.setForeground(modoColor.getTexto());
         panelCalendario.add(textoMes, gbc);
 
         gbc.gridwidth = 1;
@@ -200,8 +200,6 @@ public class CalendarioUI {
     public static void actualizarCalendario() {
 
         boolean primerDia = false;
-        Color colorMes = Color.WHITE;
-        Color colorOtroMes = Color.GRAY;
 
         for(int i = 0; i < 42; i++ ) {
 
@@ -210,11 +208,11 @@ public class CalendarioUI {
                 if(celdasDias[i].getText().equals("1") ) {
 
                     primerDia = true;
-                    celdasDias[i].setForeground(colorMes);
+                    celdasDias[i].setForeground(modoColor.getTextoResalte());
 
                 } else {
 
-                    celdasDias[i].setForeground(colorOtroMes);
+                    celdasDias[i].setForeground(modoColor.getTextoMenosImportante());
 
                 }
 
@@ -223,11 +221,11 @@ public class CalendarioUI {
                 if(celdasDias[i].getText().equals("1") ) {
 
                     primerDia = false;
-                    celdasDias[i].setForeground(colorOtroMes);
+                    celdasDias[i].setForeground(modoColor.getTextoMenosImportante());
 
                 } else {
 
-                    celdasDias[i].setForeground(colorMes);
+                    celdasDias[i].setForeground(modoColor.getTextoResalte());
 
                 }
 

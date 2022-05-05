@@ -1,6 +1,8 @@
 package ui;
 
 
+import java.awt.Color;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +15,7 @@ public class ErrorUI {
     
     private static JDialog dialog;
     private static JLabel label;
+    private static ModoColorUI modoColor;
 
     private ErrorUI() {}
 
@@ -21,8 +24,10 @@ public class ErrorUI {
      */
     static {
 
-        label = new JLabel();
+        modoColor = ModoColorUI.MODO_CLARO;
+        label = new JLabel("", JLabel.CENTER);
         label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
+        label.setForeground(modoColor.getTexto());
 
     }
 
@@ -38,18 +43,18 @@ public class ErrorUI {
     }
 
     /**
-     * @param label the label to set
-     */
-    public static void setLabel(JLabel label) {
-        ErrorUI.label = label;
-    }
-
-    /**
      * Setter para o JDialog
      * @param dialog o novo dialogo
      */
     public static void setDialog(JDialog dialog) {
         ErrorUI.dialog = dialog;
+    }
+
+    /**
+     * @param modoColor the modoColor to set
+     */
+    public static void setModoColor(ModoColorUI modoColor) {
+        ErrorUI.modoColor = modoColor;
     }
 
     /**
@@ -62,6 +67,8 @@ public class ErrorUI {
         int x,y;
 
         dialog.setVisible(true);
+        dialog.getContentPane().setBackground(modoColor.getFondo());
+        label.setForeground(modoColor.getTexto());
         dialog.setSize(300, 100);
 
         x = frame.getX() + (frame.getWidth() / 2) - (dialog.getWidth() / 2);

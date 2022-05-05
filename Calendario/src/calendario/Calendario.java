@@ -42,13 +42,14 @@ public class Calendario {
      */
     public static void main(String[] args) {
 
-        temaColorGlobal = ModoColorUI.MODO_CLARO;
+        temaColorGlobal = ModoColorUI.MODO_OSCURO;
         
         System.setProperty("awt.useSystemAAFontSettings","on"); // Para activar antialiasing nas fontes cando non están activadas por defecto
 
         // Iniciar componentes        
         initLogin();
         initCalendario();
+        ErrorUI.setModoColor(temaColorGlobal);
 
         // Mostrar a interfaz de usuario
         LoginUI.mostrarUI();
