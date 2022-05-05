@@ -233,6 +233,7 @@ public class Calendario {
             public void actionPerformed(ActionEvent e) {
                 
                 Usuario user;
+                System.out.println(LoginUI.getFrame().getSize());
                 
                 
                 try {

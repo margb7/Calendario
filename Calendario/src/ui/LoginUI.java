@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -80,9 +81,13 @@ public class LoginUI extends ElementoUI {
     }
 
     public static void init() {
+
         frame = new JFrame("Inicio Sesión");
+
         frame.setSize(600, 400);
+        frame.setMinimumSize(new Dimension(400, 300));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         cards = new JPanel(new CardLayout());
         frame.setContentPane(cards);
 

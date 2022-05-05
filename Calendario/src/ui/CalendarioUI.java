@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class CalendarioUI extends ElementoUI{
 
@@ -66,6 +67,10 @@ public class CalendarioUI extends ElementoUI{
     public static JLabel getTextoMes() {
         return textoMes;
     }
+
+    public static JFrame getFrame() {
+        return frame;
+    }
     
     public static void mostrarUI() {
         
@@ -89,6 +94,7 @@ public class CalendarioUI extends ElementoUI{
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
+        frame.setMinimumSize(new Dimension(600, 400));
 
         frame.setLayout(new GridBagLayout());//layout manager para organizar elementos en cuadrícula
         gbc = new GridBagConstraints();//parámetros para o layout manager
