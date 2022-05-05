@@ -6,6 +6,7 @@ import utilidades.Mes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.time.LocalDate;
@@ -14,6 +15,8 @@ import java.awt.CardLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+
+import java.awt.event.MouseEvent;
 
 import excepcions.UsuarioNonAtopadoException;
 import excepcions.UsuarioXaRexistradoException;
@@ -154,6 +157,33 @@ public class Calendario {
     
                     }
         
+                });
+
+                celda.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent e) {}
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {}
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {}
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        
+                        celda.setBorderPainted(true);
+                        
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        
+                        celda.setBorderPainted(false);
+                        
+                    }
+                    
                 });
 
                 contador++;

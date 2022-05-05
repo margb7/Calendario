@@ -172,6 +172,9 @@ public class CalendarioUI extends ElementoUI{
                 celdasDias[contador] = new JButton();
 
                 celdasDias[contador].setBackground(modoColor.getFondo());
+                celdasDias[contador].setBorderPainted(false);
+                celdasDias[contador].setFocusPainted(false);
+
 
                 panelCalendario.add(celdasDias[contador], gbc);
                 contador++;
