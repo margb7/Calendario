@@ -11,3 +11,4 @@ por día do usuario e tamén eventos "públicos" ou compartidos.
 ## Enlaces
 
 - [Iconos con UIManager](http://en-human-begin.blogspot.com/2007/11/javas-icons-by-default.html)
+- [Otros iconos](https://icons8.com/icons)
