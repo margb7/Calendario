@@ -33,6 +33,8 @@ public class LoginUI extends ElementoUI {
     private static JLabel pswdSignUpLabel;
     private static JPasswordField confirmPassword;
     private static JLabel confirmPswdLabel;
+    private static JButton cambioModoCorLogIn;
+    private static JButton cambioModoCorSignUp;
 
     private LoginUI() {}
 
@@ -80,6 +82,14 @@ public class LoginUI extends ElementoUI {
         return submitSignUp;
     }
 
+    public static JButton getCambioModoCorLogIn() {
+        return cambioModoCorLogIn;
+    }
+
+    public static JButton getCambioModoCorSignUp() {
+        return cambioModoCorSignUp;
+    }
+
     public static void init() {
 
         frame = new JFrame("Inicio Sesión");
@@ -107,13 +117,13 @@ public class LoginUI extends ElementoUI {
         logInCard = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        usernameLogIn = new JTextField(20);
+        usernameLogIn = new JTextField(15);
 
         unameLogInLabel = new JLabel("Usuario");
         unameLogInLabel.setLabelFor(usernameLogIn);
         unameLogInLabel.setForeground(modoColor.getTexto());
 
-        passwordLogin = new JPasswordField(20);
+        passwordLogin = new JPasswordField(15);
 
         pswdLoginLabel = new JLabel("Contrasinal");
         pswdLoginLabel.setLabelFor(passwordLogin);
@@ -122,8 +132,10 @@ public class LoginUI extends ElementoUI {
         submitLogIn = new JButton("Log in");
 
         signUpButton = new JButton("Crea unha nova conta");
+
+        cambioModoCorLogIn = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? "Modo escuro" : "Modo claro");
         
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
         gbc.gridy = 0;
         logInCard.add(unameLogInLabel, gbc);
@@ -136,18 +148,22 @@ public class LoginUI extends ElementoUI {
         gbc.gridy = 1;
         logInCard.add(pswdLoginLabel, gbc);
 
+        gbc.insets = new Insets(10, 0, 5, 5);
         gbc.gridx = 1;
         gbc.gridy = 1;
         logInCard.add(passwordLogin, gbc);
 
         gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridx = 0;
         gbc.gridy = 2;
         logInCard.add(submitLogIn, gbc);
 
         gbc.gridy = 3;
         logInCard.add(signUpButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        logInCard.add(cambioModoCorLogIn, gbc);
 
     }
 
@@ -156,26 +172,28 @@ public class LoginUI extends ElementoUI {
         signUpCard = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        usernameSignUp = new JTextField(20);
+        usernameSignUp = new JTextField(15);
 
         unameSignUpLabel = new JLabel("Usuario");
         unameSignUpLabel.setLabelFor(usernameSignUp);
         unameSignUpLabel.setForeground(modoColor.getTexto());
 
-        passwordSignUp = new JPasswordField(20);
+        passwordSignUp = new JPasswordField(15);
 
         pswdSignUpLabel = new JLabel("Contrasinal");
         pswdSignUpLabel.setLabelFor(passwordSignUp);
         passwordSignUp.setForeground(modoColor.getTexto());
 
-        confirmPassword = new JPasswordField(20);
+        confirmPassword = new JPasswordField(15);
         confirmPswdLabel = new JLabel("Confirma o contrasinal");
 
         submitSignUp = new JButton("Sign up");
 
         logInButton = new JButton("Xa estás rexistrado?");
+
+        cambioModoCorSignUp = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? "Modo escuro" : "Modo claro");
         
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
         gbc.gridy = 0;
         signUpCard.add(unameSignUpLabel, gbc);
@@ -200,6 +218,7 @@ public class LoginUI extends ElementoUI {
         gbc.gridy = 2;
         signUpCard.add(confirmPassword, gbc);
         
+        gbc.insets = new Insets(10, 0, 5, 5);
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridx = 0;
@@ -209,6 +228,10 @@ public class LoginUI extends ElementoUI {
         gbc.gridy = 4;
         signUpCard.add(logInButton, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        signUpCard.add(cambioModoCorSignUp, gbc);
+
     }
 
     public static void mostrarUI() {
@@ -217,5 +240,35 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    public static void repintarComponentes() {
+
+        //frame;
+        //cards;
+        logInCard.setBackground(modoColor.getFondo());
+        signUpCard.setBackground(modoColor.getFondo());
+        logInButton.setBackground(modoColor.getFondo());
+        logInButton.setForeground(modoColor.getTexto());
+        signUpButton.setBackground(modoColor.getFondo());
+        signUpButton.setForeground(modoColor.getTexto());
+        submitLogIn.setBackground(modoColor.getFondo());
+        submitLogIn.setForeground(modoColor.getTexto());
+        submitSignUp.setBackground(modoColor.getFondo());
+        submitSignUp.setForeground(modoColor.getTexto());
+        //usernameLogIn;
+        unameLogInLabel.setForeground(modoColor.getTexto());
+        //passwordLogin;
+        pswdLoginLabel.setForeground(modoColor.getTexto());
+        //usernameSignUp;
+        unameSignUpLabel.setForeground(modoColor.getTexto());
+        //passwordSignUp;
+        pswdSignUpLabel.setForeground(modoColor.getTexto());
+        //confirmPassword;
+        confirmPswdLabel.setForeground(modoColor.getTexto());
+        cambioModoCorLogIn.setBackground(modoColor.getFondo());
+        cambioModoCorLogIn.setForeground(modoColor.getTexto());
+        cambioModoCorSignUp.setBackground(modoColor.getFondo());
+        cambioModoCorSignUp.setForeground(modoColor.getTexto());
+
+    }
 
 }

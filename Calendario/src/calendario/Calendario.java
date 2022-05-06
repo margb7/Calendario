@@ -268,6 +268,32 @@ public class Calendario {
             
         });
 
+        LoginUI.getCambioModoCorLogIn().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                LoginUI.setModoColor(LoginUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
+
+                LoginUI.repintarComponentes();
+                
+            }
+            
+        });
+
+        LoginUI.getCambioModoCorSignUp().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                LoginUI.setModoColor(LoginUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
+                
+                LoginUI.repintarComponentes();
+                
+            }
+            
+        });
+
     }
 
     private static void initRexistroCard() {
