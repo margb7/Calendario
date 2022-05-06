@@ -109,6 +109,8 @@ public class CalendarioUI extends ElementoUI{
         panelLateral.setBackground(modoColor.getFondo());
         
         listaEventos = new JList<>();
+        listaEventos.setBackground(modoColor.getFondo());
+        listaEventos.setForeground(modoColor.getTexto());
         panelLateral.add(listaEventos);
         
         frame.add(panelLateral, gbc);

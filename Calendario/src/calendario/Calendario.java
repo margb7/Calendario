@@ -128,7 +128,7 @@ public class Calendario {
 
                 JButton celda = celdasDias[contador];
 
-                celda.setText(Integer.toString(dataCalendario.getDayOfMonth() ) );
+                celda.setText(Integer.toString(dataCalendario.getDayOfMonth()) );
                 celda.setName(dataCalendario.toString());   // Para identificar cada botón co seu día
 
 
@@ -232,9 +232,7 @@ public class Calendario {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                Usuario user;
-                System.out.println(LoginUI.getFrame().getSize());
-                
+                Usuario user;                
                 
                 try {
 
