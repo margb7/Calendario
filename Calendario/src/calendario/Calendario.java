@@ -51,11 +51,8 @@ public class Calendario {
         // Para activar antialiasing nas fontes cando non están activadas por defecto
         System.setProperty("awt.useSystemAAFontSettings","on");
 
-        // Iniciar componentes        
-        initLogin();
-        initCalendario();
-
         // Mostrar a interfaz
+        initLogin();
         LoginUI.mostrarUI();
         
     }
@@ -246,6 +243,9 @@ public class Calendario {
 
                         LoginUI.getFrame().setVisible(false);
                         usuario = user;
+
+                        // Mostrar calendario
+                        initCalendario();
                         CalendarioUI.mostrarUI();
 
                     } else {        // Usuario existe -> pero non é a contrasinal correcta
@@ -331,6 +331,9 @@ public class Calendario {
 
                                 LoginUI.getFrame().setVisible(false);
                                 usuario = Datos.rexistrarUsuario(LoginUI.getUsernameSignUp().getText(), passwd);
+
+                                // Mostrar calendario
+                                initCalendario();
                                 CalendarioUI.mostrarUI();
     
                             } catch(UsuarioXaRexistradoException ex ) {
