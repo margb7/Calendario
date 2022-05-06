@@ -18,4 +18,6 @@ public abstract class ElementoUI {
         ElementoUI.modoColor = modoColor;
     }
 
+    protected static void repintarComponentes() {}
+
 }

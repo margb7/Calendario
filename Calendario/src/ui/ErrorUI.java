@@ -8,7 +8,7 @@ import javax.swing.UIManager;
 /**
  * Clase para mostrar nunha ventá os diferentes erros do programa
  */
-public class ErrorUI extends ElementoUI{
+public class ErrorUI extends ElementoUI {
     
     private static JDialog dialog;
     private static JLabel label;
