@@ -135,16 +135,15 @@ public class Calendario {
                 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO : añadir una pestaña con la fecha del día seleccionado y los eventos abajo
-
-                        //String dataString = Dia.values()[dc.getData().getDayOfWeek().ordinal()] + 
-                        //    " " + dc.getData().getDayOfMonth() + " de " + Mes.values()[dc.getData().getMonthValue() - 1];
+                        
                         JButton boton = (JButton) e.getSource();
 
                         // Uso do nome do botón para obter o día que representa
                         LocalDate dataDia = LocalDate.parse(boton.getName());
-
                         Evento[] listaEventos = Datos.getEventosDia(dataDia, usuario);
+                        String textoDia = Dia.values()[dataDia.getDayOfWeek().ordinal()].getNome() + " " + dataDia.getDayOfMonth() + " de " + Mes.values()[dataDia.getMonthValue() - 1].getNome();
+
+                        CalendarioUI.getTextoDia().setText(textoDia);
 
                         if(listaEventos.length != 0 ) {
 

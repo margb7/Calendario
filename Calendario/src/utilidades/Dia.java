@@ -11,12 +11,12 @@ public enum Dia {
     DOMINGO("Domingo", "do.");
 
     private String nome;
-    private String nomeCorto;
+    private String nomeCurto;
 
-    Dia(String nome, String nomeCorto ) {
+    Dia(String nome, String nomeCurto ) {
 
         this.nome = nome;
-        this.nomeCorto = nomeCorto;
+        this.nomeCurto = nomeCurto;
 
     }
 
@@ -30,8 +30,8 @@ public enum Dia {
     /**
      * @return the nomeCorto
      */
-    public String getNomeCorto() {
-        return nomeCorto;
+    public String getNomeCurto() {
+        return nomeCurto;
     }
 
     @Override

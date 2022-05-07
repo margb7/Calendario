@@ -1,5 +1,6 @@
 package ui;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,6 +28,7 @@ public class CalendarioUI extends ElementoUI{
     private static JPanel panelContido;
     private static JPanel panelCalendario;
     private static JLabel textoMes;
+    private static JLabel textoDia;
     private static JButton[] celdasDias;
     private static JButton avanzarMes;
     private static JButton retrocederMes;
@@ -68,6 +70,10 @@ public class CalendarioUI extends ElementoUI{
         return textoMes;
     }
 
+    public static JLabel getTextoDia() {
+        return textoDia;
+    }
+
     public static JFrame getFrame() {
         return frame;
     }
@@ -98,24 +104,32 @@ public class CalendarioUI extends ElementoUI{
 
         frame.setLayout(new GridBagLayout());//layout manager para organizar elementos en cuadrícula
         gbc = new GridBagConstraints();//parámetros para o layout manager
-
+ 
         gbc.weightx = 0.5;
         gbc.weighty = 1.0;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.BOTH;
+
         panelLateral = new JPanel();
         panelLateral.setOpaque(true);
         panelLateral.setBackground(modoColor.getFondo());
+        panelLateral.setLayout(new BoxLayout(panelLateral, BoxLayout.PAGE_AXIS));
         
+        textoDia = new JLabel("", JLabel.CENTER);
+        textoDia.setForeground(modoColor.getTextoResalte());
+        textoDia.setBackground(modoColor.getFondo());
+        panelLateral.add(textoDia);
+
         listaEventos = new JList<>();
         listaEventos.setBackground(modoColor.getFondo());
         listaEventos.setForeground(modoColor.getTexto());
+
         panelLateral.add(listaEventos);
         
         frame.add(panelLateral, gbc);
 
-        gbc.weightx = 1.0;
+        gbc.weightx = 0.75;
         gbc.gridx = 1;
         panelContido = new JPanel(new BorderLayout());
         panelContido.setOpaque(true);
@@ -156,7 +170,7 @@ public class CalendarioUI extends ElementoUI{
         for (byte i = 0; i < 7; i++) {//engade cada etiqueta na posición que lle corresponde
             gbc.gridx = i;
 
-            JLabel lab = new JLabel(Dia.values()[i].getNomeCorto(),javax.swing.SwingConstants.CENTER);
+            JLabel lab = new JLabel(Dia.values()[i].getNomeCurto(),javax.swing.SwingConstants.CENTER);
 
             lab.setForeground(modoColor.getTextoResalte());
 
