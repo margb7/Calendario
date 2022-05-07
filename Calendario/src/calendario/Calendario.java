@@ -64,7 +64,10 @@ public class Calendario {
 
         CalendarioUI.init();
 
+        JButton[] celdasDias = CalendarioUI.getCeldasDias();
+
         dataCalendario = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
+        primerDiaMes = dataCalendario;
 
         // Botón (">") na dereita para avanzar o mes
         CalendarioUI.getAvanzarMes().addActionListener(new ActionListener() {
@@ -73,7 +76,6 @@ public class Calendario {
             public void actionPerformed(ActionEvent e) {
                 
                 dataCalendario = dataCalendario.withDayOfMonth(1);
-                primerDiaMes = dataCalendario;
 
                 actualizarCalendario();
 
@@ -89,13 +91,76 @@ public class Calendario {
             public void actionPerformed(ActionEvent e) {
                 
                 dataCalendario = dataCalendario.withDayOfMonth(1).minusMonths(2);
-                primerDiaMes = dataCalendario;
 
                 actualizarCalendario();
                 
             }
 
         });
+
+        for(int i = 0; i < celdasDias.length; i++ ) {
+
+            celdasDias[i].addMouseListener(new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                    // Engadir para cada dia do mes a capacidade de mostrar os eventos no panel lateral
+                    JButton boton = (JButton) e.getSource();
+
+                    // Uso do nome do botón para obter o día que representa
+                    LocalDate dataDia = LocalDate.parse(boton.getName());
+                    Evento[] listaEventos = Datos.getEventosDia(dataDia, usuario);
+                    String textoDia = Dia.values()[dataDia.getDayOfWeek().ordinal()].getNome() + " " + dataDia.getDayOfMonth() + " de " + Mes.values()[dataDia.getMonthValue() - 1].getNome();
+
+                    CalendarioUI.getTextoDia().setText(textoDia);
+
+                    if(listaEventos.length != 0 ) {
+
+                        CalendarioUI.getListaEventos().setListData(listaEventos);
+
+                    }
+
+                    System.out.println(dataDia);
+                    System.out.println(primerDiaMes);
+
+                    // Se o mes do día seleccionado non coincide co mes do calendario -> pásase a mostrar ese mes
+                    if(dataDia.getMonthValue() != primerDiaMes.getMonthValue() ) {
+
+                        dataCalendario = LocalDate.of(dataDia.getYear(), dataDia.getMonthValue(), 1);
+                        actualizarCalendario();
+
+                    }
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {}
+
+                @Override
+                public void mouseReleased(MouseEvent e) {}
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    
+                    JButton src = (JButton) e.getSource();
+                    
+                    src.setBorderPainted(true);
+                    
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    
+                    JButton src = (JButton) e.getSource();
+                    
+                    src.setBorderPainted(false);
+
+                }
+                
+            });
+
+        }
 
         actualizarCalendario();
 
@@ -112,81 +177,20 @@ public class Calendario {
         
         CalendarioUI.getTextoMes().setText(stringMes);
 
+        primerDiaMes = dataCalendario;
+
         // data -> comeza no primer día do mes
         int offset = dataCalendario.getDayOfWeek().ordinal();
-        
         dataCalendario = dataCalendario.minusDays(offset);
 
-        byte contador = 0;
+        for(int i = 0; i < celdasDias.length; i++ ) {
 
-        for(int i = 0; i < 6; i++ ) {
+            JButton celda = celdasDias[i];
 
-            for(int j = 0; j < 7; j++ ) {
+            celda.setText(Integer.toString(dataCalendario.getDayOfMonth()) );
+            celda.setName(dataCalendario.toString());   // Para identificar cada botón co seu día
 
-                JButton celda = celdasDias[contador];
-
-                celda.setText(Integer.toString(dataCalendario.getDayOfMonth()) );
-                celda.setName(dataCalendario.toString());   // Para identificar cada botón co seu día
-
-
-
-                // Engadir para cada dia do mes a capacidade de mostrar os eventos no panel lateral
-                celda.addActionListener(new ActionListener() {
-                
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        
-                        JButton boton = (JButton) e.getSource();
-
-                        // Uso do nome do botón para obter o día que representa
-                        LocalDate dataDia = LocalDate.parse(boton.getName());
-                        Evento[] listaEventos = Datos.getEventosDia(dataDia, usuario);
-                        String textoDia = Dia.values()[dataDia.getDayOfWeek().ordinal()].getNome() + " " + dataDia.getDayOfMonth() + " de " + Mes.values()[dataDia.getMonthValue() - 1].getNome();
-
-                        CalendarioUI.getTextoDia().setText(textoDia);
-
-                        if(listaEventos.length != 0 ) {
-
-                            CalendarioUI.getListaEventos().setListData(listaEventos);
-
-                        } 
-    
-                    }
-        
-                });
-
-                celda.addMouseListener(new MouseListener() {
-
-                    @Override
-                    public void mouseClicked(MouseEvent e) {}
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {}
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {}
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        
-                        celda.setBorderPainted(true);
-                        
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        
-                        celda.setBorderPainted(false);
-                        
-                    }
-                    
-                });
-
-                contador++;
-
-                dataCalendario = dataCalendario.plusDays(1);
-
-            }
+            dataCalendario = dataCalendario.plusDays(1);
 
         }
 
