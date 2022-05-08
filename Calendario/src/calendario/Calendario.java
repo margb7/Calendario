@@ -12,6 +12,7 @@ import java.awt.event.WindowListener;
 import java.time.LocalDate;
 import java.awt.CardLayout;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -114,15 +115,15 @@ public class Calendario {
                     String textoDia = Dia.values()[dataDia.getDayOfWeek().ordinal()].getNome() + " " + dataDia.getDayOfMonth() + " de " + Mes.values()[dataDia.getMonthValue() - 1].getNome();
 
                     CalendarioUI.getTextoDia().setText(textoDia);
+                    
+                    // Vaciar a lista para que non conteña eventos que non corresponden 
+                    CalendarioUI.getListaEventos().setListData(new Evento[0]);
 
                     if(listaEventos.length != 0 ) {
 
                         CalendarioUI.getListaEventos().setListData(listaEventos);
 
                     }
-
-                    System.out.println(dataDia);
-                    System.out.println(primerDiaMes);
 
                     // Se o mes do día seleccionado non coincide co mes do calendario -> pásase a mostrar ese mes
                     if(dataDia.getMonthValue() != primerDiaMes.getMonthValue() ) {
