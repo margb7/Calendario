@@ -6,19 +6,17 @@ import utilidades.Mes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.WindowAdapter;
 import java.time.LocalDate;
 import java.awt.CardLayout;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import excepcions.UsuarioNonAtopadoException;
 import excepcions.UsuarioXaRexistradoException;
 
@@ -101,7 +99,7 @@ public class Calendario {
 
         for(int i = 0; i < celdasDias.length; i++ ) {
 
-            celdasDias[i].addMouseListener(new MouseListener() {
+            celdasDias[i].addMouseListener(new MouseAdapter() {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -134,12 +132,6 @@ public class Calendario {
                     }
 
                 }
-
-                @Override
-                public void mousePressed(MouseEvent e) {}
-
-                @Override
-                public void mouseReleased(MouseEvent e) {}
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
@@ -393,10 +385,7 @@ public class Calendario {
         ErrorUI.getLabel().setText(str);
         ErrorUI.getDialog().add(ErrorUI.getLabel());
 
-
-
-        // TODO : tiene que haber una mejor forma de hacer esto 
-        ErrorUI.getDialog().addWindowListener(new WindowListener() {
+        ErrorUI.getDialog().addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosed(WindowEvent e) {
@@ -409,33 +398,6 @@ public class Calendario {
             public void windowOpened(WindowEvent e) {
                 
                 owner.setEnabled(false);
-
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-
-            }
-
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-            
-                
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
 
             }
 
