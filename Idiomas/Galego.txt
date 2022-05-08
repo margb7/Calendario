@@ -1,0 +1,15 @@
+-- Documento de exemplo
+
+-- Tanto liñas vacías como as liñas comentadas con "--" son ignoradas
+
+
+
+-- como idea de exemplo para os días 
+D01-Luns
+D02-Lu.
+D03-Martes
+D04-Ma.
+
+-- despois cando se requira os nomes dos días chamar a obterTraduccion("D01"); que devolvería "Luns"
+
+-- o maior problema de todo isto segue sendo obter a ruta dos arquivos
