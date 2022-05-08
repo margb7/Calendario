@@ -321,31 +321,43 @@ public class Calendario {
 
                     if(passwd.equals(confirm) ) {       // Rexistro correcto
 
-                        if(Funciones.contrasinalValida(passwd) ) {
+                        if(Funciones.nomeCorrecto(LoginUI.getUsernameSignUp().getText()) ) {
 
-                            try {
+                            if(Funciones.contrasinalValida(passwd) ) {
+                                
+                                try {
+
+                                    LoginUI.getFrame().setVisible(false);
+                                    usuario = Datos.rexistrarUsuario(LoginUI.getUsernameSignUp().getText(), passwd);
+
+                                    // Mostrar calendario
+                                    initCalendario();
+                                    CalendarioUI.mostrarUI();
+
+                                } catch(UsuarioXaRexistradoException ex ) {
+
+                                    // Erro inesperado coa base de datos
+
+                                } 
 
                                 LoginUI.getFrame().setVisible(false);
-                                usuario = Datos.rexistrarUsuario(LoginUI.getUsernameSignUp().getText(), passwd);
-
-                                // Mostrar calendario
-                                initCalendario();
                                 CalendarioUI.mostrarUI();
-    
-                            } catch(UsuarioXaRexistradoException ex ) {
-    
-                                // Erro inesperado coa base de datos
-    
-                            } 
-    
-                            LoginUI.getFrame().setVisible(false);
-                            CalendarioUI.mostrarUI();
+
+                            } else {
+
+                                
+                                mostrarErro(LoginUI.getFrame(), "A contrasinal non é válida");  // TODO : explicar que requerimentos fan falta
+                                LoginUI.getConfirmPassword().setText("");
+                                LoginUI.getPasswordSignUp().setText("");
+
+                            }
 
                         } else {
 
-                            mostrarErro(LoginUI.getFrame(), "A contrasinal non é válida");  // TODO : explicar que requerimentos fan falta
+                            mostrarErro(LoginUI.getFrame(), "O nome de usuario non é válido");
                             LoginUI.getConfirmPassword().setText("");
                             LoginUI.getPasswordSignUp().setText("");
+                            LoginUI.getUsernameSignUp().setText("");
                             
                         }
 
