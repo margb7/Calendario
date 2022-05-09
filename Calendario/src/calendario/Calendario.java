@@ -29,6 +29,7 @@ import ui.ElementoUI;
 import ui.ErrorUI;
 import ui.LoginUI;
 import ui.ModoColorUI;
+import ui.SeleccionDataUI;
 
 /**
  *  TODO: funciona como controlador
@@ -170,6 +171,33 @@ public class Calendario {
         String stringMes = Mes.values()[dataCalendario.getMonthValue() - 1] + ", " + dataCalendario.getYear();
         
         CalendarioUI.getTextoMes().setText(stringMes);
+        CalendarioUI.getTextoMes().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                SeleccionDataUI.initSeleccionData(CalendarioUI.getFrame(), primerDiaMes.getYear());
+                SeleccionDataUI.getOk().addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        
+                        dataCalendario = LocalDate.of(SeleccionDataUI.getValorAnos(), SeleccionDataUI.getValorMes(), 1);
+                        
+                        SeleccionDataUI.getSeleccionData().dispose();
+
+                        actualizarCalendario();
+                        
+                    }
+                    
+                });
+                SeleccionDataUI.getSeleccionData().setVisible(true);
+                
+            }
+
+            
+
+        });
 
         primerDiaMes = dataCalendario;
 
