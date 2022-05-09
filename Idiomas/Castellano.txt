@@ -54,3 +54,6 @@ E04-El nombre de usuario no es válido
 E05-Las contraseñas no coinciden
 E06-Usuario ya registrado
 E07-Error
+
+-- SeleccionDataUI
+S01-Selecciona una fecha

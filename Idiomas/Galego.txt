@@ -54,3 +54,6 @@ E04-Nome de usuario non válido
 E05-As contrasinais non coinciden
 E06-Usuario xa rexistrado
 E07-Erro
+
+-- SeleccionDataUI
+S01-Selecciona unha data

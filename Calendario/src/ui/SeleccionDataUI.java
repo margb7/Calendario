@@ -8,6 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import model.Datos;
+import utilidades.Dia;
+import utilidades.Mes;
+
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
@@ -33,9 +37,9 @@ public class SeleccionDataUI extends ElementoUI {
 
     public static void initSeleccionData(JFrame owner, int anoActual) {
 
-        String[] lista = {"Xaneiro", "Febreiro", "Marzo", "Abril", "Maio", "Xuño", "Xullo", "Agosto", "Setembro", "Outubro", "Novembro", "Decembro"};
+        String[] lista = Mes.getListaMeses();
 
-        seleccionData = new JDialog(owner, "title", true);
+        seleccionData = new JDialog(owner, Datos.getTraduccion("S01", "Selecciona unha data"), true);
         seleccionData.setLayout(new GridBagLayout());
         seleccionData.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         seleccionData.setSize(300, 100);

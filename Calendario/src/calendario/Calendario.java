@@ -191,8 +191,9 @@ public class Calendario {
                     }
                     
                 });
+
                 SeleccionDataUI.getSeleccionData().setVisible(true);
-                
+
             }
 
             

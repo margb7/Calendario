@@ -40,9 +40,9 @@ public class Datos {
         idiomas = new HashMap<>();
         cargarIdiomas();
         
-        if(idiomas.containsKey("Castellano") ) {
+        if(idiomas.containsKey("Galego") ) {
 
-            idomaSeleccionado = idiomas.get("Castellano");
+            idomaSeleccionado = idiomas.get("Galego");
 
         }
 
@@ -209,8 +209,6 @@ public class Datos {
             }
 
         } catch(FileNotFoundException e) {
-
-            e.printStackTrace();
 
             System.out.println("Arquivo non atopado : " + path);
 
