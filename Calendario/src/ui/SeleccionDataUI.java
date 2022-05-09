@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import utilidades.Mes;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -24,6 +25,10 @@ public class SeleccionDataUI extends ElementoUI {
 
     public static JDialog getSeleccionData() {
         return seleccionData;
+    }
+
+    public static JButton getOk() {
+        return ok;
     }
 
     public static void initSeleccionData(JFrame owner, int anoActual) {
@@ -62,6 +67,12 @@ public class SeleccionDataUI extends ElementoUI {
 
     }
 
+    public static int getValorAnos() {
+        return (int)anos.getValue();
+    }
 
+    public static int getValorMes() {
+        return meses.getSelectedIndex() + 1;
+    }
 
 }
