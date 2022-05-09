@@ -40,7 +40,7 @@ L03-Sign up
 L04-Usuario
 L05-Contraseña
 L06-Log in
-L07-Crea una conta nueva
+L07-Crea una cuenta nueva
 L08-Modo oscuro
 L09-Modo claro
 L10-Confirma la contraseña

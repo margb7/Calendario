@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import model.Datos;
 import model.Evento;
 
 import java.awt.Toolkit;
@@ -96,7 +97,7 @@ public class CalendarioUI extends ElementoUI{
 
     public static void init() {
 
-        frame = new JFrame("Calendario");//Ventá da aplicación
+        frame = new JFrame(Datos.getTraduccion("C01", "Calendario"));//Ventá da aplicación
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);

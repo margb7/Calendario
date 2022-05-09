@@ -44,6 +44,7 @@ public class Calendario {
      */
     public static void main(String[] args) {
 
+        Datos.cargarIdiomas();
         // Tema de color para todos os elementos
         ElementoUI.setModoColor(ModoColorUI.MODO_CLARO);
         
@@ -246,7 +247,7 @@ public class Calendario {
 
                     } else {        // Usuario existe -> pero non é a contrasinal correcta
 
-                        mostrarErro(LoginUI.getFrame(), "Credenciais incorrectas");
+                        mostrarErro(LoginUI.getFrame(), Datos.getTraduccion("E01", "Credenciais incorrectas"));
                         LoginUI.getPasswordLogin().setText("");
                         LoginUI.getUsernameLogIn().setText("");
 
@@ -254,7 +255,7 @@ public class Calendario {
 
                 } catch(UsuarioNonAtopadoException ex ) {        // Non existe o usuario 
 
-                    mostrarErro(LoginUI.getFrame(), "O usuario non está rexistrado");
+                    mostrarErro(LoginUI.getFrame(), Datos.getTraduccion("E02", "O usuario non está rexistrado"));
                     LoginUI.getPasswordLogin().setText("");
                     LoginUI.getUsernameLogIn().setText("");
 
@@ -345,7 +346,7 @@ public class Calendario {
     
                             } else {
     
-                                mostrarErro(LoginUI.getFrame(), "A contrasinal non é válida");  // TODO : explicar que requerimentos fan falta
+                                mostrarErro(LoginUI.getFrame(), Datos.getTraduccion("E03", "A contrasinal non é válida"));  // TODO : explicar que requerimentos fan falta
                                 LoginUI.getConfirmPassword().setText("");
                                 LoginUI.getPasswordSignUp().setText("");
                                 
@@ -353,7 +354,7 @@ public class Calendario {
 
                         } else {
 
-                            mostrarErro(LoginUI.getFrame(), "Nome de usuario non válido");
+                            mostrarErro(LoginUI.getFrame(), Datos.getTraduccion("E04", "Nome de usuario non válido"));
                             LoginUI.getConfirmPassword().setText("");
                             LoginUI.getPasswordSignUp().setText("");
                             LoginUI.getUsernameSignUp().setText("");
@@ -362,7 +363,7 @@ public class Calendario {
 
                     } else {    // Rexistro incorrecto (a contrasinal e a confirmación non concordan)
 
-                        mostrarErro(LoginUI.getFrame(), "As contrasinais non coinciden");
+                        mostrarErro(LoginUI.getFrame(), Datos.getTraduccion("E05", "As contrasinais non coinciden"));
                         LoginUI.getConfirmPassword().setText("");
                         LoginUI.getPasswordSignUp().setText("");
 
@@ -370,7 +371,7 @@ public class Calendario {
 
                 } else { // Usuario previamente rexisrado
 
-                    mostrarErro(LoginUI.getFrame(), "Usuario xa rexistrado");
+                    mostrarErro(LoginUI.getFrame(), Datos.getTraduccion("E06", "Usuario xa rexistrado"));
                     LoginUI.getConfirmPassword().setText("");
                     LoginUI.getPasswordSignUp().setText("");
                     LoginUI.getUsernameSignUp().setText("");
@@ -391,7 +392,7 @@ public class Calendario {
      */
     public static void mostrarErro(JFrame owner, String str ) {
 
-        ErrorUI.setDialog(new JDialog(owner, "Error"));
+        ErrorUI.setDialog(new JDialog(owner, Datos.getTraduccion("E07", "Erro")));
         ErrorUI.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         ErrorUI.getLabel().setText(str);
         ErrorUI.getDialog().add(ErrorUI.getLabel());

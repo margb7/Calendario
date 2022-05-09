@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import javax.naming.NameNotFoundException;
@@ -18,8 +19,11 @@ import excepcions.UsuarioXaRexistradoException;
  */
 public class Datos {
     
+    private static final String CARPETA_IDIOMAS = "Idiomas";
     private static LocalDate data;
     private static LocalTime tempo;
+    private static HashMap<String, String> idomaSeleccionado; 
+    private static HashMap<String, HashMap<String, String>> idiomas;
 
     /**
      * Constructor privado para evitar instancias
@@ -33,6 +37,14 @@ public class Datos {
 
         data = LocalDate.now();
         tempo = LocalTime.now();
+        idiomas = new HashMap<>();
+        cargarIdiomas();
+        
+        if(idiomas.containsKey("Castellano") ) {
+
+            idomaSeleccionado = idiomas.get("Castellano");
+
+        }
 
     }
 
@@ -120,6 +132,66 @@ public class Datos {
         return out;
     }
 
+    /**
+     * Carga os idiomas da carpeta de idiomas e os garda para o seu uso.
+     */
+    public static void cargarIdiomas() {
+
+        File carpetaIdiomas = new File(CARPETA_IDIOMAS);
+        String[] lines;
+        String nomeIdioma;  // O nome de cada idioma correspóndese co nome do ficheiro sen a extensión ".txt"
+        String codigo;
+        String significado;
+        HashMap<String, String> trad;   // Hash map que corresponde o código co seu valor 
+
+        for(File f : carpetaIdiomas.listFiles() ) {
+
+            lines = leerFichero(f.getAbsolutePath());
+            nomeIdioma = f.getName().substring(0, f.getName().length() - 4);
+            trad = new HashMap<>();
+
+            for(String s : lines ) {
+
+                if(!s.isEmpty() && !s.startsWith("--") ) {
+
+                    codigo = s.substring(0, 3);
+                    significado = s.substring(4, s.length());
+
+                    trad.put(codigo, significado);
+
+                }
+
+            }
+
+            idiomas.put(nomeIdioma, trad);
+
+        }
+        
+    }
+
+    /**
+     * Devolve o valor no idioma seleccionado para un valor de texto do programa.
+     * @param codigo o código da traducción
+     * @param valorPorDefecto o valor no caso de non atopar a traducción.
+     * @return a cadea co valor de texto que corresponde.
+     */
+    public static String getTraduccion(String codigo, String valorPorDefecto ) {
+
+        String out;
+
+        if(idomaSeleccionado.containsKey(codigo) ) {
+
+            out = idomaSeleccionado.get(codigo);
+
+        } else {
+
+            out = valorPorDefecto;
+
+        }
+
+        return out;
+    }
+
     public static String[] leerFichero(String path ) {
         
         Scanner sc;
@@ -128,8 +200,7 @@ public class Datos {
 
         try {
 
-            // TODO: HARDCODED
-            sc = new Scanner(new File("E:\\DAM\\Progr\\Entrega\\Calendario\\Test\\EjemplosEventos.txt"), "UTF-8");
+            sc = new Scanner(new File(path), "UTF-8");
             
             while(sc.hasNextLine() ) {
 
@@ -138,6 +209,8 @@ public class Datos {
             }
 
         } catch(FileNotFoundException e) {
+
+            e.printStackTrace();
 
             System.out.println("Arquivo non atopado : " + path);
 
@@ -159,7 +232,7 @@ public class Datos {
         Evento[] out = null;
         String[] consulta = null;
         
-        consulta = leerFichero("../../../Test/EjemplosEventos.txt");    // = pedirDatosBBDD() 
+        consulta = leerFichero("E:\\DAM\\Progr\\Entrega\\Calendario\\Test\\EjemplosEventos.txt");    // = pedirDatosBBDD() 
 
         out = new Evento[consulta.length];
 

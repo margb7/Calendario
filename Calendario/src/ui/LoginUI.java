@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import model.Datos;
+
 public class LoginUI extends ElementoUI {
 
     private static JFrame frame;
@@ -92,7 +94,7 @@ public class LoginUI extends ElementoUI {
 
     public static void init() {
 
-        frame = new JFrame("Inicio Sesión");
+        frame = new JFrame(Datos.getTraduccion("L01", "Inicio Sesión"));
 
         frame.setSize(600, 400);
         frame.setMinimumSize(new Dimension(400, 300));
@@ -104,8 +106,8 @@ public class LoginUI extends ElementoUI {
         initLogIn();
         initSignUp();
 
-        frame.add(logInCard, "Log in");
-        frame.add(signUpCard, "Sign up");
+        frame.add(logInCard, Datos.getTraduccion("L02", "Log in"));
+        frame.add(signUpCard, Datos.getTraduccion("L03", "Sign up"));
 
         logInCard.setBackground(modoColor.getFondo());
         signUpCard.setBackground(modoColor.getFondo());
@@ -119,21 +121,21 @@ public class LoginUI extends ElementoUI {
 
         usernameLogIn = new JTextField(15);
 
-        unameLogInLabel = new JLabel("Usuario");
+        unameLogInLabel = new JLabel(Datos.getTraduccion("L04", "Usuario"));
         unameLogInLabel.setLabelFor(usernameLogIn);
         unameLogInLabel.setForeground(modoColor.getTexto());
 
         passwordLogin = new JPasswordField(15);
 
-        pswdLoginLabel = new JLabel("Contrasinal");
+        pswdLoginLabel = new JLabel(Datos.getTraduccion("L05", "Contrasinal"));
         pswdLoginLabel.setLabelFor(passwordLogin);
         pswdLoginLabel.setForeground(modoColor.getTexto());
 
-        submitLogIn = new JButton("Log in");
+        submitLogIn = new JButton(Datos.getTraduccion("L06", "Log in"));
 
-        signUpButton = new JButton("Crea unha nova conta");
+        signUpButton = new JButton(Datos.getTraduccion("L07", "Crea unha nova conta"));
 
-        cambioModoCorLogIn = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? "Modo escuro" : "Modo claro");
+        cambioModoCorLogIn = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
         
         gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
@@ -174,24 +176,24 @@ public class LoginUI extends ElementoUI {
 
         usernameSignUp = new JTextField(15);
 
-        unameSignUpLabel = new JLabel("Usuario");
+        unameSignUpLabel = new JLabel(Datos.getTraduccion("L04", "Usuario"));
         unameSignUpLabel.setLabelFor(usernameSignUp);
         unameSignUpLabel.setForeground(modoColor.getTexto());
 
         passwordSignUp = new JPasswordField(15);
 
-        pswdSignUpLabel = new JLabel("Contrasinal");
+        pswdSignUpLabel = new JLabel(Datos.getTraduccion("L05", "Contrasinal"));
         pswdSignUpLabel.setLabelFor(passwordSignUp);
         passwordSignUp.setForeground(modoColor.getTexto());
 
         confirmPassword = new JPasswordField(15);
-        confirmPswdLabel = new JLabel("Confirma o contrasinal");
+        confirmPswdLabel = new JLabel(Datos.getTraduccion("L10", "Confirma o contrasinal"));
 
-        submitSignUp = new JButton("Sign up");
+        submitSignUp = new JButton(Datos.getTraduccion("L03", "Sign up"));
 
-        logInButton = new JButton("Xa estás rexistrado?");
+        logInButton = new JButton(Datos.getTraduccion("L11", "Xa estás rexistrado?"));
 
-        cambioModoCorSignUp = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? "Modo escuro" : "Modo claro");
+        cambioModoCorSignUp = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
         
         gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
