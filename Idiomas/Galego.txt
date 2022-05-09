@@ -50,7 +50,7 @@ L11-Xa estás rexistrado?
 E01-Credenciais incorrectas
 E02-O usuario non está rexistrado
 E03-A contrasinal non é válida
-E04-Nome de usuario non válid
+E04-Nome de usuario non válido
 E05-As contrasinais non coinciden
 E06-Usuario xa rexistrado
-E07-Error
+E07-Erro
