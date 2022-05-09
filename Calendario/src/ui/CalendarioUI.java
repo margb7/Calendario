@@ -28,7 +28,7 @@ public class CalendarioUI extends ElementoUI{
     private static JPanel panelLateral;
     private static JPanel panelContido;
     private static JPanel panelCalendario;
-    private static JLabel textoMes;
+    private static JButton textoMes;
     private static JLabel textoDia;
     private static JButton[] celdasDias;
     private static JButton avanzarMes;
@@ -67,7 +67,7 @@ public class CalendarioUI extends ElementoUI{
     /**
      * @return the textoMes
      */
-    public static JLabel getTextoMes() {
+    public static JButton getTextoMes() {
         return textoMes;
     }
 
@@ -160,8 +160,11 @@ public class CalendarioUI extends ElementoUI{
         gbc.gridx = 0;
         gbc.gridy = 0;
         
-        textoMes = new JLabel("default", javax.swing.SwingConstants.CENTER);//nome de mes
+        textoMes = new JButton("default");//nome de mes
         textoMes.setForeground(modoColor.getTexto());
+        textoMes.setBackground(modoColor.getFondo());
+        textoMes.setFocusPainted(false);
+        textoMes.setBorderPainted(false);
         panelCalendario.add(textoMes, gbc);
 
         gbc.gridwidth = 1;
