@@ -1,15 +1,56 @@
--- Documento de exemplo
+-- ### GALEGO ###
 
--- Tanto liñas vacías como as liñas comentadas con "--" son ignoradas
-
-
-
--- como idea de exemplo para os días 
+-- DÍAS
 D01-Luns
 D02-Lu.
 D03-Martes
 D04-Ma.
+D05-Mércores
+D06-Mé.
+D07-Xoves
+D08-Xo.
+D09-Venres
+D10-Ve.
+D11-Sábado
+D12-Sá.
+D13-Domingo
+D14-Do.
 
--- despois cando se requira os nomes dos días chamar a obterTraduccion("D01"); que devolvería "Luns"
+-- MESES
+M01-Xaneiro
+M02-Febreiro
+M03-Marzo
+M04-Abril
+M05-Maio
+M06-Xuño
+M07-Xullo
+M08-Agosto
+M09-Setembro
+M10-Outubro
+M11-Novembro
+M12-Decembro
 
--- o maior problema de todo isto segue sendo obter a ruta dos arquivos
+-- CALENDARIOUI (solo o título por agora)
+C01-Calendario
+
+-- LOGINUI
+L01-Inicio Sesión
+L02-Log in
+L03-Sign up
+L04-Usuario
+L05-Contrasinal
+L06-Log in
+L07-Crea unha nova conta
+L08-Modo escuro
+L09-Modo claro
+L10-Confirma o contrasinal
+L11-Xa estás rexistrado?
+
+-- ERRORUI  (estos valores úsanse dende o calendario)
+E01-Credenciais incorrectas
+E02-O usuario non está rexistrado
+E03-A contrasinal non é válida
+E04-Nome de usuario non válid
+E05-As contrasinais non coinciden
+E06-Usuario xa rexistrado
+E07-Error
