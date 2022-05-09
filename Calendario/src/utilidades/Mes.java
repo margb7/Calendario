@@ -11,9 +11,9 @@ public enum Mes {
     XULIO("Xullo"),
     AGOSTO("Agosto"),
     SETEMBRO("Setembro"),
-    OUTUBRO("Outubre"),
-    NOVEMBRE("Novembre"),
-    DECEMBRE("Decembro");
+    OUTUBRO("Outubro"),
+    NOVEMBRO("Novembro"),
+    DECEMBRO("Decembro");
 
     private String nome;
 
