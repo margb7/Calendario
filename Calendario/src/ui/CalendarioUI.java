@@ -19,6 +19,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 public class CalendarioUI extends ElementoUI{
@@ -136,6 +137,7 @@ public class CalendarioUI extends ElementoUI{
         textoDia = new JLabel("", JLabel.CENTER);
         textoDia.setForeground(modoColor.getTextoResalte());
         textoDia.setBackground(modoColor.getFondo());
+        textoDia.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelLateral.add(textoDia);
 
         listaEventos = new JList<>();
