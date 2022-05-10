@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -238,7 +239,20 @@ public class LoginUI extends ElementoUI {
 
     public static void mostrarUI() {
 
-        frame.setVisible(true);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                
+                Toolkit tool = Toolkit.getDefaultToolkit();
+
+                frame.setVisible(true);
+                frame.setLocation((tool.getScreenSize().width - frame.getWidth()) / 2, (tool.getScreenSize().height - frame.getHeight() ) / 2 );
+                
+            }
+            
+        });
+        
 
     }
 
