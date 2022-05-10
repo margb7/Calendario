@@ -176,7 +176,7 @@ public class Calendario {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                SeleccionDataUI.initSeleccionData(CalendarioUI.getFrame(), primerDiaMes.getYear());
+                SeleccionDataUI.initSeleccionData(CalendarioUI.getFrame(), primerDiaMes.getYear(), primerDiaMes.getMonthValue() - 1);
                 SeleccionDataUI.getOk().addActionListener(new ActionListener() {
 
                     @Override

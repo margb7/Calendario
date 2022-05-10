@@ -35,7 +35,7 @@ public class SeleccionDataUI extends ElementoUI {
         return ok;
     }
 
-    public static void initSeleccionData(JFrame owner, int anoActual) {
+    public static void initSeleccionData(JFrame owner, int anoActual, int mesActual) {
 
         String[] lista = Mes.getListaMeses();
 
@@ -46,6 +46,7 @@ public class SeleccionDataUI extends ElementoUI {
         seleccionData.setSize(300, 100);
 
         meses = new JComboBox<>(lista);
+        meses.setSelectedIndex(mesActual);
 
         model = new SpinnerNumberModel(anoActual, 1980, anoActual + 10, 1);
 
@@ -85,5 +86,7 @@ public class SeleccionDataUI extends ElementoUI {
     public static int getValorMes() {
         return meses.getSelectedIndex() + 1;
     }
+
+    //TODO implementar ElementoUI
 
 }
