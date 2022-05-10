@@ -34,6 +34,9 @@ public class CalendarioUI extends ElementoUI{
     private static JButton[] celdasDias;
     private static JButton avanzarMes;
     private static JButton retrocederMes;
+    private static JMenuItem itemPublico;
+    private static JMenuItem itemPrivado;
+    private static JMenuItem itemGrupal;
 
     /**
      * Constructor privado para evitar instancias
@@ -78,6 +81,18 @@ public class CalendarioUI extends ElementoUI{
 
     public static JFrame getFrame() {
         return frame;
+    }
+
+    public static JMenuItem getItemGrupal() {
+        return itemGrupal;
+    }
+
+    public static JMenuItem getItemPrivado() {
+        return itemPrivado;
+    }
+
+    public static JMenuItem getItemPublico() {
+        return itemPublico;
     }
     
     public static void mostrarUI() {
@@ -154,9 +169,12 @@ public class CalendarioUI extends ElementoUI{
         panelCalendario.setOpaque(true);
         panelCalendario.setBackground(modoColor.getFondo());
         panelCalendario.setComponentPopupMenu(new JPopupMenu("Crear evento"));
-        panelCalendario.getComponentPopupMenu().add(new JMenuItem("Público"));
-        panelCalendario.getComponentPopupMenu().add(new JMenuItem("Grupal"));
-        panelCalendario.getComponentPopupMenu().add(new JMenuItem("Privado"));
+        itemPublico = new JMenuItem("Público");
+        panelCalendario.getComponentPopupMenu().add(itemPublico);
+        itemGrupal = new JMenuItem("Grupal");
+        panelCalendario.getComponentPopupMenu().add(itemGrupal);
+        itemPrivado = new JMenuItem("Privado");
+        panelCalendario.getComponentPopupMenu().add(itemPrivado);
         panelContido.add(panelCalendario, BorderLayout.CENTER);
 
         gbc.weightx = 1.0;

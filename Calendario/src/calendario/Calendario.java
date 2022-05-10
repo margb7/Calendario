@@ -157,6 +157,40 @@ public class Calendario {
 
         }
 
+        //TODO implementar as accións dos ítems do menú contextual
+        CalendarioUI.getItemGrupal().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                System.out.println(e.getActionCommand());
+                
+            }
+
+        });
+
+        CalendarioUI.getItemPrivado().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                System.out.println(e.getActionCommand());
+                
+            }
+
+        });
+
+        CalendarioUI.getItemPublico().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                System.out.println(e.getActionCommand());
+                
+            }
+
+        });
+
         actualizarCalendario();
 
     }
