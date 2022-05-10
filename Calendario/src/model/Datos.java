@@ -49,6 +49,33 @@ public class Datos {
     }
 
     /**
+     * @return the idomaSeleccionado
+     */
+    public static HashMap<String, String> getIdomaSeleccionado() {
+        return idomaSeleccionado;
+    }
+
+    /**
+     * @return the idiomas
+     */
+    public static HashMap<String, HashMap<String, String>> getIdiomas() {
+        return idiomas;
+    }
+
+    /**
+     * @param idomaSeleccionado the idomaSeleccionado to set
+     */
+    public static void setIdomaSeleccionado(String idomaSeleccionado) {
+        
+        if(idiomas.containsKey(idomaSeleccionado) ) {
+
+            Datos.idomaSeleccionado = idiomas.get(idomaSeleccionado);
+
+        }
+
+    }
+
+    /**
      * Obtén da base de datos todos os eventos dun usuario e dunha data en concreto
      * @param dataEvento a data para buscar eventos.
      * @param user o usuario dos eventos.

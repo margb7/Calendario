@@ -24,7 +24,16 @@ public abstract class ElementoUI {
         ElementoUI.modoColor = modoColor;
     }
 
-    protected static void repintarComponentes() {}
+    public static void cambiarModo() {
+
+        modoColor = (modoColor == ModoColorUI.MODO_CLARO) ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO; 
+
+    }
+
+    public abstract void mostrarUI();
+    public abstract void iniciarComponentes();
+
+    protected abstract void repintarComponentes();
 
 }
 

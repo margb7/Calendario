@@ -18,24 +18,24 @@ import java.awt.GridBagConstraints;
 
 public class SeleccionDataUI extends ElementoUI {
     
-    private static JDialog seleccionData;
-    private static JSpinner anos;
-    private static SpinnerNumberModel model;
-    private static JComboBox<String> meses;
-    private static JLabel de;
-    private static JButton ok;
+    private JDialog seleccionData;
+    private JSpinner anos;
+    private SpinnerNumberModel model;
+    private JComboBox<String> meses;
+    private JLabel de;
+    private JButton ok;
 
     private SeleccionDataUI() {}
 
-    public static JDialog getSeleccionData() {
+    public JDialog getSeleccionData() {
         return seleccionData;
     }
 
-    public static JButton getOk() {
+    public JButton getOk() {
         return ok;
     }
 
-    public static void initSeleccionData(JFrame owner, int anoActual) {
+    public void iniciarComponentes(JFrame owner, int anoActual) {
 
         String[] lista = Mes.getListaMeses();
 
@@ -45,13 +45,9 @@ public class SeleccionDataUI extends ElementoUI {
         seleccionData.setSize(300, 100);
 
         meses = new JComboBox<>(lista);
-
         model = new SpinnerNumberModel(anoActual, 1980, anoActual + 10, 1);
-
         anos = new JSpinner(model);
-
         de = new JLabel("de");
-
         ok = new JButton("OK");
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -77,12 +73,29 @@ public class SeleccionDataUI extends ElementoUI {
 
     }
 
-    public static int getValorAnos() {
+    public int getValorAnos() {
         return (int)anos.getValue();
     }
 
-    public static int getValorMes() {
+    public int getValorMes() {
         return meses.getSelectedIndex() + 1;
+    }
+
+    @Override
+    public void mostrarUI() {
+         
+    }
+
+    @Override
+    public void iniciarComponentes() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    protected void repintarComponentes() {
+        // TODO Auto-generated method stub
+        
     }
 
 }

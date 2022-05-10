@@ -10,60 +10,65 @@ import javax.swing.UIManager;
  */
 public class ErrorUI extends ElementoUI {
     
-    private static JDialog dialog;
-    private static JLabel label;
-
-    private ErrorUI() {}
+    private JDialog dialog;
+    private JLabel label;
 
     /**
-     * Constructor estático para a interface
+     * Constructor para os obxectos da interface de erros
      */
-    static {
-        
-        label = new JLabel("", JLabel.CENTER);
-        label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
-        label.setForeground(modoColor.getTexto());
+    public ErrorUI() {
+
+        iniciarComponentes();
 
     }
 
-    public static JDialog getDialog() {
+    @Override
+    public void iniciarComponentes() {
+
+        label = new JLabel("", JLabel.CENTER);
+        label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
+
+    }
+
+    /**
+     * Devolve o <code>JDialog</code> da interface de erro.
+     * @return
+     */
+    public JDialog getDialog() {
         return dialog;
     }
 
     /**
-     * @return the label
+     * Getter para obter o compoñente ca mensaxe de erro do diálogo.
+     * @return o <code>JLabel</code> que representa a mensaxe de erro do diálogo.
      */
-    public static JLabel getLabel() {
+    public JLabel getLabel() {
         return label;
     }
 
     /**
-     * Setter para o JDialog
+     * Setter para o <code>JDialog</code> da interface de erro.
      * @param dialog o novo dialogo
      */
-    public static void setDialog(JDialog dialog) {
-        ErrorUI.dialog = dialog;
+    public void setDialog(JDialog dialog) {
+        this.dialog = dialog;
+        this.dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        this.dialog.add(label);
     }
 
     /**
-     * @param modoColor the modoColor to set
+     * Mostra a interface de erro.
+     * @param frame a xanela que lanza o erro para que a interface de erro se coloque centrada
+     * no medio desa xanela.
      */
-    public static void setModoColor(ModoColorUI modoColor) {
-        ErrorUI.modoColor = modoColor;
-    }
-
-    /**
-     * Mostra a interface de erro
-     * @param frame a ventá que lanza o erro para que a interface de erro se coloque centrada
-     * no medio desa ventá.
-     */
-    public static void mostrarUI(JFrame frame ) {
+    public void mostrarUI(JFrame frame ) {
 
         int x,y;
 
+        repintarComponentes();  // Antes de mostrar xa se actualizan as cores da interfaz
+
         dialog.setVisible(true);
-        dialog.getContentPane().setBackground(modoColor.getFondo());
-        label.setForeground(modoColor.getTexto());
+        dialog.setResizable(false);
         dialog.setSize(300, 100);
 
         x = frame.getX() + (frame.getWidth() / 2) - (dialog.getWidth() / 2);
@@ -71,6 +76,34 @@ public class ErrorUI extends ElementoUI {
 
         dialog.setLocation(x, y);
 
+    }
+
+    /**
+     * Mostra a interface de erro sen bloquear ningunha outra xanela.
+     */
+    @Override
+    public void mostrarUI() {
+
+        repintarComponentes();  // Antes de mostrar xa se actualizan as cores da interfaz
+
+        dialog.setVisible(true);
+        dialog.setResizable(false);
+        dialog.setSize(300, 100);
+
+        dialog.setLocationRelativeTo(null);
+
+    }
+
+    /**
+     * Repinta as cores da interface gráfica.
+     */
+    @Override
+    protected void repintarComponentes() {
+        
+        label.setForeground(modoColor.getTexto());
+        dialog.getContentPane().setBackground(modoColor.getFondo());
+        label.setForeground(modoColor.getTexto());
+        
     }
 
 }

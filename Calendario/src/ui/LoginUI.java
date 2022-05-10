@@ -13,88 +13,120 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import model.Datos;
-
 public class LoginUI extends ElementoUI {
 
-    private static JFrame frame;
-    private static JPanel cards;
-    private static JPanel logInCard;
-    private static JPanel signUpCard;
-    private static JButton logInButton;
-    private static JButton signUpButton;
-    private static JButton submitLogIn;
-    private static JButton submitSignUp;
-    private static JTextField usernameLogIn;
-    private static JLabel unameLogInLabel;
-    private static JPasswordField passwordLogin;
-    private static JLabel pswdLoginLabel;
-    private static JTextField usernameSignUp;
-    private static JLabel unameSignUpLabel;
-    private static JPasswordField passwordSignUp;
-    private static JLabel pswdSignUpLabel;
-    private static JPasswordField confirmPassword;
-    private static JLabel confirmPswdLabel;
-    private static JButton cambioModoCorLogIn;
-    private static JButton cambioModoCorSignUp;
+    private JFrame frame;
+    private JPanel cards;
+    private JPanel logInCard;
+    private JPanel signUpCard;
+    private JButton logInButton;
+    private JButton signUpButton;
+    private JButton submitLogIn;
+    private JButton submitSignUp;
+    private JTextField usernameLogIn;
+    private JLabel unameLogInLabel;
+    private JPasswordField passwordLogin;
+    private JLabel pswdLoginLabel;
+    private JTextField usernameSignUp;
+    private JLabel unameSignUpLabel;
+    private JPasswordField passwordSignUp;
+    private JLabel pswdSignUpLabel;
+    private JPasswordField confirmPassword;
+    private JLabel confirmPswdLabel;
+    private JButton cambioModoCorLogIn;
+    private JButton cambioModoCorSignUp;
 
-    private LoginUI() {}
+    public LoginUI() {
 
-    public static JFrame getFrame() {
+        iniciarComponentes();
+        repintarComponentes();
+
+    }
+
+    public JFrame getFrame() {
         return frame;
     }
 
-    public static JPanel getCards() {
+    public JPanel getCards() {
         return cards;
     }
 
-    public static JButton getLogInButton() {
+    /**
+     * @return the unameLogInLabel
+     */
+    public JLabel getUnameLogInLabel() {
+        return unameLogInLabel;
+    }
+
+    /**
+     * @return the unameSignUpLabel
+     */
+    public JLabel getUnameSignUpLabel() {
+        return unameSignUpLabel;
+    }
+
+    /**
+     * @return the logInCard
+     */
+    public JPanel getLogInCard() {
+        return logInCard;
+    }
+
+    /**
+     * @return the signUpCard
+     */
+    public JPanel getSignUpCard() {
+        return signUpCard;
+    }
+
+    public JButton getLogInButton() {
         return logInButton;
     }
 
-    public static JButton getSignUpButton() {
+    public JButton getSignUpButton() {
         return signUpButton;
     }
 
-    public static JTextField getUsernameSignUp() {
+    public JTextField getUsernameSignUp() {
         return usernameSignUp;
     }
 
-    public static JTextField getUsernameLogIn() {
+    public JTextField getUsernameLogIn() {
         return usernameLogIn;
     }
 
-    public static JPasswordField getConfirmPassword() {
+    public JPasswordField getConfirmPassword() {
         return confirmPassword;
     }
 
-    public static JPasswordField getPasswordLogin() {
+    public JPasswordField getPasswordLogin() {
         return passwordLogin;
     }
 
-    public static JPasswordField getPasswordSignUp() {
+    public JPasswordField getPasswordSignUp() {
         return passwordSignUp;
     }
 
-    public static JButton getSubmitLogIn() {
+    public JButton getSubmitLogIn() {
         return submitLogIn;
     }
 
-    public static JButton getSubmitSignUp() {
+    public JButton getSubmitSignUp() {
         return submitSignUp;
     }
 
-    public static JButton getCambioModoCorLogIn() {
+    public JButton getCambioModoCorLogIn() {
         return cambioModoCorLogIn;
     }
 
-    public static JButton getCambioModoCorSignUp() {
+    public JButton getCambioModoCorSignUp() {
         return cambioModoCorSignUp;
     }
 
-    public static void init() {
+    @Override
+    public void iniciarComponentes() {
 
-        frame = new JFrame(Datos.getTraduccion("L01", "Inicio Sesión"));
+        frame = new JFrame();
 
         frame.setSize(600, 400);
         frame.setMinimumSize(new Dimension(400, 300));
@@ -106,36 +138,36 @@ public class LoginUI extends ElementoUI {
         initLogIn();
         initSignUp();
 
-        frame.add(logInCard, Datos.getTraduccion("L02", "Log in"));
-        frame.add(signUpCard, Datos.getTraduccion("L03", "Sign up"));
+        frame.add(logInCard);
+        frame.add(signUpCard);
 
         logInCard.setBackground(modoColor.getFondo());
         signUpCard.setBackground(modoColor.getFondo());
 
     }
 
-    private static void initLogIn() {
+    private void initLogIn() {
 
         logInCard = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         usernameLogIn = new JTextField(15);
 
-        unameLogInLabel = new JLabel(Datos.getTraduccion("L04", "Usuario"));
+        unameLogInLabel = new JLabel();
         unameLogInLabel.setLabelFor(usernameLogIn);
         unameLogInLabel.setForeground(modoColor.getTexto());
 
         passwordLogin = new JPasswordField(15);
 
-        pswdLoginLabel = new JLabel(Datos.getTraduccion("L05", "Contrasinal"));
+        pswdLoginLabel = new JLabel();
         pswdLoginLabel.setLabelFor(passwordLogin);
         pswdLoginLabel.setForeground(modoColor.getTexto());
 
-        submitLogIn = new JButton(Datos.getTraduccion("L06", "Log in"));
+        submitLogIn = new JButton();
 
-        signUpButton = new JButton(Datos.getTraduccion("L07", "Crea unha nova conta"));
+        signUpButton = new JButton();
 
-        cambioModoCorLogIn = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+        cambioModoCorLogIn = new JButton();
         
         gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
@@ -169,7 +201,7 @@ public class LoginUI extends ElementoUI {
 
     }
 
-    private static void initSignUp() {
+    private void initSignUp() {
 
         signUpCard = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -236,13 +268,13 @@ public class LoginUI extends ElementoUI {
 
     }
 
-    public static void mostrarUI() {
+    public void mostrarUI() {
 
         frame.setVisible(true);
 
     }
 
-    public static void repintarComponentes() {
+    public void repintarComponentes() {
 
         //frame;
         //cards;
