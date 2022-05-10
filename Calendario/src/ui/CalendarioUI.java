@@ -137,7 +137,7 @@ public class CalendarioUI extends ElementoUI{
         textoDia = new JLabel("", JLabel.CENTER);
         textoDia.setForeground(modoColor.getTextoResalte());
         textoDia.setBackground(modoColor.getFondo());
-        textoDia.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textoDia.setAlignmentX(Component.CENTER_ALIGNMENT);//Parece un pouco a machada isto
         panelLateral.add(textoDia);
 
         listaEventos = new JList<>();
