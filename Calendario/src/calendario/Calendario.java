@@ -191,6 +191,19 @@ public class Calendario {
 
         });
 
+        CalendarioUI.getCambioModoCor().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                CalendarioUI.setModoColor(CalendarioUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
+                
+                CalendarioUI.repintarComponentes();
+                
+            }
+            
+        });
+
         actualizarCalendario();
 
     }

@@ -22,7 +22,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
-public class CalendarioUI extends ElementoUI{
+public class CalendarioUI extends ElementoUI {
 
     private static JList<Evento> listaEventos;
     private static JFrame frame;
@@ -38,6 +38,7 @@ public class CalendarioUI extends ElementoUI{
     private static JMenuItem itemPublico;
     private static JMenuItem itemPrivado;
     private static JMenuItem itemGrupal;
+    private static JButton cambioModoCor;
 
     /**
      * Constructor privado para evitar instancias
@@ -95,6 +96,10 @@ public class CalendarioUI extends ElementoUI{
     public static JMenuItem getItemPublico() {
         return itemPublico;
     }
+
+    public static JButton getCambioModoCor() {
+        return cambioModoCor;
+    }
     
     public static void mostrarUI() {
         
@@ -134,6 +139,13 @@ public class CalendarioUI extends ElementoUI{
         panelLateral.setBackground(modoColor.getFondo());
         panelLateral.setLayout(new BoxLayout(panelLateral, BoxLayout.PAGE_AXIS));
         
+        cambioModoCor = new JButton("Cambiar tema de cor");
+        cambioModoCor.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cambioModoCor.setFocusPainted(false);
+        cambioModoCor.setBackground(modoColor.getFondo());
+        cambioModoCor.setForeground(modoColor.getTexto());
+        panelLateral.add(cambioModoCor);
+
         textoDia = new JLabel("", JLabel.CENTER);
         textoDia.setForeground(modoColor.getTextoResalte());
         textoDia.setBackground(modoColor.getFondo());
@@ -275,4 +287,27 @@ public class CalendarioUI extends ElementoUI{
 
     }
 
+
+    public static void repintarComponentes() {
+        
+        
+        panelLateral.setBackground(modoColor.getFondo());
+        panelLateral.setForeground(modoColor.getTexto());
+        panelContido.setBackground(modoColor.getFondo());
+        cambioModoCor.setBackground(modoColor.getFondo());
+        cambioModoCor.setForeground(modoColor.getTexto());
+        /*
+        JPanel panelContido;
+        JPanel panelCalendario;
+        JButton textoMes;
+        JLabel textoDia;
+        JButton[] celdasDias;
+        JButton avanzarMes;
+        JButton retrocederMes;
+        JMenuItem itemPublico;
+        JMenuItem itemPrivado;
+        JMenuItem itemGrupal;
+        */
+
+    }
 }
