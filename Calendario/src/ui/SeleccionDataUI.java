@@ -14,6 +14,7 @@ import utilidades.Mes;
 
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 
 public class SeleccionDataUI extends ElementoUI {
@@ -41,9 +42,11 @@ public class SeleccionDataUI extends ElementoUI {
 
         seleccionData = new JDialog(owner, Datos.getTraduccion("S01", "Selecciona unha data"), true);
         seleccionData.setLayout(new GridBagLayout());
-        //seleccionData.setUndecorated(true); poñer tamén a posición en que se abre o diálogo
+        seleccionData.setUndecorated(true);
+        seleccionData.getRootPane().setBorder(new javax.swing.border.LineBorder(Color.GRAY, 1));
         seleccionData.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         seleccionData.setSize(300, 100);
+        seleccionData.setLocation(seleccionData.getParent().getX(), seleccionData.getParent().getY());
 
         meses = new JComboBox<>(lista);
         meses.setSelectedIndex(mesActual);
