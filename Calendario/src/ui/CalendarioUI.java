@@ -5,9 +5,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
-import model.Datos;
 import model.Evento;
 
 import java.awt.Toolkit;
@@ -97,7 +98,7 @@ public class CalendarioUI extends ElementoUI{
 
     public static void init() {
 
-        frame = new JFrame(Datos.getTraduccion("C01", "Calendario"));//Ventá da aplicación
+        frame = new JFrame("Calendario");//Ventá da aplicación
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
@@ -152,6 +153,10 @@ public class CalendarioUI extends ElementoUI{
         panelCalendario = new JPanel(new GridBagLayout());
         panelCalendario.setOpaque(true);
         panelCalendario.setBackground(modoColor.getFondo());
+        panelCalendario.setComponentPopupMenu(new JPopupMenu("Crear evento"));
+        panelCalendario.getComponentPopupMenu().add(new JMenuItem("Público"));
+        panelCalendario.getComponentPopupMenu().add(new JMenuItem("Grupal"));
+        panelCalendario.getComponentPopupMenu().add(new JMenuItem("Privado"));
         panelContido.add(panelCalendario, BorderLayout.CENTER);
 
         gbc.weightx = 1.0;
@@ -200,6 +205,7 @@ public class CalendarioUI extends ElementoUI{
                 celdasDias[contador].setBackground(modoColor.getFondo());
                 celdasDias[contador].setBorderPainted(false);
                 celdasDias[contador].setFocusPainted(false);
+                celdasDias[contador].setInheritsPopupMenu(true);
 
 
                 panelCalendario.add(celdasDias[contador], gbc);
