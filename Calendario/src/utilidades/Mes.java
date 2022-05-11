@@ -17,9 +17,31 @@ public enum Mes {
     NOVEMBRO(11),
     DECEMBRO(12);
 
-    private String nome;
+    private int num;
 
     Mes(int num ) {
+
+        this.num = num;
+
+    }
+
+    public static String[] getListaMeses() {
+
+        String[] out = new String[values().length];
+
+        for(int i = 0; i < values().length; i++ ) {
+
+            out[i] = values()[i].getNome();
+
+        }
+
+        return out;
+
+    }
+
+    public String getNome() {
+
+        String nome;
 
         switch(num) {
 
@@ -62,29 +84,12 @@ public enum Mes {
 
         }
 
-    }
-
-    public static String[] getListaMeses() {
-
-        String[] out = new String[values().length];
-
-        for(int i = 0; i < values().length; i++ ) {
-
-            out[i] = values()[i].getNome();
-
-        }
-
-        return out;
-
-    }
-
-    public String getNome() {
         return nome;
     }
 
     @Override
     public String toString() {
-        return nome;
+        return getNome();
     }
 
 }
