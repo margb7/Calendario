@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,8 +39,7 @@ public class LoginUI extends ElementoUI {
 
     public LoginUI() {
 
-        iniciarComponentes();
-        repintarComponentes();
+        init();
 
     }
 
@@ -49,20 +49,6 @@ public class LoginUI extends ElementoUI {
 
     public JPanel getCards() {
         return cards;
-    }
-
-    /**
-     * @return the unameLogInLabel
-     */
-    public JLabel getUnameLogInLabel() {
-        return unameLogInLabel;
-    }
-
-    /**
-     * @return the unameSignUpLabel
-     */
-    public JLabel getUnameSignUpLabel() {
-        return unameSignUpLabel;
     }
 
     /**
@@ -95,16 +81,51 @@ public class LoginUI extends ElementoUI {
         return usernameLogIn;
     }
 
+    /**
+     * @return the unameLogInLabel
+     */
+    public JLabel getUnameLogInLabel() {
+        return unameLogInLabel;
+    }
+
+    /**
+     * @return the unameSignUpLabel
+     */
+    public JLabel getUnameSignUpLabel() {
+        return unameSignUpLabel;
+    }
+
     public JPasswordField getConfirmPassword() {
         return confirmPassword;
+    }
+
+    /**
+     * @return the confirmPswdLabel
+     */
+    public JLabel getConfirmPswdLabel() {
+        return confirmPswdLabel;
     }
 
     public JPasswordField getPasswordLogin() {
         return passwordLogin;
     }
 
+    /**
+     * @return the pswdLoginLabel
+     */
+    public JLabel getPswdLoginLabel() {
+        return pswdLoginLabel;
+    }
+
     public JPasswordField getPasswordSignUp() {
         return passwordSignUp;
+    }
+
+    /**
+     * @return the pswdSignUpLabel
+     */
+    public JLabel getPswdSignUpLabel() {
+        return pswdSignUpLabel;
     }
 
     public JButton getSubmitLogIn() {
@@ -123,8 +144,7 @@ public class LoginUI extends ElementoUI {
         return cambioModoCorSignUp;
     }
 
-    @Override
-    public void iniciarComponentes() {
+    public void init() {
 
         frame = new JFrame();
 
@@ -208,24 +228,24 @@ public class LoginUI extends ElementoUI {
 
         usernameSignUp = new JTextField(15);
 
-        unameSignUpLabel = new JLabel(Datos.getTraduccion("L04", "Usuario"));
+        unameSignUpLabel = new JLabel();
         unameSignUpLabel.setLabelFor(usernameSignUp);
         unameSignUpLabel.setForeground(modoColor.getTexto());
 
         passwordSignUp = new JPasswordField(15);
 
-        pswdSignUpLabel = new JLabel(Datos.getTraduccion("L05", "Contrasinal"));
+        pswdSignUpLabel = new JLabel();
         pswdSignUpLabel.setLabelFor(passwordSignUp);
         passwordSignUp.setForeground(modoColor.getTexto());
 
         confirmPassword = new JPasswordField(15);
-        confirmPswdLabel = new JLabel(Datos.getTraduccion("L10", "Confirma o contrasinal"));
+        confirmPswdLabel = new JLabel();
 
-        submitSignUp = new JButton(Datos.getTraduccion("L03", "Sign up"));
+        submitSignUp = new JButton();
 
-        logInButton = new JButton(Datos.getTraduccion("L11", "Xa estás rexistrado?"));
+        logInButton = new JButton();
 
-        cambioModoCorSignUp = new JButton(getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+        cambioModoCorSignUp = new JButton();
         
         gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
@@ -270,7 +290,20 @@ public class LoginUI extends ElementoUI {
 
     public void mostrarUI() {
 
-        frame.setVisible(true);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                
+                Toolkit tool = Toolkit.getDefaultToolkit();
+
+                frame.setVisible(true);
+                frame.setLocation((tool.getScreenSize().width - frame.getWidth()) / 2, (tool.getScreenSize().height - frame.getHeight() ) / 2 );
+                
+            }
+            
+        });
+        
 
     }
 

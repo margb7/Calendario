@@ -42,17 +42,10 @@ public class Datos {
         
         if(idiomas.containsKey("Galego") ) {
 
-            idomaSeleccionado = idiomas.get("Galego");
+            Datos.idomaSeleccionado = idiomas.get("Galego");
 
         }
 
-    }
-
-    /**
-     * @return the idomaSeleccionado
-     */
-    public static HashMap<String, String> getIdomaSeleccionado() {
-        return idomaSeleccionado;
     }
 
     /**
@@ -65,11 +58,11 @@ public class Datos {
     /**
      * @param idomaSeleccionado the idomaSeleccionado to set
      */
-    public static void setIdomaSeleccionado(String idomaSeleccionado) {
+    public static void setIdomaSeleccionado(String idioma) {
         
-        if(idiomas.containsKey(idomaSeleccionado) ) {
+        if(idiomas.containsKey(idioma) ) {
 
-            Datos.idomaSeleccionado = idiomas.get(idomaSeleccionado);
+            Datos.idomaSeleccionado = idiomas.get(idioma);
 
         }
 

@@ -32,6 +32,10 @@ M12-Decembro
 
 -- CALENDARIOUI (solo o título por agora)
 C01-Calendario
+C02-Cambiar tema de cor
+C03-Público
+C04-Grupal
+C05-Privado
 
 -- LOGINUI
 L01-Inicio Sesión
@@ -57,3 +61,5 @@ E07-Erro
 
 -- SeleccionDataUI
 S01-Selecciona unha data
+S02-de
+S03-Ok

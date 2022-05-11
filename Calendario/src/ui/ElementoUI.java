@@ -13,27 +13,19 @@ public abstract class ElementoUI {
     /**
      * @return the modoColor
      */
-    public static ModoColorUI getModoColor() {
+    public static final ModoColorUI getModoColor() {
         return modoColor;
     }
 
     /**
      * @param modoColor the modoColor to set
      */
-    public static void setModoColor(ModoColorUI modoColor) {
+    public static final void setModoColor(ModoColorUI modoColor) {
         ElementoUI.modoColor = modoColor;
     }
 
-    public static void cambiarModo() {
-
-        modoColor = (modoColor == ModoColorUI.MODO_CLARO) ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO; 
-
-    }
-
-    public abstract void mostrarUI();
-    public abstract void iniciarComponentes();
-
-    protected abstract void repintarComponentes();
+    protected void repintarComponentes() {}
+    abstract void mostrarUI();
 
 }
 

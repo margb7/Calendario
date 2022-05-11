@@ -6,26 +6,25 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-
-import model.Datos;
-import utilidades.Dia;
-import utilidades.Mes;
 
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 
 public class SeleccionDataUI extends ElementoUI {
     
     private JDialog seleccionData;
     private JSpinner anos;
-    private SpinnerNumberModel model;
     private JComboBox<String> meses;
     private JLabel de;
     private JButton ok;
 
-    private SeleccionDataUI() {}
+    public SeleccionDataUI() {
+
+        initSeleccionData();
+
+    }
 
     public JDialog getSeleccionData() {
         return seleccionData;
@@ -35,20 +34,41 @@ public class SeleccionDataUI extends ElementoUI {
         return ok;
     }
 
-    public void iniciarComponentes(JFrame owner, int anoActual) {
+    /**
+     * @return the de
+     */
+    public JLabel getDe() {
+        return de;
+    }
 
-        String[] lista = Mes.getListaMeses();
+    /**
+     * @return the anos
+     */
+    public JSpinner getAnos() {
+        return anos;
+    }
 
-        seleccionData = new JDialog(owner, Datos.getTraduccion("S01", "Selecciona unha data"), true);
+    /**
+     * @return the meses
+     */
+    public JComboBox<String> getMeses() {
+        return meses;
+    }
+
+    public void initSeleccionData() {
+
+        seleccionData = new JDialog();
         seleccionData.setLayout(new GridBagLayout());
+        seleccionData.setUndecorated(true);
+        seleccionData.getRootPane().setBorder(new javax.swing.border.LineBorder(Color.GRAY, 1));
         seleccionData.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         seleccionData.setSize(300, 100);
+        seleccionData.setLocation(seleccionData.getParent().getX(), seleccionData.getParent().getY());
 
-        meses = new JComboBox<>(lista);
-        model = new SpinnerNumberModel(anoActual, 1980, anoActual + 10, 1);
-        anos = new JSpinner(model);
-        de = new JLabel("de");
-        ok = new JButton("OK");
+        meses = new JComboBox<>();
+        anos = new JSpinner();
+        de = new JLabel();
+        ok = new JButton();
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -72,30 +92,31 @@ public class SeleccionDataUI extends ElementoUI {
         seleccionData.add(ok, gbc);
 
     }
-
-    public int getValorAnos() {
-        return (int)anos.getValue();
-    }
-
-    public int getValorMes() {
-        return meses.getSelectedIndex() + 1;
-    }
-
+    
     @Override
     public void mostrarUI() {
-         
+        
+        seleccionData.setVisible(true);
+        seleccionData.getContentPane().setBackground(modoColor.getFondo());
+        seleccionData.setSize(300, 100);
+
+        seleccionData.setLocationRelativeTo(null);
+
     }
 
-    @Override
-    public void iniciarComponentes() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void mostrarUI(JFrame frame ) {
 
-    @Override
-    protected void repintarComponentes() {
-        // TODO Auto-generated method stub
-        
+        int x,y;
+
+        seleccionData.setVisible(true);
+        seleccionData.getContentPane().setBackground(modoColor.getFondo());
+        seleccionData.setSize(300, 100);
+
+        x = frame.getX() + (frame.getWidth() / 2) - (seleccionData.getWidth() / 2);
+        y = frame.getY() + (frame.getHeight() / 2) - (seleccionData.getHeight() / 2);
+
+        seleccionData.setLocation(x, y);
+
     }
 
 }
