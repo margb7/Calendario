@@ -2,6 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URI;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
@@ -250,7 +252,7 @@ public class Datos {
         Evento[] out = null;
         String[] consulta = null;
         
-        consulta = leerFichero("E:\\DAM\\Progr\\Entrega\\Calendario\\Test\\EjemplosEventos.txt");    // = pedirDatosBBDD() 
+        consulta = leerFichero(Path.of("Test", "EjemplosEventos.txt").toString());    // = pedirDatosBBDD() 
 
         out = new Evento[consulta.length];
 
