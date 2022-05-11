@@ -194,6 +194,7 @@ public class CalendarioUI extends ElementoUI {
         panelCalendario = new JPanel(new GridBagLayout());
         panelCalendario.setOpaque(true);
         panelCalendario.setBackground(modoColor.getFondo());
+
         panelCalendario.setComponentPopupMenu(new JPopupMenu());
 
         itemPublico = new JMenuItem();
@@ -203,6 +204,7 @@ public class CalendarioUI extends ElementoUI {
         panelCalendario.getComponentPopupMenu().add(itemGrupal);
 
         itemPrivado = new JMenuItem();
+
         panelCalendario.getComponentPopupMenu().add(itemPrivado);
         panelContido.add(panelCalendario, BorderLayout.CENTER);
 
