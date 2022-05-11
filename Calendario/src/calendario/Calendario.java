@@ -18,6 +18,7 @@ import javax.swing.SpinnerNumberModel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 import excepcions.UsuarioNonAtopadoException;
 import excepcions.UsuarioXaRexistradoException;
 
@@ -76,6 +77,10 @@ public class Calendario {
         
         // Mostrar o login
         interfaceLogin.mostrarUI();
+        
+        Toolkit tool = Toolkit.getDefaultToolkit();
+        
+        interfaceLogin.getFrame().setLocation((tool.getScreenSize().width - interfaceLogin.getFrame().getWidth()) / 2, (tool.getScreenSize().height - interfaceLogin.getFrame().getHeight() ) / 2 );
         
     }
 
@@ -373,6 +378,12 @@ public class Calendario {
                         initCalendario();
                         interfaceCalendario.mostrarUI();
 
+                        // Para que o tamaño do calendario e a posición se corresponda coa xanela que
+                        // se acaba de pechar
+                        interfaceCalendario.getFrame().setSize(interfaceLogin.getFrame().getSize());
+                        interfaceCalendario.getFrame().setLocation(interfaceLogin.getFrame().getLocation());
+
+
                     } else {        // Usuario existe -> pero non é a contrasinal correcta
 
                         mostrarErro(interfaceLogin.getFrame(), Datos.getTraduccion("E01", "Credenciais incorrectas"));
@@ -472,14 +483,16 @@ public class Calendario {
                                     initCalendario();
                                     interfaceCalendario.mostrarUI();
         
+                                    // Para que o tamaño do calendario e a posición se corresponda coa xanela que
+                                    // se acaba de pechar
+                                    interfaceCalendario.getFrame().setSize(interfaceLogin.getFrame().getSize());
+                                    interfaceCalendario.getFrame().setLocation(interfaceLogin.getFrame().getLocation());
+
                                 } catch(UsuarioXaRexistradoException ex ) {
         
                                     // Erro inesperado coa base de datos
         
-                                } 
-        
-                                interfaceLogin.getFrame().setVisible(false);
-                                interfaceCalendario.mostrarUI();
+                                }                                 
     
                             } else {
     
