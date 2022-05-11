@@ -31,6 +31,7 @@ public class CalendarioUI extends ElementoUI {
     private JPanel panelContido;
     private JPanel panelCalendario;
     private JButton textoMes;
+    private JLabel[] labelDias;
     private JLabel textoDia;
     private JButton[] celdasDias;
     private JButton avanzarMes;
@@ -225,12 +226,17 @@ public class CalendarioUI extends ElementoUI {
         gbc.weighty = 0.50;
         gbc.gridy = 1;
 
+        labelDias = new JLabel[7];
+
         for (byte i = 0; i < 7; i++) {//engade cada etiqueta na posición que lle corresponde
             gbc.gridx = i;
 
             JLabel lab = new JLabel(Dia.values()[i].getNomeCurto(),javax.swing.SwingConstants.CENTER);
 
             lab.setForeground(modoColor.getTextoResalte());
+            lab.setBackground(modoColor.getFondo());
+
+            labelDias[i] = lab;
 
             panelCalendario.add(lab, gbc);
 
@@ -277,7 +283,7 @@ public class CalendarioUI extends ElementoUI {
                 if(celdasDias[i].getText().equals("1") ) {
 
                     primerDia = true;
-                    celdasDias[i].setForeground(modoColor.getTextoResalte());
+                    celdasDias[i].setForeground(modoColor.getTexto());
 
                 } else {
 
@@ -294,11 +300,13 @@ public class CalendarioUI extends ElementoUI {
 
                 } else {
 
-                    celdasDias[i].setForeground(modoColor.getTextoResalte());
+                    celdasDias[i].setForeground(modoColor.getTexto());
 
                 }
 
             }
+
+            celdasDias[i].setBackground(modoColor.getFondo());
 
         }
 
@@ -313,6 +321,24 @@ public class CalendarioUI extends ElementoUI {
         panelContido.setBackground(modoColor.getFondo());
         cambioModoCor.setBackground(modoColor.getFondo());
         cambioModoCor.setForeground(modoColor.getTexto());
+
+        panelCalendario.setBackground(modoColor.getFondo());
+        panelCalendario.setForeground(modoColor.getTexto());
+
+        textoMes.setForeground(modoColor.getTextoResalte());
+        textoMes.setBackground(modoColor.getFondo());
+
+        for (byte i = 0; i < 7; i++) {//engade cada etiqueta na posición que lle corresponde
+            gbc.gridx = i;
+
+            JLabel lab = labelDias[i];
+
+            lab.setForeground(modoColor.getTextoResalte());
+            lab.setBackground(modoColor.getFondo());
+
+        }
+
+        actualizarCalendario();
         /*
         JPanel panelContido;
         JPanel panelCalendario;
