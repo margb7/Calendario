@@ -52,7 +52,7 @@ public class Calendario {
      */
     public static void main(String[] args) {
 
-        Datos.cargarIdiomas();
+        Datos.init();
 
         Datos.setIdomaSeleccionado("Castellano");
 
@@ -73,6 +73,7 @@ public class Calendario {
         interfaceErro = new ErrorUI();
 
         initSeleccionData();
+        initTradSeleccionData();
         initLogin();
         
         // Mostrar o login
@@ -87,10 +88,6 @@ public class Calendario {
     private static void initSeleccionData() {
 
         String[] lista = Mes.getListaMeses();
-
-        interfaceSeleccionData.getSeleccionData().setTitle(Datos.getTraduccion("S01", "Selecciona unha data"));
-        interfaceSeleccionData.getDe().setText(Datos.getTraduccion("S02", "de"));
-        interfaceSeleccionData.getOk().setText(Datos.getTraduccion("S03", "Ok"));
 
         interfaceSeleccionData.getAnos().setModel(new SpinnerNumberModel(dataCalendario.getYear(), 1980, dataCalendario.getYear() + 10, 1));
 
@@ -119,18 +116,20 @@ public class Calendario {
 
     }
 
+    private static void initTradSeleccionData() {
+
+        interfaceSeleccionData.getSeleccionData().setTitle(Datos.getTraduccion("S01", "Selecciona unha data"));
+        interfaceSeleccionData.getDe().setText(Datos.getTraduccion("S02", "de"));
+        interfaceSeleccionData.getOk().setText(Datos.getTraduccion("S03", "Ok"));
+
+    }
+
     /**
      * Inicializa os atributos e os eventos da ventá do calendario antes de mostralo.
      */
     private static void initCalendario() {
 
         JButton[] celdasDias = interfaceCalendario.getCeldasDias();
-
-        // NO afecta -> interfaceCalendario.getPanelCalendario().getComponentPopupMenu().setName("Crear");
-        interfaceCalendario.getFrame().setTitle(Datos.getTraduccion("C01", "Calendario"));
-        interfaceCalendario.getItemPublico().setText(Datos.getTraduccion("C03", "Público"));
-        interfaceCalendario.getItemPrivado().setText(Datos.getTraduccion("C05", "Privado"));
-        interfaceCalendario.getItemGrupal().setText(Datos.getTraduccion("C04", "Grupal"));
 
         // Botón (">") na dereita para avanzar o mes
         interfaceCalendario.getAvanzarMes().addActionListener(new ActionListener() {
@@ -266,8 +265,6 @@ public class Calendario {
 
         });
                                                                             
-        interfaceCalendario.getCambioModoCor().setText(Datos.getTraduccion("C02", "Cambiar tema de cor"));
-
         interfaceCalendario.getCambioModoCor().addActionListener(new ActionListener() {
 
             @Override
@@ -282,6 +279,18 @@ public class Calendario {
         });
 
         actualizarCalendario();
+
+    }
+
+    public static void initTradCalendario() {
+
+        // NO afecta -> interfaceCalendario.getPanelCalendario().getComponentPopupMenu().setName("Crear");
+        interfaceCalendario.getFrame().setTitle(Datos.getTraduccion("C01", "Calendario"));
+        interfaceCalendario.getItemPublico().setText(Datos.getTraduccion("C03", "Público"));
+        interfaceCalendario.getItemPrivado().setText(Datos.getTraduccion("C05", "Privado"));
+        interfaceCalendario.getItemGrupal().setText(Datos.getTraduccion("C04", "Grupal"));
+
+        interfaceCalendario.getCambioModoCor().setText(Datos.getTraduccion("C02", "Cambiar tema de cor"));
 
     }
 
@@ -376,6 +385,7 @@ public class Calendario {
 
                         // Mostrar calendario
                         initCalendario();
+                        initTradCalendario();
                         interfaceCalendario.mostrarUI();
 
                         // Para que o tamaño do calendario e a posición se corresponda coa xanela que
@@ -411,6 +421,7 @@ public class Calendario {
                 
                 ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
 
+                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
                 interfaceLogin.repintarComponentes();
                 
             }
@@ -481,6 +492,7 @@ public class Calendario {
     
                                     // Mostrar calendario
                                     initCalendario();
+                                    initTradCalendario();
                                     interfaceCalendario.mostrarUI();
         
                                     // Para que o tamaño do calendario e a posición se corresponda coa xanela que

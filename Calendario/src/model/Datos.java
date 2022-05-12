@@ -2,7 +2,6 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URI;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,7 +34,8 @@ public class Datos {
     /**
      * Constructor estático para inicializar as datas
      */
-    static {
+
+    public static void init() {
 
         data = LocalDate.now();
         tempo = LocalTime.now();
@@ -45,6 +45,10 @@ public class Datos {
         if(idiomas.containsKey("Galego") ) {
 
             Datos.idomaSeleccionado = idiomas.get("Galego");
+
+        } else {
+
+            Datos.idomaSeleccionado = null;
 
         }
 
@@ -166,26 +170,34 @@ public class Datos {
         String significado;
         HashMap<String, String> trad;   // Hash map que corresponde o código co seu valor 
 
-        for(File f : carpetaIdiomas.listFiles() ) {
+        if(carpetaIdiomas.exists() ) {
 
-            lines = leerFichero(f.getAbsolutePath());
-            nomeIdioma = f.getName().substring(0, f.getName().length() - 4);
-            trad = new HashMap<>();
+            for(File f : carpetaIdiomas.listFiles() ) {
 
-            for(String s : lines ) {
-
-                if(!s.isEmpty() && !s.startsWith("--") ) {
-
-                    codigo = s.substring(0, 3);
-                    significado = s.substring(4, s.length());
-
-                    trad.put(codigo, significado);
-
+                lines = leerFichero(f.getAbsolutePath());
+                nomeIdioma = f.getName().substring(0, f.getName().length() - 4);
+                trad = new HashMap<>();
+    
+                for(String s : lines ) {
+    
+                    if(!s.isEmpty() && !s.startsWith("--") ) {
+    
+                        codigo = s.substring(0, 3);
+                        significado = s.substring(4, s.length());
+    
+                        trad.put(codigo, significado);
+    
+                    }
+    
                 }
-
+    
+                idiomas.put(nomeIdioma, trad);
+    
             }
 
-            idiomas.put(nomeIdioma, trad);
+        } else {
+
+            System.out.println("Non se atopou a carpeta de idiomas -> valores por defecto en galego");
 
         }
         
@@ -201,7 +213,7 @@ public class Datos {
 
         String out;
 
-        if(idomaSeleccionado.containsKey(codigo) ) {
+        if(idomaSeleccionado != null && idomaSeleccionado.containsKey(codigo) ) {
 
             out = idomaSeleccionado.get(codigo);
 
