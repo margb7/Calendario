@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.awt.CardLayout;
 
 import javax.swing.JButton;
@@ -38,10 +39,13 @@ import ui.SeleccionDataUI;
  */
 public class Calendario {
 
+    private static HashMap<String, HashMap<String, String>> idiomasDisponibles;
+    private static HashMap<String, String> idiomaSeleccionado;
     private static LocalDate dataCalendario;
     private static LocalDate primerDiaMes;
     private static Usuario usuario;
 
+    // Interfaces de usuario
     private static CalendarioUI interfaceCalendario;
     private static LoginUI interfaceLogin;
     private static SeleccionDataUI interfaceSeleccionData;
@@ -282,18 +286,6 @@ public class Calendario {
 
     }
 
-    public static void initTradCalendario() {
-
-        // NO afecta -> interfaceCalendario.getPanelCalendario().getComponentPopupMenu().setName("Crear");
-        interfaceCalendario.getFrame().setTitle(Datos.getTraduccion("C01", "Calendario"));
-        interfaceCalendario.getItemPublico().setText(Datos.getTraduccion("C03", "Público"));
-        interfaceCalendario.getItemPrivado().setText(Datos.getTraduccion("C05", "Privado"));
-        interfaceCalendario.getItemGrupal().setText(Datos.getTraduccion("C04", "Grupal"));
-
-        interfaceCalendario.getCambioModoCor().setText(Datos.getTraduccion("C02", "Cambiar tema de cor"));
-
-    }
-
     /**
      * Actualiza os contidos do calendario para reflexar correctamente o mes. Precísase o seu
      * uso cada vez que se fagan cambios no mes do calendario. 
@@ -329,8 +321,6 @@ public class Calendario {
 
     public static void initLogin() {
 
-        interfaceLogin.getFrame().setTitle(Datos.getTraduccion("L01", "Inicio Sesión"));
-
         initLoginCard();
         initRexistroCard();
 
@@ -340,13 +330,6 @@ public class Calendario {
      * Prepara a interfaz do login antes de mostrala.
      */
     private static void initLoginCard() {
-
-        interfaceLogin.getLogInCard().setName(Datos.getTraduccion("L02", "Log in"));
-        interfaceLogin.getUnameLogInLabel().setText(Datos.getTraduccion("L04", "Usuario"));
-        interfaceLogin.getPswdLoginLabel().setText(Datos.getTraduccion("L05", "Contrasinal"));
-        interfaceLogin.getSubmitLogIn().setText(Datos.getTraduccion("L06", "Log in"));
-        interfaceLogin.getSignUpButton().setText(Datos.getTraduccion("L07", "Crea unha nova conta"));
-        interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
 
         // Evento para cambiar ao modo rexistro dende o modo inicio de sesión
         interfaceLogin.getLogInButton().addActionListener(new ActionListener() {
@@ -385,7 +368,6 @@ public class Calendario {
 
                         // Mostrar calendario
                         initCalendario();
-                        initTradCalendario();
                         interfaceCalendario.mostrarUI();
 
                         // Para que o tamaño do calendario e a posición se corresponda coa xanela que
@@ -435,7 +417,8 @@ public class Calendario {
                 
                 LoginUI.setModoColor(LoginUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
                 
-                //LoginUI.repintarComponentes();
+                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+                interfaceLogin.repintarComponentes();
                 
             }
             
@@ -444,15 +427,6 @@ public class Calendario {
     }
 
     private static void initRexistroCard() {
-
-        interfaceLogin.getSignUpCard().setName(Datos.getTraduccion("L03", "Sign up"));
-        interfaceLogin.getUnameSignUpLabel().setText(Datos.getTraduccion("L04", "Usuario"));
-        interfaceLogin.getPswdSignUpLabel().setText(Datos.getTraduccion("L05", "Contrasinal"));
-        interfaceLogin.getConfirmPswdLabel().setText(Datos.getTraduccion("L10", "Confirma o contrasinal"));
-        interfaceLogin.getSubmitSignUp().setText(Datos.getTraduccion("L03", "Sign up"));
-        interfaceLogin.getLogInButton().setText(Datos.getTraduccion("L11", "Xa estás rexistrado?"));
-        interfaceLogin.getCambioModoCorSignUp().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
-
 
         // Evento para cambiar ao modo inicio de sesión dende o modo de rexistro
         interfaceLogin.getSignUpButton().addActionListener(new ActionListener() {
@@ -492,7 +466,6 @@ public class Calendario {
     
                                     // Mostrar calendario
                                     initCalendario();
-                                    initTradCalendario();
                                     interfaceCalendario.mostrarUI();
         
                                     // Para que o tamaño do calendario e a posición se corresponda coa xanela que

@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import model.Datos;
+
 public class LoginUI extends ElementoUI {
 
     private JFrame frame;
@@ -80,51 +82,16 @@ public class LoginUI extends ElementoUI {
         return usernameLogIn;
     }
 
-    /**
-     * @return the unameLogInLabel
-     */
-    public JLabel getUnameLogInLabel() {
-        return unameLogInLabel;
-    }
-
-    /**
-     * @return the unameSignUpLabel
-     */
-    public JLabel getUnameSignUpLabel() {
-        return unameSignUpLabel;
-    }
-
     public JPasswordField getConfirmPassword() {
         return confirmPassword;
-    }
-
-    /**
-     * @return the confirmPswdLabel
-     */
-    public JLabel getConfirmPswdLabel() {
-        return confirmPswdLabel;
     }
 
     public JPasswordField getPasswordLogin() {
         return passwordLogin;
     }
 
-    /**
-     * @return the pswdLoginLabel
-     */
-    public JLabel getPswdLoginLabel() {
-        return pswdLoginLabel;
-    }
-
     public JPasswordField getPasswordSignUp() {
         return passwordSignUp;
-    }
-
-    /**
-     * @return the pswdSignUpLabel
-     */
-    public JLabel getPswdSignUpLabel() {
-        return pswdSignUpLabel;
     }
 
     public JButton getSubmitLogIn() {
@@ -160,8 +127,8 @@ public class LoginUI extends ElementoUI {
         frame.add(logInCard);
         frame.add(signUpCard);
 
-        logInCard.setBackground(modoColor.getFondo());
-        signUpCard.setBackground(modoColor.getFondo());
+        actualizarTraduccions();
+        repintarComponentes();
 
     }
 
@@ -174,13 +141,11 @@ public class LoginUI extends ElementoUI {
 
         unameLogInLabel = new JLabel();
         unameLogInLabel.setLabelFor(usernameLogIn);
-        unameLogInLabel.setForeground(modoColor.getTexto());
 
         passwordLogin = new JPasswordField(15);
 
         pswdLoginLabel = new JLabel();
         pswdLoginLabel.setLabelFor(passwordLogin);
-        pswdLoginLabel.setForeground(modoColor.getTexto());
 
         submitLogIn = new JButton();
 
@@ -229,13 +194,11 @@ public class LoginUI extends ElementoUI {
 
         unameSignUpLabel = new JLabel();
         unameSignUpLabel.setLabelFor(usernameSignUp);
-        unameSignUpLabel.setForeground(modoColor.getTexto());
 
         passwordSignUp = new JPasswordField(15);
 
         pswdSignUpLabel = new JLabel();
         pswdSignUpLabel.setLabelFor(passwordSignUp);
-        passwordSignUp.setForeground(modoColor.getTexto());
 
         confirmPassword = new JPasswordField(15);
         confirmPswdLabel = new JLabel();
@@ -284,6 +247,30 @@ public class LoginUI extends ElementoUI {
         gbc.gridx = 0;
         gbc.gridy = 5;
         signUpCard.add(cambioModoCorSignUp, gbc);
+
+    }
+
+    @Override
+    public void actualizarTraduccions() {
+        
+        frame.setTitle(Datos.getTraduccion("L01", "Inicio Sesión"));
+
+        // Para login
+        logInCard.setName(Datos.getTraduccion("L02", "Log in"));
+        unameLogInLabel.setText(Datos.getTraduccion("L04", "Usuario"));
+        pswdLoginLabel.setText(Datos.getTraduccion("L05", "Contrasinal"));
+        submitLogIn.setText(Datos.getTraduccion("L06", "Log in"));
+        signUpButton.setText(Datos.getTraduccion("L07", "Crea unha nova conta"));
+        cambioModoCorLogIn.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+
+        // Para rexistro
+        signUpCard.setName(Datos.getTraduccion("L03", "Sign up"));
+        unameSignUpLabel.setText(Datos.getTraduccion("L04", "Usuario"));
+        pswdSignUpLabel.setText(Datos.getTraduccion("L05", "Contrasinal"));
+        confirmPswdLabel.setText(Datos.getTraduccion("L10", "Confirma o contrasinal"));
+        submitSignUp.setText(Datos.getTraduccion("L03", "Sign up"));
+        logInButton.setText(Datos.getTraduccion("L11", "Xa estás rexistrado?"));
+        cambioModoCorSignUp.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
 
     }
 
