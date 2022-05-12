@@ -27,6 +27,7 @@ import model.Evento;
 import model.Usuario;
 
 import ui.CalendarioUI;
+import ui.CreacionEventoPrivadoUI;
 import ui.ElementoUI;
 import ui.ErrorUI;
 import ui.LoginUI;
@@ -46,6 +47,7 @@ public class Calendario {
     private static LoginUI interfaceLogin;
     private static SeleccionDataUI interfaceSeleccionData;
     private static ErrorUI interfaceErro;
+    private static CreacionEventoPrivadoUI interfaceCreacionEventoPrivado;
 
     /**
      * @param args the command line arguments
@@ -71,6 +73,7 @@ public class Calendario {
         interfaceLogin = new LoginUI();
         interfaceSeleccionData = new SeleccionDataUI();
         interfaceErro = new ErrorUI();
+        interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
 
         initSeleccionData();
         initLogin();
@@ -249,7 +252,7 @@ public class Calendario {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                System.out.println(e.getActionCommand());
+                pedirDatosEventoPrivado(interfaceCalendario.getFrame());
                 
             }
 
@@ -592,6 +595,30 @@ public class Calendario {
         });
 
         interfaceSeleccionData.mostrarUI(owner);
+
+    }
+
+    public static void pedirDatosEventoPrivado(JFrame owner) {
+
+        interfaceCreacionEventoPrivado.getDialogoCreacion().addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+                owner.setEnabled(true);
+                
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+                owner.setEnabled(false);
+
+            }
+
+        });
+
+        interfaceCreacionEventoPrivado.mostrarUI(owner);
 
     }
     

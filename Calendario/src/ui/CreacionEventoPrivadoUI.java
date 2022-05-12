@@ -24,6 +24,10 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
     }
 
+    public JDialog getDialogoCreacion() {
+        return dialogoCreacion;
+    }
+
     public void initCreacionEvento() {
 
         JDialog dialogoCreacion = new JDialog();
@@ -38,10 +42,16 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
         horaEventoValor = new JSpinner(new SpinnerDateModel());
         horaEventoValor.setEditor(new JSpinner.DateEditor(horaEventoValor, "HH:mm"));
 
+        crearEventoButton = new JButton("Crear");
+
+        cancelarButton = new JButton("Cancelar");
+
         dialogoCreacion.add(nombreEventoLabel);
         dialogoCreacion.add(nombreEventoTexto);
         dialogoCreacion.add(horaEventoLabel);
         dialogoCreacion.add(horaEventoValor);
+        dialogoCreacion.add(crearEventoButton);
+        dialogoCreacion.add(cancelarButton);
 
     }
 
