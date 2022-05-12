@@ -328,6 +328,11 @@ public class CalendarioUI extends ElementoUI {
         textoMes.setForeground(modoColor.getTextoResalte());
         textoMes.setBackground(modoColor.getFondo());
 
+        textoDia.setForeground(modoColor.getTextoResalte());
+
+        listaEventos.setBackground(modoColor.getFondo());
+        listaEventos.setForeground(modoColor.getTexto());
+
         for (byte i = 0; i < 7; i++) {//engade cada etiqueta na posición que lle corresponde
             gbc.gridx = i;
 
@@ -339,18 +344,7 @@ public class CalendarioUI extends ElementoUI {
         }
 
         actualizarCalendario();
-        /*
-        JPanel panelContido;
-        JPanel panelCalendario;
-        JButton textoMes;
-        JLabel textoDia;
-        JButton[] celdasDias;
-        JButton avanzarMes;
-        JButton retrocederMes;
-        JMenuItem itemPublico;
-        JMenuItem itemPrivado;
-        JMenuItem itemGrupal;
-        */
+        
 
     }
 }
