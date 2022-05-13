@@ -1,6 +1,6 @@
 package utilidades;
 
-import model.Datos;
+import calendario.Calendario;
 
 /**
  * Clase para xestionar os nomes dos días usados no calendario
@@ -56,25 +56,25 @@ public enum Dia {
         switch(num) {
 
             case 1:
-                nome = Datos.getTraduccion("D01", "Luns");
+                nome = Calendario.getTraduccion("D01", "Luns");
             break;
             case 2:
-                nome = Datos.getTraduccion("D03", "Martes");
+                nome = Calendario.getTraduccion("D03", "Martes");
             break;
             case 3:
-                nome = Datos.getTraduccion("D05", "Mércores");
+                nome = Calendario.getTraduccion("D05", "Mércores");
             break;
             case 4:
-                nome = Datos.getTraduccion("D07", "Xoves");
+                nome = Calendario.getTraduccion("D07", "Xoves");
             break;
             case 5:
-                nome = Datos.getTraduccion("D09", "Venres");
+                nome = Calendario.getTraduccion("D09", "Venres");
             break;
             case 6:
-                nome = Datos.getTraduccion("D11", "Sábado");
+                nome = Calendario.getTraduccion("D11", "Sábado");
             break;
             default:
-                nome = Datos.getTraduccion("D13", "Domingo");
+                nome = Calendario.getTraduccion("D13", "Domingo");
             break;
 
         }
@@ -93,25 +93,25 @@ public enum Dia {
         switch(num) {
 
             case 1:
-                nomeCurto = Datos.getTraduccion("D02", "Lu.");
+                nomeCurto = Calendario.getTraduccion("D02", "Lu.");
             break;
             case 2:
-                nomeCurto = Datos.getTraduccion("D04", "Ma.");
+                nomeCurto = Calendario.getTraduccion("D04", "Ma.");
             break;
             case 3:
-                nomeCurto = Datos.getTraduccion("D06", "Mé.");
+                nomeCurto = Calendario.getTraduccion("D06", "Mé.");
             break;
             case 4:
-                nomeCurto = Datos.getTraduccion("D08", "Xo.");
+                nomeCurto = Calendario.getTraduccion("D08", "Xo.");
             break;
             case 5:
-                nomeCurto = Datos.getTraduccion("D10", "Ve.");
+                nomeCurto = Calendario.getTraduccion("D10", "Ve.");
             break;
             case 6:
-                nomeCurto = Datos.getTraduccion("D12", "Sá.");
+                nomeCurto = Calendario.getTraduccion("D12", "Sá.");
             break;
             default:
-                nomeCurto = Datos.getTraduccion("D14", "Do.");
+                nomeCurto = Calendario.getTraduccion("D14", "Do.");
             break;
 
         }

@@ -23,8 +23,6 @@ public class Datos {
     private static final String CARPETA_IDIOMAS = "Idiomas";
     private static LocalDate data;
     private static LocalTime tempo;
-    private static HashMap<String, String> idomaSeleccionado; 
-    private static HashMap<String, HashMap<String, String>> idiomas;
 
     /**
      * Constructor privado para evitar instancias
@@ -39,38 +37,6 @@ public class Datos {
 
         data = LocalDate.now();
         tempo = LocalTime.now();
-        idiomas = new HashMap<>();
-        cargarIdiomas();
-        
-        if(idiomas.containsKey("Galego") ) {
-
-            Datos.idomaSeleccionado = idiomas.get("Galego");
-
-        } else {
-
-            Datos.idomaSeleccionado = null;
-
-        }
-
-    }
-
-    /**
-     * @return the idiomas
-     */
-    public static HashMap<String, HashMap<String, String>> getIdiomas() {
-        return idiomas;
-    }
-
-    /**
-     * @param idomaSeleccionado the idomaSeleccionado to set
-     */
-    public static void setIdomaSeleccionado(String idioma) {
-        
-        if(idiomas.containsKey(idioma) ) {
-
-            Datos.idomaSeleccionado = idiomas.get(idioma);
-
-        }
 
     }
 
@@ -161,14 +127,17 @@ public class Datos {
     /**
      * Carga os idiomas da carpeta de idiomas e os garda para o seu uso.
      */
-    public static void cargarIdiomas() {
+    public static HashMap<String, HashMap<String, String>> cargarIdiomas() {
 
         File carpetaIdiomas = new File(CARPETA_IDIOMAS);
         String[] lines;
         String nomeIdioma;  // O nome de cada idioma correspóndese co nome do ficheiro sen a extensión ".txt"
         String codigo;
         String significado;
-        HashMap<String, String> trad;   // Hash map que corresponde o código co seu valor 
+        HashMap<String, String> trad;   // Hash map que corresponde o código co seu valor  
+        HashMap<String, HashMap<String, String>> idiomas;
+
+        idiomas = new HashMap<>();
 
         if(carpetaIdiomas.exists() ) {
 
@@ -201,29 +170,7 @@ public class Datos {
 
         }
         
-    }
-
-    /**
-     * Devolve o valor no idioma seleccionado para un valor de texto do programa.
-     * @param codigo o código da traducción
-     * @param valorPorDefecto o valor no caso de non atopar a traducción.
-     * @return a cadea co valor de texto que corresponde.
-     */
-    public static String getTraduccion(String codigo, String valorPorDefecto ) {
-
-        String out;
-
-        if(idomaSeleccionado != null && idomaSeleccionado.containsKey(codigo) ) {
-
-            out = idomaSeleccionado.get(codigo);
-
-        } else {
-
-            out = valorPorDefecto;
-
-        }
-
-        return out;
+        return idiomas;
     }
 
     public static String[] leerFichero(String path ) {

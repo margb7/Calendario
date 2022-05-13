@@ -57,8 +57,9 @@ public class Calendario {
     public static void main(String[] args) {
 
         Datos.init();
+        idiomasDisponibles = Datos.cargarIdiomas();
 
-        Datos.setIdomaSeleccionado("Castellano");
+        setIdomaSeleccionado("Castellano");
 
         // Tema de color para todos os elementos
         ElementoUI.setModoColor(ModoColorUI.MODO_CLARO);
@@ -77,7 +78,6 @@ public class Calendario {
         interfaceErro = new ErrorUI();
 
         initSeleccionData();
-        initTradSeleccionData();
         initLogin();
         
         // Mostrar o login
@@ -87,6 +87,23 @@ public class Calendario {
         
         interfaceLogin.getFrame().setLocation((tool.getScreenSize().width - interfaceLogin.getFrame().getWidth()) / 2, (tool.getScreenSize().height - interfaceLogin.getFrame().getHeight() ) / 2 );
         
+    }
+
+    public static HashMap<String, HashMap<String, String>> getIdiomasDisponibles() {
+        return idiomasDisponibles;
+    }
+
+    /**
+     * @param idomaSeleccionado the idomaSeleccionado to set
+     */
+    public static void setIdomaSeleccionado(String idioma) {
+        
+        if(idiomasDisponibles.containsKey(idioma) ) {
+
+            Calendario.idiomaSeleccionado = idiomasDisponibles.get(idioma);
+
+        }
+
     }
 
     private static void initSeleccionData() {
@@ -117,14 +134,6 @@ public class Calendario {
             }
                     
         });
-
-    }
-
-    private static void initTradSeleccionData() {
-
-        interfaceSeleccionData.getSeleccionData().setTitle(Datos.getTraduccion("S01", "Selecciona unha data"));
-        interfaceSeleccionData.getDe().setText(Datos.getTraduccion("S02", "de"));
-        interfaceSeleccionData.getOk().setText(Datos.getTraduccion("S03", "Ok"));
 
     }
 
@@ -378,7 +387,7 @@ public class Calendario {
 
                     } else {        // Usuario existe -> pero non é a contrasinal correcta
 
-                        mostrarErro(interfaceLogin.getFrame(), Datos.getTraduccion("E01", "Credenciais incorrectas"));
+                        mostrarErro(interfaceLogin.getFrame(), getTraduccion("E01", "Credenciais incorrectas"));
                         interfaceLogin.getPasswordLogin().setText("");
                         interfaceLogin.getUsernameLogIn().setText("");
 
@@ -386,7 +395,7 @@ public class Calendario {
 
                 } catch(UsuarioNonAtopadoException ex ) {        // Non existe o usuario 
 
-                    mostrarErro(interfaceLogin.getFrame(), Datos.getTraduccion("E02", "O usuario non está rexistrado"));
+                    mostrarErro(interfaceLogin.getFrame(), getTraduccion("E02", "O usuario non está rexistrado"));
                     interfaceLogin.getPasswordLogin().setText("");
                     interfaceLogin.getUsernameLogIn().setText("");
 
@@ -403,7 +412,7 @@ public class Calendario {
                 
                 ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
 
-                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? getTraduccion("L08", "Modo escuro") : getTraduccion("L09", "Modo claro"));
                 interfaceLogin.repintarComponentes();
                 
             }
@@ -417,7 +426,7 @@ public class Calendario {
                 
                 LoginUI.setModoColor(LoginUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
                 
-                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? getTraduccion("L08", "Modo escuro") : getTraduccion("L09", "Modo claro"));
                 interfaceLogin.repintarComponentes();
                 
             }
@@ -481,7 +490,7 @@ public class Calendario {
     
                             } else {
     
-                                mostrarErro(interfaceLogin.getFrame(), Datos.getTraduccion("E03", "A contrasinal non é válida"));  // TODO : explicar que requerimentos fan falta
+                                mostrarErro(interfaceLogin.getFrame(), getTraduccion("E03", "A contrasinal non é válida"));  // TODO : explicar que requerimentos fan falta
                                 interfaceLogin.getConfirmPassword().setText("");
                                 interfaceLogin.getPasswordSignUp().setText("");
                                 
@@ -489,7 +498,7 @@ public class Calendario {
 
                         } else {
 
-                            mostrarErro(interfaceLogin.getFrame(), Datos.getTraduccion("E04", "Nome de usuario non válido"));
+                            mostrarErro(interfaceLogin.getFrame(), getTraduccion("E04", "Nome de usuario non válido"));
                             interfaceLogin.getConfirmPassword().setText("");
                             interfaceLogin.getPasswordSignUp().setText("");
                             interfaceLogin.getUsernameSignUp().setText("");
@@ -498,7 +507,7 @@ public class Calendario {
 
                     } else {    // Rexistro incorrecto (a contrasinal e a confirmación non concordan)
 
-                        mostrarErro(interfaceLogin.getFrame(), Datos.getTraduccion("E05", "As contrasinais non coinciden"));
+                        mostrarErro(interfaceLogin.getFrame(), getTraduccion("E05", "As contrasinais non coinciden"));
                         interfaceLogin.getConfirmPassword().setText("");
                         interfaceLogin.getPasswordSignUp().setText("");
 
@@ -506,7 +515,7 @@ public class Calendario {
 
                 } else { // Usuario previamente rexisrado
 
-                    mostrarErro(interfaceLogin.getFrame(), Datos.getTraduccion("E06", "Usuario xa rexistrado"));
+                    mostrarErro(interfaceLogin.getFrame(), getTraduccion("E06", "Usuario xa rexistrado"));
                     interfaceLogin.getConfirmPassword().setText("");
                     interfaceLogin.getPasswordSignUp().setText("");
                     interfaceLogin.getUsernameSignUp().setText("");
@@ -527,7 +536,6 @@ public class Calendario {
      */
     public static void mostrarErro(JFrame owner, String str ) {
 
-        interfaceErro.getDialog().setTitle(Datos.getTraduccion("E07", "Erro"));
         interfaceErro.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         interfaceErro.getLabel().setText(str);
         interfaceErro.getDialog().add(interfaceErro.getLabel());
@@ -554,6 +562,29 @@ public class Calendario {
 
         interfaceErro.mostrarUI(owner);
 
+    }
+
+    /**
+     * Devolve o valor no idioma seleccionado para un valor de texto do programa.
+     * @param codigo o código da traducción
+     * @param valorPorDefecto o valor no caso de non atopar a traducción.
+     * @return a cadea co valor de texto que corresponde.
+     */
+    public static String getTraduccion(String codigo, String valorPorDefecto ) {
+
+        String out;
+
+        if(idiomaSeleccionado != null && idiomaSeleccionado.containsKey(codigo) ) {
+
+            out = idiomaSeleccionado.get(codigo);
+
+        } else {
+
+            out = valorPorDefecto;
+
+        }
+
+        return out;
     }
 
     public static void pedirData(JFrame owner ) {

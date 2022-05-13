@@ -1,5 +1,6 @@
 package utilidades;
 
+import calendario.Calendario;
 import model.Datos;
 
 public enum Mes {
@@ -46,40 +47,40 @@ public enum Mes {
         switch(num) {
 
             case 1:
-                nome = Datos.getTraduccion("M01", "Xaneiro");
+                nome = Calendario.getTraduccion("M01", "Xaneiro");
             break;
             case 2:
-                nome = Datos.getTraduccion("M02", "Febreiro");
+                nome = Calendario.getTraduccion("M02", "Febreiro");
             break;
             case 3:
-                nome = Datos.getTraduccion("M03", "Marzo");
+                nome = Calendario.getTraduccion("M03", "Marzo");
             break;
             case 4:
-                nome = Datos.getTraduccion("M04", "Abril");
+                nome = Calendario.getTraduccion("M04", "Abril");
             break;
             case 5:
-                nome = Datos.getTraduccion("M05", "Maio");
+                nome = Calendario.getTraduccion("M05", "Maio");
             break;
             case 6:
-                nome = Datos.getTraduccion("M06", "Xuño");
+                nome = Calendario.getTraduccion("M06", "Xuño");
             break;
             case 7:
-                nome = Datos.getTraduccion("M07", "Xullo");
+                nome = Calendario.getTraduccion("M07", "Xullo");
             break;
             case 8:
-                nome = Datos.getTraduccion("M08", "Agosto");
+                nome = Calendario.getTraduccion("M08", "Agosto");
             break;
             case 9:
-                nome = Datos.getTraduccion("M09", "Setembro");
+                nome = Calendario.getTraduccion("M09", "Setembro");
             break;
             case 10:
-                nome = Datos.getTraduccion("M10", "Outubro");
+                nome = Calendario.getTraduccion("M10", "Outubro");
             break;
             case 11:
-                nome = Datos.getTraduccion("M11", "Novembro");
+                nome = Calendario.getTraduccion("M11", "Novembro");
             break;
             default:
-                nome = Datos.getTraduccion("M12", "Decembro");
+                nome = Calendario.getTraduccion("M12", "Decembro");
             break;
 
         }

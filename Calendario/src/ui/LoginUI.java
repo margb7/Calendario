@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import model.Datos;
+import calendario.Calendario;
 
 public class LoginUI extends ElementoUI {
 
@@ -253,24 +253,24 @@ public class LoginUI extends ElementoUI {
     @Override
     public void actualizarTraduccions() {
         
-        frame.setTitle(Datos.getTraduccion("L01", "Inicio Sesión"));
+        frame.setTitle(Calendario.getTraduccion("L01", "Inicio Sesión"));
 
         // Para login
-        logInCard.setName(Datos.getTraduccion("L02", "Log in"));
-        unameLogInLabel.setText(Datos.getTraduccion("L04", "Usuario"));
-        pswdLoginLabel.setText(Datos.getTraduccion("L05", "Contrasinal"));
-        submitLogIn.setText(Datos.getTraduccion("L06", "Log in"));
-        signUpButton.setText(Datos.getTraduccion("L07", "Crea unha nova conta"));
-        cambioModoCorLogIn.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+        logInCard.setName(Calendario.getTraduccion("L02", "Log in"));
+        unameLogInLabel.setText(Calendario.getTraduccion("L04", "Usuario"));
+        pswdLoginLabel.setText(Calendario.getTraduccion("L05", "Contrasinal"));
+        submitLogIn.setText(Calendario.getTraduccion("L06", "Log in"));
+        signUpButton.setText(Calendario.getTraduccion("L07", "Crea unha nova conta"));
+        cambioModoCorLogIn.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
 
         // Para rexistro
-        signUpCard.setName(Datos.getTraduccion("L03", "Sign up"));
-        unameSignUpLabel.setText(Datos.getTraduccion("L04", "Usuario"));
-        pswdSignUpLabel.setText(Datos.getTraduccion("L05", "Contrasinal"));
-        confirmPswdLabel.setText(Datos.getTraduccion("L10", "Confirma o contrasinal"));
-        submitSignUp.setText(Datos.getTraduccion("L03", "Sign up"));
-        logInButton.setText(Datos.getTraduccion("L11", "Xa estás rexistrado?"));
-        cambioModoCorSignUp.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Datos.getTraduccion("L08", "Modo escuro") : Datos.getTraduccion("L09", "Modo claro"));
+        signUpCard.setName(Calendario.getTraduccion("L03", "Sign up"));
+        unameSignUpLabel.setText(Calendario.getTraduccion("L04", "Usuario"));
+        pswdSignUpLabel.setText(Calendario.getTraduccion("L05", "Contrasinal"));
+        confirmPswdLabel.setText(Calendario.getTraduccion("L10", "Confirma o contrasinal"));
+        submitSignUp.setText(Calendario.getTraduccion("L03", "Sign up"));
+        logInButton.setText(Calendario.getTraduccion("L11", "Xa estás rexistrado?"));
+        cambioModoCorSignUp.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
 
     }
 

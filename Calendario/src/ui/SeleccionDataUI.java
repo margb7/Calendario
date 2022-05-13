@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 
+import calendario.Calendario;
+
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Color;
@@ -91,6 +93,15 @@ public class SeleccionDataUI extends ElementoUI {
         gbc.insets = new Insets(10, 0, 0, 0);
         seleccionData.add(ok, gbc);
 
+    }
+
+    @Override
+    public void actualizarTraduccions() {
+
+        seleccionData.setTitle(Calendario.getTraduccion("S01", "Selecciona unha data"));
+        de.setText(Calendario.getTraduccion("S02", "de"));
+        ok.setText(Calendario.getTraduccion("S03", "Ok"));
+    
     }
     
     @Override

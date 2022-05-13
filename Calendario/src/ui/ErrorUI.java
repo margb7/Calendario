@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import calendario.Calendario;
+
 /**
  * Clase para mostrar nunha ventá os diferentes erros do programa
  */
@@ -17,7 +19,6 @@ public class ErrorUI extends ElementoUI {
 
         dialog = new JDialog();
         label = new JLabel("", JLabel.CENTER);
-        label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
         label.setForeground(modoColor.getTexto());
 
     }
@@ -36,6 +37,8 @@ public class ErrorUI extends ElementoUI {
     @Override
     void mostrarUI() {
 
+        label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
+        dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
         dialog.setVisible(true);
         dialog.getContentPane().setBackground(modoColor.getFondo());
         label.setForeground(modoColor.getTexto());
@@ -53,7 +56,8 @@ public class ErrorUI extends ElementoUI {
     public void mostrarUI(JFrame frame ) {
 
         int x,y;
-
+        
+        dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
         dialog.setVisible(true);
         dialog.getContentPane().setBackground(modoColor.getFondo());
         label.setForeground(modoColor.getTexto());

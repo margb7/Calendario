@@ -9,7 +9,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-import model.Datos;
+import calendario.Calendario;
+
 import model.Evento;
 
 import java.awt.Toolkit;
@@ -49,7 +50,6 @@ public class CalendarioUI extends ElementoUI {
 
         init();
         actualizarTraduccions();
-        repintarComponentes();
 
     }
 
@@ -117,7 +117,11 @@ public class CalendarioUI extends ElementoUI {
     }
     
     public void mostrarUI() {
-        
+    
+        // Ten como finalidade actualizar o color no caso de que se actualizase o tema de cor 
+        // despois de instanciar a clase
+        repintarComponentes();
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -205,7 +209,7 @@ public class CalendarioUI extends ElementoUI {
         gbc.gridx = 0;
         gbc.gridy = 0;
         
-        textoMes = new JButton("default");//nome de mes
+        textoMes = new JButton();//nome de mes
 
         textoMes.setFocusPainted(false);
         textoMes.setBorderPainted(false);
@@ -301,12 +305,12 @@ public class CalendarioUI extends ElementoUI {
     public void actualizarTraduccions() {
         
         // NO afecta -> interfaceCalendario.getPanelCalendario().getComponentPopupMenu().setName("Crear");
-        frame.setTitle(Datos.getTraduccion("C01", "Calendario"));
-        itemPublico.setText(Datos.getTraduccion("C03", "Público"));
-        itemPrivado.setText(Datos.getTraduccion("C05", "Privado"));
-        itemGrupal.setText(Datos.getTraduccion("C04", "Grupal"));
+        frame.setTitle(Calendario.getTraduccion("C01", "Calendario"));
+        itemPublico.setText(Calendario.getTraduccion("C03", "Público"));
+        itemPrivado.setText(Calendario.getTraduccion("C05", "Privado"));
+        itemGrupal.setText(Calendario.getTraduccion("C04", "Grupal"));
 
-        cambioModoCor.setText(Datos.getTraduccion("C02", "Cambiar tema de cor"));
+        cambioModoCor.setText(Calendario.getTraduccion("C02", "Cambiar tema de cor"));
 
     }
 
