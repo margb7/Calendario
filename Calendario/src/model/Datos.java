@@ -2,7 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -82,7 +82,7 @@ public class Datos {
      * @param user o usuario dos eventos.
      * @return a lista de eventos con todos os eventos ou unha lista vacía de eventos
      */
-    public static Evento[] getEventosDia(LocalDate dataEvento, Usuario user) {    // Añadir usuario como parámetro
+    public static Evento[] getEventosDia(LocalDate dataEvento, Usuario user) {
 
         Evento[] listaEventos = new Evento[0];
 
@@ -92,22 +92,7 @@ public class Datos {
 
         // TODO: gardar contido nun array de eventos
 
-        if(dataEvento.equals(LocalDate.of(2022, 6, 2)) ) {
-
-            listaEventos = new Evento[2];
-            listaEventos[0] = new EventoPrivado(0, "Vacaciones", data, tempo);
-            listaEventos[1] = new EventoPrivado(0, "examenes = null", data, tempo);
-
-        } else if(dataEvento.getMonthValue() == 12 && dataEvento.getDayOfMonth() == 25 ) {
-        
-            listaEventos = new Evento[1];
-            listaEventos[0] = new EventoPrivado(0, "Navidad", data, tempo);
-
-        } else {
-
-            listaEventos = getEventosPrivados(dataEvento, user);
-
-        }
+        listaEventos = getEventosPrivados(dataEvento, user);
 
         return listaEventos;
     }
@@ -166,7 +151,7 @@ public class Datos {
             ResultSet set = sentenciaLectura(statement);
 
             if (set.next() ) {
-                
+
                 out = true;
 
             }
@@ -280,16 +265,35 @@ public class Datos {
 
     private static Evento[] getEventosPrivados(LocalDate dia, Usuario user ) {
 
-        Evento[] out = null;
-        String[] consulta = null;
-        
-        consulta = leerFichero(Path.of("Test", "EjemplosEventos.txt").toString());    // = pedirDatosBBDD() 
+        Evento[] out = new Evento[0];
+        ArrayList<Evento> eventos = new ArrayList<>();
 
-        out = new Evento[consulta.length];
+        try {
 
-        for(int i = 0; i < consulta.length; i++ ) {
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, HORA FROM VISTA_EVENTOS_PRIVADOS WHERE CREADOR = ? AND DATA_EVENTO = ? ");
 
-            out[i] = EventoPrivado.parse(consulta[i]);
+            statement.setInt(1, user.getId());
+            statement.setString(2, dia.toString());
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if(set != null ) {
+
+                while(set.next() ) {
+
+                    eventos.add(new EventoPrivado(set.getInt(1), set.getString(2), dia, set.getTime(3).toLocalTime() ));
+    
+                }
+    
+                out = eventos.toArray(out);
+
+            }
+            
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter eventos privados");
+            e.printStackTrace();
 
         }
 

@@ -1,7 +1,9 @@
 ## Tabla con códigos de erro ##
 -- 45001 -> usuario non atopado
 
-
+##
+##  FUNCIÓNS DE LECTURA
+##
 
 DELIMITER $$
 
@@ -34,9 +36,11 @@ CREATE FUNCTION OBTER_NUMERO_USUARIO(NOM VARCHAR(20))
 
 
 
-# TODO: devolver a clave do evento creado 
-DROP PROCEDURE CREAR_EVENTO$$
 
+
+# TODO: devolver a clave do evento creado 
+
+/*
 ## Usado para crear un evento.
 ## @throws 45001 se non atopa o usuario polo nome proporcionado
 CREATE PROCEDURE CREAR_EVENTO(IN NOM_EV VARCHAR(25), IN DATA_EV DATE, IN HORA_EV TIME, IN NOM_USER VARCHAR(25), IN TIPO TINYINT, OUT OK BOOLEAN)
@@ -69,4 +73,4 @@ CREATE PROCEDURE CREAR_EVENTO(IN NOM_EV VARCHAR(25), IN DATA_EV DATE, IN HORA_EV
     
 	END$$
 
-DELIMITER ;
+DELIMITER ;*/
