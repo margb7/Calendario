@@ -106,6 +106,8 @@ public class SeleccionDataUI extends ElementoUI {
     
     @Override
     public void mostrarUI() {
+
+        actualizarTraduccions();
         
         seleccionData.setVisible(true);
         seleccionData.getContentPane().setBackground(modoColor.getFondo());
@@ -118,6 +120,8 @@ public class SeleccionDataUI extends ElementoUI {
     public void mostrarUI(JFrame frame ) {
 
         int x,y;
+
+        actualizarTraduccions();
 
         seleccionData.setVisible(true);
         seleccionData.getContentPane().setBackground(modoColor.getFondo());
