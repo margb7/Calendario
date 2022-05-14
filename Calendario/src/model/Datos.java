@@ -84,17 +84,24 @@ public class Datos {
      */
     public static Evento[] getEventosDia(LocalDate dataEvento, Usuario user) {
 
-        Evento[] listaEventos = new Evento[0];
+        Evento[] out = new Evento[0];
+        ArrayList<Evento> eventos = new ArrayList<>();
+        
+        getEventosPrivados(dataEvento, user).forEach(el -> {
 
-        // getEventosPublicos(dia);
-        // getEventosPrivados(dia,user);
-        // getEventosGrupales(dia, user);
+            eventos.add(el);
 
-        // TODO: gardar contido nun array de eventos
+        });
 
-        listaEventos = getEventosPrivados(dataEvento, user);
+        getEventosPublicos(dataEvento).forEach(el -> {
 
-        return listaEventos;
+            eventos.add(el);
+            
+        });
+
+        out = eventos.toArray(out);
+
+        return out;
     }
 
     /**
@@ -263,9 +270,8 @@ public class Datos {
         return out;
     }
 
-    private static Evento[] getEventosPrivados(LocalDate dia, Usuario user ) {
+    private static ArrayList<Evento> getEventosPrivados(LocalDate dia, Usuario user ) {
 
-        Evento[] out = new Evento[0];
         ArrayList<Evento> eventos = new ArrayList<>();
 
         try {
@@ -284,11 +290,8 @@ public class Datos {
                     eventos.add(new EventoPrivado(set.getInt(1), set.getString(2), dia, set.getTime(3).toLocalTime() ));
     
                 }
-    
-                out = eventos.toArray(out);
 
             }
-            
 
         } catch (SQLException e) {
 
@@ -297,27 +300,40 @@ public class Datos {
 
         }
 
-        return out;
+        return eventos;
     }
 
-    private static Evento[] getEventosPublicos(LocalDate dia ) {
+    private static ArrayList<Evento> getEventosPublicos(LocalDate dia ) {
 
-        Evento[] out = null;
-        String[] consulta = null;       // consulta = pedirDatos() 
-        
-        /*
-        
-        out = new String[consulta.length];
+        ArrayList<Evento> eventos = new ArrayList<>();
 
-        for(int i = 0; i < consulta.length; i++ ) {
+        try {
 
-            out[i] = EventoPublico.parse(consulta[i]);
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, HORA FROM VISTA_EVENTOS_PUBLICOS WHERE DATA_EVENTO = ? ");
+
+            statement.setString(1, dia.toString());
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if(set != null ) {
+
+                while(set.next() ) {
+
+                    eventos.add(new EventoPublico(set.getInt(1), set.getString(2), dia, set.getTime(3).toLocalTime() ));
+    
+                }
+
+            }
+            
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter eventos públicos");
+            e.printStackTrace();
 
         }
 
-        */
-
-        return out;
+        return eventos;
     }
 
     private static Evento[] getEventosGrupales(LocalDate dia, Usuario user ) {
