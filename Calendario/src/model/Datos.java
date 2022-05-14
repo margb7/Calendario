@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,6 +42,15 @@ public class Datos {
 
     public static void init() {
 
+        data = LocalDate.now();
+        tempo = LocalTime.now();
+
+        iniciarConexionBBDD();
+
+    }
+
+    public static void iniciarConexionBBDD() {
+
         try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -63,15 +74,6 @@ public class Datos {
 
         }
 
-        data = LocalDate.now();
-        tempo = LocalTime.now();
-
-    }
-
-    public static void iniciarConexionBBDD() {
-
-        
-
     }
 
     /**
@@ -90,7 +92,7 @@ public class Datos {
 
         // TODO: gardar contido nun array de eventos
 
-        /*if(dataEvento.equals(LocalDate.of(2022, Month.JUNE, 2)) ) {
+        if(dataEvento.equals(LocalDate.of(2022, 6, 2)) ) {
 
             listaEventos = new Evento[2];
             listaEventos[0] = new EventoPrivado(0, "Vacaciones", data, tempo);
@@ -105,7 +107,7 @@ public class Datos {
 
             listaEventos = getEventosPrivados(dataEvento, user);
 
-        }*/
+        }
 
         return listaEventos;
     }
@@ -119,14 +121,32 @@ public class Datos {
     public static Usuario getUsuarioPorNome(String nome ) throws UsuarioNonAtopadoException{
 
         Usuario out = null;
+        
+        try {
 
-        if(nome.equals("administrador") ) {
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_USUARIO, PASSWD FROM USUARIOS WHERE NOME = ? ");
 
-            out = new Usuario(0, "administrador", "renaido");  // TODO: valor temporal para probas
+            statement.setString(1, nome);
 
-        } else {
+            ResultSet set = sentenciaLectura(statement);
 
-            throw new UsuarioNonAtopadoException("Para o nome : " + nome);
+            if (set.next() ) {
+
+                int id = set.getInt(1);
+                String passwd = set.getString(2);
+
+                out = new Usuario(id, nome, passwd);
+
+            } else {
+
+                throw new UsuarioNonAtopadoException("Para o usuario con nome: " + nome);
+
+            }
+
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter o usuario por nome");
 
         }
 
@@ -137,7 +157,25 @@ public class Datos {
 
         boolean out = false;
 
-        out = nome.equals("administrador");
+        try {
+
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_USUARIO FROM USUARIOS WHERE NOME = ? ");
+
+            statement.setString(1, nome);
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if (set.next() ) {
+                
+                out = true;
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para saber se o usuario está rexistrado");
+
+        }
 
         return out;
     } 
@@ -296,6 +334,24 @@ public class Datos {
         */
 
         return out;
+    }
+
+    public static ResultSet sentenciaLectura(PreparedStatement st) {
+
+        ResultSet out;
+
+        try {
+
+            out = st.executeQuery();
+
+        } catch (SQLException e) {
+            
+            out = null;
+
+        }
+
+        return out;
+
     }
 
 }

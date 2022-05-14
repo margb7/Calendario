@@ -57,6 +57,7 @@ public class ErrorUI extends ElementoUI {
 
         int x,y;
         
+        label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
         dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
         dialog.setVisible(true);
         dialog.getContentPane().setBackground(modoColor.getFondo());
