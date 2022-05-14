@@ -3,9 +3,12 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -24,6 +27,8 @@ public class Datos {
     private static LocalDate data;
     private static LocalTime tempo;
 
+    private static Connection conexionBase;
+
     /**
      * Constructor privado para evitar instancias
      */
@@ -35,8 +40,37 @@ public class Datos {
 
     public static void init() {
 
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            try {
+
+                conexionBase = DriverManager.getConnection("jdbc:mysql://localhost/calendario", "root", "root");
+
+            } catch (SQLException e) {
+
+                e.printStackTrace();
+                System.out.println("Non se puido conectar coa base de datos");
+                
+                conexionBase = null;
+
+            }
+            
+        } catch (ClassNotFoundException e) {
+            
+            System.out.println("Non se puido atopar o driver de jdbc");
+
+        }
+
         data = LocalDate.now();
         tempo = LocalTime.now();
+
+    }
+
+    public static void iniciarConexionBBDD() {
+
+        
 
     }
 
@@ -56,7 +90,7 @@ public class Datos {
 
         // TODO: gardar contido nun array de eventos
 
-        if(dataEvento.equals(LocalDate.of(2022, Month.JUNE, 2)) ) {
+        /*if(dataEvento.equals(LocalDate.of(2022, Month.JUNE, 2)) ) {
 
             listaEventos = new Evento[2];
             listaEventos[0] = new EventoPrivado(0, "Vacaciones", data, tempo);
@@ -71,7 +105,7 @@ public class Datos {
 
             listaEventos = getEventosPrivados(dataEvento, user);
 
-        }
+        }*/
 
         return listaEventos;
     }
