@@ -61,7 +61,6 @@ public class Datos {
 
             } catch (SQLException e) {
 
-                e.printStackTrace();
                 System.out.println("Non se puido conectar coa base de datos");
                 
                 conexionBase = null;
@@ -71,9 +70,14 @@ public class Datos {
         } catch (ClassNotFoundException e) {
             
             System.out.println("Non se puido atopar o driver de jdbc");
+            conexionBase = null;
 
         }
 
+    }
+
+    public static Connection getConexionBase() {
+        return conexionBase;
     }
 
     /**
@@ -94,6 +98,12 @@ public class Datos {
         });
 
         getEventosPublicos(dataEvento).forEach(el -> {
+
+            eventos.add(el);
+            
+        });
+
+        getEventosGrupales(dataEvento, user).forEach(el -> {
 
             eventos.add(el);
             
@@ -287,7 +297,7 @@ public class Datos {
 
                 while(set.next() ) {
 
-                    eventos.add(new EventoPrivado(set.getInt(1), set.getString(2), dia, set.getTime(3).toLocalTime() ));
+                    eventos.add(new EventoPrivado(set.getInt(1), set.getString(2), user.getId(), dia, set.getTime(3).toLocalTime() ));
     
                 }
 
@@ -309,7 +319,7 @@ public class Datos {
 
         try {
 
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, HORA FROM VISTA_EVENTOS_PUBLICOS WHERE DATA_EVENTO = ? ");
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, CREADOR, HORA FROM VISTA_EVENTOS_PUBLICOS WHERE DATA_EVENTO = ? ");
 
             statement.setString(1, dia.toString());
 
@@ -319,7 +329,7 @@ public class Datos {
 
                 while(set.next() ) {
 
-                    eventos.add(new EventoPublico(set.getInt(1), set.getString(2), dia, set.getTime(3).toLocalTime() ));
+                    eventos.add(new EventoPublico(set.getInt(1), set.getString(2), set.getInt(3), dia, set.getTime(4).toLocalTime() ));
     
                 }
 
@@ -336,24 +346,38 @@ public class Datos {
         return eventos;
     }
 
-    private static Evento[] getEventosGrupales(LocalDate dia, Usuario user ) {
+    private static ArrayList<Evento> getEventosGrupales(LocalDate dia, Usuario user ) {
 
-        Evento[] out = null;
-        String[] consulta = null;       // consulta = pedirDatos() 
-        
-        /*
-        
-        out = new String[consulta.length];
+        ArrayList<Evento> eventos = new ArrayList<>();
 
-        for(int i = 0; i < consulta.length; i++ ) {
+        try {
 
-            out[i] = EventoGrupal.parse(consulta[i]);
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, CREADOR, HORA FROM VISTA_EVENTOS_GRUPAIS WHERE USUARIO = ? AND DATA_EVENTO = ?");
+
+            statement.setInt(1, user.getId());
+            statement.setString(2, dia.toString());
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if(set != null ) {
+
+                while(set.next() ) {
+
+                    eventos.add(new EventoGrupal(set.getInt(1), set.getString(2), set.getInt(3), dia, set.getTime(4).toLocalTime() ));
+    
+                }
+
+            }
+            
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter eventos grupais");
+            e.printStackTrace();
 
         }
 
-        */
-
-        return out;
+        return eventos;
     }
 
     public static ResultSet sentenciaLectura(PreparedStatement st) {

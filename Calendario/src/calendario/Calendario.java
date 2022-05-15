@@ -78,14 +78,32 @@ public class Calendario {
         interfaceErro = new ErrorUI();
 
         initSeleccionData();
-        initLogin();
-        
-        // Mostrar o login
-        interfaceLogin.mostrarUI();
-        
+
         Toolkit tool = Toolkit.getDefaultToolkit();
+            
+        // TODO: Temporal -> solo para dar un aviso 
+        if(Datos.getConexionBase() == null ) {
+
+            interfaceErro.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            interfaceErro.getLabel().setText("Non se puido conectar coa base da datos");
+            interfaceErro.getDialog().add(interfaceErro.getLabel());
+            interfaceErro.mostrarUI();
+
+            interfaceErro.getDialog().setLocation((tool.getScreenSize().width - interfaceLogin.getFrame().getWidth()) / 2, (tool.getScreenSize().height - interfaceLogin.getFrame().getHeight() ) / 2 );
+
+        } else {
+
+            
+            initLogin();
+            
+            // Mostrar o login
+            interfaceLogin.mostrarUI();
+                        
+            interfaceLogin.getFrame().setLocation((tool.getScreenSize().width - interfaceLogin.getFrame().getWidth()) / 2, (tool.getScreenSize().height - interfaceLogin.getFrame().getHeight() ) / 2 );
         
-        interfaceLogin.getFrame().setLocation((tool.getScreenSize().width - interfaceLogin.getFrame().getWidth()) / 2, (tool.getScreenSize().height - interfaceLogin.getFrame().getHeight() ) / 2 );
+
+        }
+
         
     }
 

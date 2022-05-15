@@ -17,10 +17,20 @@ INSERT INTO EVENTOS(NOME, DATA_EVENTO, HORA, CREADOR) VALUES ("NAVIDAD", "2022-1
                                                     ("EVENTO 1", "2022-06-02", CURRENT_TIME(), @CLAVE1),
                                                     ("EVENTO 2", "2022-06-01", CURRENT_TIME(), @CLAVE2),
                                                     ("EVENTO 3", "2022-05-15", CURRENT_TIME(), @CLAVE2),
-                                                    ("EVENTO 4", "2022-05-22", CURRENT_TIME(), @CLAVE1);
+                                                    ("EVENTO 4", "2022-05-22", CURRENT_TIME(), @CLAVE1),
+                                                    ("Evento grupal", "2022-06-02", CURRENT_TIME(), @CLAVE1);
 
 
 ## TEMPORAL -> despois úsanse as funcions para crear eventos
+
+SELECT ID_EVENTO INTO @CLAVE_EVENTO 
+    FROM EVENTOS 
+    WHERE NOME = "Evento grupal";
+
+INSERT INTO EVENTOS_GRUPAIS(EVENTO) VALUES (@CLAVE_EVENTO);
+INSERT INTO GRUPAIS_USUARIOS(EVENTO_GRUPAL, USUARIO) VALUES (@CLAVE_EVENTO, @CLAVE1);
+INSERT INTO GRUPAIS_USUARIOS(EVENTO_GRUPAL, USUARIO) VALUES (@CLAVE_EVENTO, @CLAVE2);
+
 
 SELECT ID_EVENTO INTO @CLAVE_EVENTO 
     FROM EVENTOS 
