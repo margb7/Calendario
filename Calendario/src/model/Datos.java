@@ -2,7 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -182,15 +182,32 @@ public class Datos {
     public static Usuario rexistrarUsuario(String nome, String contrasinal ) throws UsuarioXaRexistradoException{
 
         Usuario out;
+        int id = -1;
 
         if(usuarioEstaRexistrado(nome) ) {
 
             throw new UsuarioXaRexistradoException("Para o usuario: " + nome);
 
+        } else {
+
+            try {
+
+                CallableStatement cs = conexionBase.prepareCall("CALL REXISTRAR_USUARIO(?, ?)");
+                ResultSet rs;
+
+                cs.setString(1, nome);
+                cs.setString(2, contrasinal);
+
+                cs.execute();
+
+            } catch(SQLException e) {
+                
+                System.out.println("Erro na consulta para rexistrar usuario");
+
+            }
         }
 
-        // TODO: id proporcionado pola base de datos
-        out = new Usuario(0, nome, contrasinal);
+        out = new Usuario(id, nome, contrasinal);
 
         return out;
     }

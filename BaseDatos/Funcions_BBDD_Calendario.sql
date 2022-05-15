@@ -7,8 +7,8 @@
 
 DELIMITER $$
 
-USE BBDD_CALENDARIO$$
-
+USE CALENDARIO$$
+/*
 DROP FUNCTION OBTER_NUMERO_USUARIO$$
 CREATE FUNCTION OBTER_NUMERO_USUARIO(NOM VARCHAR(20))
     RETURNS INT UNSIGNED
@@ -35,7 +35,7 @@ CREATE FUNCTION OBTER_NUMERO_USUARIO(NOM VARCHAR(20))
 	END$$
 
 
-
+*/
 
 
 # TODO: devolver a clave do evento creado 
@@ -72,5 +72,20 @@ CREATE PROCEDURE CREAR_EVENTO(IN NOM_EV VARCHAR(25), IN DATA_EV DATE, IN HORA_EV
         END CASE;
     
 	END$$
+*/
 
-DELIMITER ;*/
+## Rexistra un usuario e devolve a clave do novo usuario
+DROP PROCEDURE IF EXISTS REXISTRAR_USUARIO$$
+CREATE PROCEDURE REXISTRAR_USUARIO(IN NOME_USUARIO VARCHAR(20), IN PASSWD VARCHAR(30))
+    MODIFIES SQL DATA
+    BEGIN
+    
+        INSERT INTO USUARIOS(NOME, PASSWD) VALUES (NOME_USUARIO, PASSWD);
+        
+        ## TODO: como se puede devolver el valor de un procedimiento a java
+        
+    END$$
+    
+DELIMITER ;
+
+select * from usuarios;
