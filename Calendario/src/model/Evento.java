@@ -21,6 +21,22 @@ public abstract class Evento {
         
     }
 
+    public int getCreador() {
+        return creador;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
     @Override
     public String toString() {
         return nome;

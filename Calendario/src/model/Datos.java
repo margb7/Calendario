@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,8 +25,9 @@ import excepcions.UsuarioXaRexistradoException;
 public class Datos {
     
     private static final String CARPETA_IDIOMAS = "Idiomas";
-    private static LocalDate data;
-    private static LocalTime tempo;
+    private static final String CONEXION_BASE = "jdbc:mysql://localhost/calendario";
+    private static final String USUARIO_CONEXION = "root";
+    private static final String PASSWD_CONEXION = "root";
 
     private static Connection conexionBase;
 
@@ -42,14 +42,11 @@ public class Datos {
 
     public static void init() {
 
-        data = LocalDate.now();
-        tempo = LocalTime.now();
-
         iniciarConexionBBDD();
 
     }
 
-    public static void iniciarConexionBBDD() {
+    private static void iniciarConexionBBDD() {
 
         try {
 
@@ -57,7 +54,7 @@ public class Datos {
 
             try {
 
-                conexionBase = DriverManager.getConnection("jdbc:mysql://localhost/calendario", "root", "root");
+                conexionBase = DriverManager.getConnection(CONEXION_BASE, USUARIO_CONEXION, PASSWD_CONEXION);
 
             } catch (SQLException e) {
 
@@ -369,7 +366,6 @@ public class Datos {
 
             }
             
-
         } catch (SQLException e) {
 
             System.out.println("Error coa consulta para obter eventos grupais");

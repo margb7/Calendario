@@ -9,13 +9,4 @@ public class EventoGrupal extends Evento {
         super(id, nome, creador,data, tempo);
     }
 
-    public static EventoGrupal parse(String str) {
-
-        EventoGrupal out = null;
-
-
-
-        return out;
-    }
-
 }

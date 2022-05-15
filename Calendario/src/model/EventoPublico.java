@@ -9,12 +9,4 @@ public class EventoPublico extends Evento {
         super(id, nome, creador, data, tempo);
     }
 
-    public static EventoPublico parse(String str) {
-
-        EventoPublico out = null;
-
-
-
-        return out;
-    }
 }
