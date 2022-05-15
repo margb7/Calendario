@@ -179,6 +179,14 @@ public class Datos {
         return out;
     } 
 
+    /**
+     * Rexistra o usuario na base de datos. Se non se pode rexistrar este método devolverá un usuario
+     * co nome e contrasinal pasados como argumentos pero con id -1
+     * @param nome o nome do usuario a rexistrar. Se xa está rexistrado saltará unha excepciṕn
+     * @param contrasinal a contrasinal do usuario.
+     * @return un <code>Usuario</code> co nome e contrasinal especificados
+     * @throws UsuarioXaRexistradoException se o usuario xa está rexistrado
+     */
     public static Usuario rexistrarUsuario(String nome, String contrasinal ) throws UsuarioXaRexistradoException{
 
         Usuario out;
@@ -201,7 +209,7 @@ public class Datos {
                 cs.execute();
 
             } catch(SQLException e) {
-                
+
                 System.out.println("Erro na consulta para rexistrar usuario");
 
             }
