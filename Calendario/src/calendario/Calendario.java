@@ -59,7 +59,7 @@ public class Calendario {
         Datos.init();
         idiomasDisponibles = Datos.cargarIdiomas();
 
-        setIdomaSeleccionado("Castellano");
+        setIdomaSeleccionado("Galego");
 
         // Tema de color para todos os elementos
         ElementoUI.setModoColor(ModoColorUI.MODO_CLARO);

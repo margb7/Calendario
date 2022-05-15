@@ -29,6 +29,10 @@ public abstract class Evento {
         return data;
     }
 
+    public LocalTime getTempo() {
+        return tempo;
+    }
+
     public int getId() {
         return id;
     }

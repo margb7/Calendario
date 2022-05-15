@@ -201,8 +201,7 @@ public class Datos {
             try {
 
                 CallableStatement cs = conexionBase.prepareCall("CALL REXISTRAR_USUARIO(?, ?)");
-                ResultSet rs;
-
+                
                 cs.setString(1, nome);
                 cs.setString(2, contrasinal);
 

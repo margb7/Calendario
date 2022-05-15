@@ -1,78 +1,9 @@
 ## Tabla con códigos de erro ##
 -- 45001 -> usuario non atopado
 
-##
-##  FUNCIÓNS DE LECTURA
-##
-
 DELIMITER $$
 
 USE CALENDARIO$$
-/*
-DROP FUNCTION OBTER_NUMERO_USUARIO$$
-CREATE FUNCTION OBTER_NUMERO_USUARIO(NOM VARCHAR(20))
-    RETURNS INT UNSIGNED
-    READS SQL DATA
-    BEGIN
-    
-		DECLARE SAIDA INT UNSIGNED;
-        
-        SET SAIDA = (
-						SELECT ID_USUARIO
-							FROM USUARIOS
-                            WHERE NOMBRE = NOM
-					);
-                    
-		IF SAIDA = NULL
-        THEN
-        
-			SIGNAL SQLSTATE "45001" SET MESSAGE_TEXT = "NON SE ATOPOU O USUARIO";
-		
-        END IF;
-        
-        RETURN SAIDA;
-        
-	END$$
-
-
-*/
-
-
-# TODO: devolver a clave do evento creado 
-
-/*
-## Usado para crear un evento.
-## @throws 45001 se non atopa o usuario polo nome proporcionado
-CREATE PROCEDURE CREAR_EVENTO(IN NOM_EV VARCHAR(25), IN DATA_EV DATE, IN HORA_EV TIME, IN NOM_USER VARCHAR(25), IN TIPO TINYINT, OUT OK BOOLEAN)
-	MODIFIES SQL DATA
-    BEGIN
-
-        CASE TIPO
-			WHEN 1				-- Privado
-				THEN 
-					
-					-- Falta obter a clave do evento creado
-					INSERT INTO EVENTOS (NOME, DATA_EVENTO, HORA) VALUES (NOM_EV, DATA_EV, HORA_EV);
-					
-        
-			WHEN 2				-- Grupal
-				THEN
-        
-					-- Falta obter a clave do evento creado
-					INSERT INTO EVENTOS (NOME, DATA_EVENTO, HORA) VALUES (NOM_EV, DATA_EV, HORA_EV);
-					INSERT INTO EVENTOS_GRUPAIS (CLAVE_EVENTO, OBTER_NUMERO_USUARIO(NOM_USER));
-        
-			WHEN 3				-- Público
-				THEN
-                
-					-- Falta obter a clave do evento creado
-					INSERT INTO EVENTOS (NOME, DATA_EVENTO, HORA) VALUES (NOM_EV, DATA_EV, HORA_EV);
-					INSERT INTO EVENTOS_PUBLICOS (CLAVE_EVENTO, OBTER_NUMERO_USUARIO(NOM_USER));
-                
-        END CASE;
-    
-	END$$
-*/
 
 ## Rexistra un usuario e devolve a clave do novo usuario
 DROP PROCEDURE IF EXISTS REXISTRAR_USUARIO$$
@@ -86,6 +17,32 @@ CREATE PROCEDURE REXISTRAR_USUARIO(IN NOME_USUARIO VARCHAR(20), IN PASSWD VARCHA
         
     END$$
     
-DELIMITER ;
+DROP PROCEDURE IF EXISTS BORRAR_USUARIO$$
+CREATE PROCEDURE BORRAR_USUARIO(IN ID_USER INT UNSIGNED)
+    MODIFIES SQL DATA
+    BEGIN
+    
+        DELETE FROM USUARIOS
+            WHERE ID_USUARIO = ID_USER;
+    
+    END$$
 
-select * from usuarios;
+
+
+DROP PROCEDURE IF EXISTS CREAR_EVENTO_PUBLICO$$
+CREATE PROCEDURE CREAR_EVENTO_PUBLICO(IN NOME_EV VARCHAR(25), IN ID_CREAD INT UNSIGNED, IN DATA_EV DATE, IN HORA_EV TIME)
+    MODIFIES SQL DATA
+    BEGIN
+    
+        INSERT INTO EVENTOS(NOME, DATA_EVENTO, HORA, CREADOR) VALUES (NOME_EV, DATA_EV, HORA_EV, ID_CREAD);
+        
+        SELECT ID_EVENTO INTO @ID_EV
+            FROM EVENTOS
+            WHERE NOME = NOME_EV AND CREADOR = ID_CREAD;
+
+        INSERT INTO EVENTOS_PUBLICOS(EVENTO) VALUES (@ID_EV);
+        
+    END$$
+        
+        
+DELIMITER ;
