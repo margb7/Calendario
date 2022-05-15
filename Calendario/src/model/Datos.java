@@ -298,7 +298,7 @@ public class Datos {
 
         }
 
-        return out;
+        return lineas.toArray(out);
     }
 
     private static ArrayList<Evento> getEventosPrivados(LocalDate dia, Usuario user ) {
