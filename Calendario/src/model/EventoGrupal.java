@@ -9,4 +9,9 @@ public class EventoGrupal extends Evento {
         super(id, nome, creador,data, tempo);
     }
 
+    @Override
+    public String toString() {
+        return getNome() + " | G - creado por id : " + getCreador();
+    }
+
 }

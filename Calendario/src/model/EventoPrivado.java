@@ -12,4 +12,9 @@ public class EventoPrivado extends Evento {
         super(id, nome, creador, data, tempo);
     }
 
+    @Override
+    public String toString() {
+        return getNome() + " | Pr - creado por id : " + getCreador();
+    }
+
 }

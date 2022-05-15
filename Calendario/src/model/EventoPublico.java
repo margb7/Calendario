@@ -9,4 +9,9 @@ public class EventoPublico extends Evento {
         super(id, nome, creador, data, tempo);
     }
 
+    @Override
+    public String toString() {
+        return getNome() + " | Pú - creado por id : " + getCreador();
+    }
+
 }
