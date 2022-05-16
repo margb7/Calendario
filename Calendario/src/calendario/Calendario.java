@@ -1,25 +1,16 @@
 package calendario;
 
-import utilidades.Dia;
 import utilidades.Funciones;
-import utilidades.Mes;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.awt.CardLayout;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.SpinnerNumberModel;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Toolkit;
+import excepcions.CredenciaisIncorrectasException;
 import excepcions.UsuarioNonAtopadoException;
 import excepcions.UsuarioXaRexistradoException;
 
@@ -35,7 +26,7 @@ import ui.ModoColorUI;
 import ui.SeleccionDataUI;
 
 /**
- *  TODO: funciona como controlador
+ * Clase que contén o main do programa. Tamén actúa como controlador do programa
  */
 public class Calendario {
 
@@ -56,10 +47,10 @@ public class Calendario {
      */
     public static void main(String[] args) {
 
-        Datos.init();
+        
         idiomasDisponibles = Datos.cargarIdiomas();
 
-        setIdomaSeleccionado("Galego");
+        setIdomaSeleccionado("English");
 
         // Tema de color para todos os elementos
         ElementoUI.setModoColor(ModoColorUI.MODO_CLARO);
@@ -76,31 +67,19 @@ public class Calendario {
         interfaceLogin = new LoginUI();
         interfaceSeleccionData = new SeleccionDataUI();
         interfaceErro = new ErrorUI();
-
-        initSeleccionData();
-
-        Toolkit tool = Toolkit.getDefaultToolkit();
             
-        // TODO: Temporal -> solo para dar un aviso 
-        if(Datos.getConexionBase() == null ) {
+        if(Datos.iniciarConexionBBDD() ) {
 
-            interfaceErro.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            interfaceErro.getLabel().setText("Non se puido conectar coa base da datos");
-            interfaceErro.getDialog().add(interfaceErro.getLabel());
-            interfaceErro.mostrarUI();
-
-            interfaceErro.getDialog().setLocation((tool.getScreenSize().width - interfaceLogin.getFrame().getWidth()) / 2, (tool.getScreenSize().height - interfaceLogin.getFrame().getHeight() ) / 2 );
+            // Programa en modo normal
+            interfaceLogin.mostrarUI();
 
         } else {
+            
+            // Programa en modo limitado (mostra o calendario pero nada mais)
+            mostrarErro(getTraduccion("E08", "Non se puido conectar coa base da datos"));
+            setUsuario(new Usuario(-1, "Default", ""));     // So serve para cando non hai conexion
 
-            
-            initLogin();
-            
-            // Mostrar o login
-            interfaceLogin.mostrarUI();
-                        
-            interfaceLogin.getFrame().setLocation((tool.getScreenSize().width - interfaceLogin.getFrame().getWidth()) / 2, (tool.getScreenSize().height - interfaceLogin.getFrame().getHeight() ) / 2 );
-        
+            mostrarCalendario();
 
         }
 
@@ -109,6 +88,33 @@ public class Calendario {
 
     public static HashMap<String, HashMap<String, String>> getIdiomasDisponibles() {
         return idiomasDisponibles;
+    }
+
+    public static LocalDate getDataCalendario() {
+        return dataCalendario;
+    }
+
+    public static LocalDate getPrimerDiaMes() {
+        return primerDiaMes;
+    }
+
+    public static Usuario getUsuario() {
+        return usuario;
+    }
+
+    public static void setPrimerDiaMes(LocalDate primerDiaMes) {
+        Calendario.primerDiaMes = primerDiaMes;
+    }
+
+    public static void setUsuario(Usuario usuario) {
+        Calendario.usuario = usuario;
+    }
+
+    public static void setDataCalendario(LocalDate dataCalendario) {
+        Calendario.dataCalendario = dataCalendario;
+        Calendario.primerDiaMes = dataCalendario;
+
+        interfaceCalendario.actualizarCalendario();
     }
 
     /**
@@ -124,427 +130,73 @@ public class Calendario {
 
     }
 
-    private static void initSeleccionData() {
+    public static void avanzarMes() {
 
-        String[] lista = Mes.getListaMeses();
+        setDataCalendario(primerDiaMes.plusMonths(1));
 
-        interfaceSeleccionData.getAnos().setModel(new SpinnerNumberModel(dataCalendario.getYear(), 1980, dataCalendario.getYear() + 10, 1));
+    }
 
-        for(int i = 0; i < lista.length; i++ ){
+    public static void retrocederMes() {
 
-            interfaceSeleccionData.getMeses().addItem(lista[i]);
+        setDataCalendario(primerDiaMes.minusMonths(1));
+
+    }
+
+    public static Usuario logIn(String nome, String passwd ) throws CredenciaisIncorrectasException, UsuarioNonAtopadoException {
+
+        Usuario user = Datos.getUsuarioPorNome(nome);
+
+        if(!user.getContrasinal().equals(passwd) ) {     // Inicio de sesión correcto
+
+            throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_COINCIDE, "");
 
         }
 
-        interfaceSeleccionData.getMeses().setSelectedIndex(dataCalendario.getMonthValue() - 1);
-
-        interfaceSeleccionData.getOk().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                dataCalendario = LocalDate.of((int)interfaceSeleccionData.getAnos().getValue(), (int) interfaceSeleccionData.getMeses().getSelectedIndex() + 1, 1);
-                
-                interfaceSeleccionData.getSeleccionData().dispose();
-
-                actualizarCalendario();
-                
-            }
-                    
-        });
-
+        return user;
     }
 
-    /**
-     * Inicializa os atributos e os eventos da ventá do calendario antes de mostralo.
-     */
-    private static void initCalendario() {
+    public static Usuario rexistrarConta(String nome, String contrasinal, String confirmacion ) throws UsuarioXaRexistradoException, CredenciaisIncorrectasException{
 
-        JButton[] celdasDias = interfaceCalendario.getCeldasDias();
+        Usuario user;
 
-        // Botón (">") na dereita para avanzar o mes
-        interfaceCalendario.getAvanzarMes().addActionListener(new ActionListener() {
+        if(!Datos.usuarioEstaRexistrado(nome) ) {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                dataCalendario = dataCalendario.withDayOfMonth(1);
+            if(Funciones.nomeUsuarioValido(nome) ) {
 
-                actualizarCalendario();
+                if(Funciones.contrasinalValida(contrasinal) ) {
+
+                    if(contrasinal.equals(confirmacion) ) {
+
+                        user = Datos.rexistrarUsuario(nome, contrasinal);
+        
+                    } else {
+        
+                        throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_COINCIDE ,"A contrasinal e a confirmación non son correctas");
+        
+                    }
+
+                } else {
+
+                    throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_VALIDA, "A contrasinal non é válida");
+
+                }
+
+            } else {
+
+                throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.NOME_NON_VALIDO, "Nome de usuario non válido");
 
             }
 
-        });
+        } else {
 
-
-        // Botón ("<") na esquerda para retroceder o mes
-        interfaceCalendario.getRetrocederMes().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                dataCalendario = dataCalendario.withDayOfMonth(1).minusMonths(2);
-
-                actualizarCalendario();
-                
-            }
-
-        });
-
-        for(int i = 0; i < celdasDias.length; i++ ) {
-
-            celdasDias[i].addMouseListener(new MouseAdapter() {
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-
-                    // Engadir para cada dia do mes a capacidade de mostrar os eventos no panel lateral
-                    JButton boton = (JButton) e.getSource();
-
-                    // Uso do nome do botón para obter o día que representa
-                    LocalDate dataDia = LocalDate.parse(boton.getName());
-                    Evento[] listaEventos = Datos.getEventosDia(dataDia, usuario);
-                    String textoDia = Dia.values()[dataDia.getDayOfWeek().ordinal()].getNome() + " " + dataDia.getDayOfMonth() + " de " + Mes.values()[dataDia.getMonthValue() - 1].getNome();
-
-                    interfaceCalendario.getTextoDia().setText(textoDia);
-                    
-                    // Vaciar a lista para que non conteña eventos que non corresponden 
-                    interfaceCalendario.getListaEventos().setListData(new Evento[0]);
-
-                    if(listaEventos.length != 0 ) {
-
-                        interfaceCalendario.getListaEventos().setListData(listaEventos);
-
-                    }
-
-                    // Se o mes do día seleccionado non coincide co mes do calendario -> pásase a mostrar ese mes
-                    if(dataDia.getMonthValue() != primerDiaMes.getMonthValue() ) {
-
-                        dataCalendario = LocalDate.of(dataDia.getYear(), dataDia.getMonthValue(), 1);
-                        actualizarCalendario();
-
-                    }
-
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    
-                    JButton src = (JButton) e.getSource();
-                    
-                    src.setBorderPainted(true);
-                    
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    
-                    JButton src = (JButton) e.getSource();
-                    
-                    src.setBorderPainted(false);
-
-                }
-                
-            });
+            throw new UsuarioXaRexistradoException("Para o nome :" + nome);
 
         }
 
-        interfaceCalendario.getTextoMes().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                pedirData(interfaceCalendario.getFrame());
-
-            }
-
-            
-
-        });
-
-        //TODO implementar as accións dos ítems do menú contextual
-        interfaceCalendario.getItemGrupal().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                System.out.println(e.getActionCommand());
-                
-            }
-
-        });
-
-        interfaceCalendario.getItemPrivado().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                System.out.println(e.getActionCommand());
-                
-            }
-
-        });
-
-        interfaceCalendario.getItemPublico().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                System.out.println(e.getActionCommand());
-                
-            }
-
-        });
-                                                                            
-        interfaceCalendario.getCambioModoCor().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
-                
-                interfaceCalendario.repintarComponentes();
-                
-            }
-            
-        });
-
-        actualizarCalendario();
+        return user;
 
     }
 
-    /**
-     * Actualiza os contidos do calendario para reflexar correctamente o mes. Precísase o seu
-     * uso cada vez que se fagan cambios no mes do calendario. 
-     */
-    public static void actualizarCalendario() {
-
-        JButton[] celdasDias = interfaceCalendario.getCeldasDias();
-        String stringMes = Mes.values()[dataCalendario.getMonthValue() - 1] + ", " + dataCalendario.getYear();
-        
-        interfaceCalendario.getTextoMes().setText(stringMes);
-        
-
-        primerDiaMes = dataCalendario;
-
-        // data -> comeza no primer día do mes
-        int offset = dataCalendario.getDayOfWeek().ordinal();
-        dataCalendario = dataCalendario.minusDays(offset);
-
-        for(int i = 0; i < celdasDias.length; i++ ) {
-
-            JButton celda = celdasDias[i];
-
-            celda.setText(Integer.toString(dataCalendario.getDayOfMonth()) );
-            celda.setName(dataCalendario.toString());   // Para identificar cada botón co seu día
-
-            dataCalendario = dataCalendario.plusDays(1);
-
-        }
-
-        interfaceCalendario.actualizarCalendario();
-
-    }
-
-    public static void initLogin() {
-
-        initLoginCard();
-        initRexistroCard();
-
-    }
-
-    /**
-     * Prepara a interfaz do login antes de mostrala.
-     */
-    private static void initLoginCard() {
-
-        // Evento para cambiar ao modo rexistro dende o modo inicio de sesión
-        interfaceLogin.getLogInButton().addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                CardLayout cl = (CardLayout) interfaceLogin.getCards().getLayout();
-
-                cl.next(interfaceLogin.getCards());
-
-            }
-
-        });
-
-        // Evento ao clicar no botón para iniciar sesión
-        interfaceLogin.getSubmitLogIn().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                Usuario user;                
-                
-                try {
-
-                    String passwd;
-
-                    user = Datos.getUsuarioPorNome(interfaceLogin.getUsernameLogIn().getText());
-
-                    passwd = new String(interfaceLogin.getPasswordLogin().getPassword());
-
-                    if(user.getContrasinal().equals(passwd) ) {     // Inicio de sesión correcto
-
-                        interfaceLogin.getFrame().setVisible(false);
-                        usuario = user;
-
-                        // Mostrar calendario
-                        initCalendario();
-                        interfaceCalendario.mostrarUI();
-
-                        // Para que o tamaño do calendario e a posición se corresponda coa xanela que
-                        // se acaba de pechar
-                        interfaceCalendario.getFrame().setSize(interfaceLogin.getFrame().getSize());
-                        interfaceCalendario.getFrame().setLocation(interfaceLogin.getFrame().getLocation());
-
-
-                    } else {        // Usuario existe -> pero non é a contrasinal correcta
-
-                        mostrarErro(interfaceLogin.getFrame(), getTraduccion("E01", "Credenciais incorrectas"));
-                        interfaceLogin.getPasswordLogin().setText("");
-                        interfaceLogin.getUsernameLogIn().setText("");
-
-                    }
-
-                } catch(UsuarioNonAtopadoException ex ) {        // Non existe o usuario 
-
-                    mostrarErro(interfaceLogin.getFrame(), getTraduccion("E02", "O usuario non está rexistrado"));
-                    interfaceLogin.getPasswordLogin().setText("");
-                    interfaceLogin.getUsernameLogIn().setText("");
-
-                }
-
-            }
-            
-        });
-
-        interfaceLogin.getCambioModoCorLogIn().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
-
-                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? getTraduccion("L08", "Modo escuro") : getTraduccion("L09", "Modo claro"));
-                interfaceLogin.repintarComponentes();
-                
-            }
-            
-        });
-
-        interfaceLogin.getCambioModoCorSignUp().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                LoginUI.setModoColor(LoginUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
-                
-                interfaceLogin.getCambioModoCorLogIn().setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? getTraduccion("L08", "Modo escuro") : getTraduccion("L09", "Modo claro"));
-                interfaceLogin.repintarComponentes();
-                
-            }
-            
-        });
-
-    }
-
-    private static void initRexistroCard() {
-
-        // Evento para cambiar ao modo inicio de sesión dende o modo de rexistro
-        interfaceLogin.getSignUpButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                CardLayout cl = (CardLayout) interfaceLogin.getCards().getLayout();
-
-                cl.next(interfaceLogin.getCards());
-
-            }
-
-        });
-
-        // Evento ao clicar no botón para rexistrarse
-        interfaceLogin.getSubmitSignUp().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if(!Datos.usuarioEstaRexistrado(interfaceLogin.getUsernameSignUp().getText()) ) {  // Usuario non rexistrado
-
-                    String passwd = new String(interfaceLogin.getPasswordSignUp().getPassword());
-                    String confirm = new String(interfaceLogin.getConfirmPassword().getPassword());
-
-                    if(passwd.equals(confirm) ) {       // Rexistro correcto
-
-                        if(Funciones.nomeUsuarioValido(interfaceLogin.getUsernameSignUp().getText()) ) {
-
-                            if(Funciones.contrasinalValida(passwd) ) {
-
-                                try {
-    
-                                    interfaceLogin.getFrame().setVisible(false);
-                                    usuario = Datos.rexistrarUsuario(interfaceLogin.getUsernameSignUp().getText(), passwd);
-    
-                                    // Mostrar calendario
-                                    initCalendario();
-                                    interfaceCalendario.mostrarUI();
-        
-                                    // Para que o tamaño do calendario e a posición se corresponda coa xanela que
-                                    // se acaba de pechar
-                                    interfaceCalendario.getFrame().setSize(interfaceLogin.getFrame().getSize());
-                                    interfaceCalendario.getFrame().setLocation(interfaceLogin.getFrame().getLocation());
-
-                                } catch(UsuarioXaRexistradoException ex ) {
-        
-                                    // Erro inesperado coa base de datos
-        
-                                }                                 
-    
-                            } else {
-    
-                                mostrarErro(interfaceLogin.getFrame(), getTraduccion("E03", "A contrasinal non é válida"));  // TODO : explicar que requerimentos fan falta
-                                interfaceLogin.getConfirmPassword().setText("");
-                                interfaceLogin.getPasswordSignUp().setText("");
-                                
-                            }
-
-                        } else {
-
-                            mostrarErro(interfaceLogin.getFrame(), getTraduccion("E04", "Nome de usuario non válido"));
-                            interfaceLogin.getConfirmPassword().setText("");
-                            interfaceLogin.getPasswordSignUp().setText("");
-                            interfaceLogin.getUsernameSignUp().setText("");
-
-                        }
-
-                    } else {    // Rexistro incorrecto (a contrasinal e a confirmación non concordan)
-
-                        mostrarErro(interfaceLogin.getFrame(), getTraduccion("E05", "As contrasinais non coinciden"));
-                        interfaceLogin.getConfirmPassword().setText("");
-                        interfaceLogin.getPasswordSignUp().setText("");
-
-                    }
-
-                } else { // Usuario previamente rexisrado
-
-                    mostrarErro(interfaceLogin.getFrame(), getTraduccion("E06", "Usuario xa rexistrado"));
-                    interfaceLogin.getConfirmPassword().setText("");
-                    interfaceLogin.getPasswordSignUp().setText("");
-                    interfaceLogin.getUsernameSignUp().setText("");
-
-                }
-
-            }
-
-        });
-
-    }
 
     /**
      * Lanza un diálogo mostrando información dun erro. Tamén bloquea a ventá que chama 
@@ -556,7 +208,6 @@ public class Calendario {
 
         interfaceErro.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         interfaceErro.getLabel().setText(str);
-        interfaceErro.getDialog().add(interfaceErro.getLabel());
 
         // Evento para crear un diálgo de forma que ata que non se peche non 
         // se poda interactuar co "owner"
@@ -579,6 +230,15 @@ public class Calendario {
         });
 
         interfaceErro.mostrarUI(owner);
+
+    }
+
+    public static void mostrarErro(String str ) {
+
+        interfaceErro.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        interfaceErro.getLabel().setText(str);
+
+        interfaceErro.mostrarUI();
 
     }
 
@@ -605,6 +265,12 @@ public class Calendario {
         return out;
     }
 
+    public static Evento[] obterEventos(LocalDate dataDia) {
+
+        return Datos.getEventosDia(dataDia, usuario);
+
+    }
+
     public static void pedirData(JFrame owner ) {
 
         interfaceSeleccionData.getSeleccionData().addWindowListener(new WindowAdapter() {
@@ -626,6 +292,12 @@ public class Calendario {
         });
 
         interfaceSeleccionData.mostrarUI(owner);
+
+    }
+
+    public static void mostrarCalendario() {
+
+        interfaceCalendario.mostrarUI();
 
     }
     

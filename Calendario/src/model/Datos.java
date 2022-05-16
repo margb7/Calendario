@@ -36,17 +36,9 @@ public class Datos {
      */
     private Datos() {}
 
-    /**
-     * Constructor estático para inicializar as datas
-     */
+    public static boolean iniciarConexionBBDD() {
 
-    public static void init() {
-
-        iniciarConexionBBDD();
-
-    }
-
-    private static void iniciarConexionBBDD() {
+        boolean out = true;
 
         try {
 
@@ -59,8 +51,8 @@ public class Datos {
             } catch (SQLException e) {
 
                 System.out.println("Non se puido conectar coa base de datos");
-                
                 conexionBase = null;
+                out = false;
 
             }
             
@@ -68,9 +60,11 @@ public class Datos {
             
             System.out.println("Non se puido atopar o driver de jdbc");
             conexionBase = null;
+            out = false;
 
         }
-
+        
+        return out;
     }
 
     public static Connection getConexionBase() {
@@ -88,23 +82,31 @@ public class Datos {
         Evento[] out = new Evento[0];
         ArrayList<Evento> eventos = new ArrayList<>();
         
-        getEventosPrivados(dataEvento, user).forEach(el -> {
+        try {
 
-            eventos.add(el);
+            getEventosPrivados(dataEvento, user).forEach(el -> {
 
-        });
+                eventos.add(el);
+    
+            });
+    
+            getEventosPublicos(dataEvento).forEach(el -> {
+    
+                eventos.add(el);
+                
+            });
+    
+            getEventosGrupales(dataEvento, user).forEach(el -> {
+    
+                eventos.add(el);
+                
+            });
 
-        getEventosPublicos(dataEvento).forEach(el -> {
+        } catch(NullPointerException e ) {
 
-            eventos.add(el);
-            
-        });
+            // Para cando non hai conexión coa base de datos (a conexión do jdbc é null)
 
-        getEventosGrupales(dataEvento, user).forEach(el -> {
-
-            eventos.add(el);
-            
-        });
+        }
 
         out = eventos.toArray(out);
 
@@ -301,7 +303,7 @@ public class Datos {
         return lineas.toArray(out);
     }
 
-    private static ArrayList<Evento> getEventosPrivados(LocalDate dia, Usuario user ) {
+    public static ArrayList<Evento> getEventosPrivados(LocalDate dia, Usuario user ) {
 
         ArrayList<Evento> eventos = new ArrayList<>();
 
@@ -334,7 +336,7 @@ public class Datos {
         return eventos;
     }
 
-    private static ArrayList<Evento> getEventosPublicos(LocalDate dia ) {
+    public static ArrayList<Evento> getEventosPublicos(LocalDate dia ) {
 
         ArrayList<Evento> eventos = new ArrayList<>();
 
@@ -367,7 +369,7 @@ public class Datos {
         return eventos;
     }
 
-    private static ArrayList<Evento> getEventosGrupales(LocalDate dia, Usuario user ) {
+    public static ArrayList<Evento> getEventosGrupales(LocalDate dia, Usuario user ) {
 
         ArrayList<Evento> eventos = new ArrayList<>();
 

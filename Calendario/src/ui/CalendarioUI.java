@@ -13,10 +13,15 @@ import calendario.Calendario;
 
 import model.Evento;
 
-import java.awt.Toolkit;
-
 import utilidades.Dia;
+import utilidades.Mes;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
@@ -49,7 +54,9 @@ public class CalendarioUI extends ElementoUI {
     public CalendarioUI() {
 
         init();
+        iniciarListeners();
         actualizarTraduccions();
+        repintarComponentes();
 
     }
 
@@ -261,11 +268,182 @@ public class CalendarioUI extends ElementoUI {
 
     }
 
+    private void iniciarListeners() {
+
+        // Botón (">") na dereita para avanzar o mes
+        avanzarMes.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Calendario.avanzarMes();
+                actualizarCalendario();
+
+            }
+
+        });
+
+
+        // Botón ("<") na esquerda para retroceder o mes
+        retrocederMes.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Calendario.retrocederMes();
+                actualizarCalendario();
+            
+            }
+
+        });
+
+        for(int i = 0; i < celdasDias.length; i++ ) {
+
+            celdasDias[i].addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                    // Engadir para cada dia do mes a capacidade de mostrar os eventos no panel lateral
+                    JButton boton = (JButton) e.getSource();
+
+                    // Uso do nome do botón para obter o día que representa
+                    LocalDate dataDia = LocalDate.parse(boton.getName());
+                    Evento[] eventos = Calendario.obterEventos(dataDia);
+                    String texto = Dia.values()[dataDia.getDayOfWeek().ordinal()].getNome() + " " + dataDia.getDayOfMonth() + " " +
+                                Calendario.getTraduccion("C06", "de") + " " + Mes.values()[dataDia.getMonthValue() - 1].getNome();
+
+                    textoDia.setText(texto);
+                    
+                    // Vaciar a lista para que non conteña eventos que non corresponden 
+                    listaEventos.setListData(new Evento[0]);
+
+                    if(eventos.length != 0 ) {
+
+                        listaEventos.setListData(eventos);
+
+                    }
+
+                    // Se o mes do día seleccionado non coincide co mes do calendario -> pásase a mostrar ese mes
+                    if(dataDia.getMonthValue() != Calendario.getPrimerDiaMes().getMonthValue() ) {
+
+                        Calendario.setDataCalendario(LocalDate.of(dataDia.getYear(), dataDia.getMonthValue(), 1));
+
+                    }
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    
+                    JButton src = (JButton) e.getSource();
+                    
+                    src.setBorderPainted(true);
+                    
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    
+                    JButton src = (JButton) e.getSource();
+                    
+                    src.setBorderPainted(false);
+
+                }
+                
+            });
+
+        }
+
+        // Evento para pedir unha data ao usuario que pasará a ser a mostrada no calendario
+        textoMes.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Calendario.pedirData(frame);
+
+            }
+
+        });
+
+        //TODO implementar as accións dos ítems do menú contextual
+        // Evento do menú para crear un evento grupal
+        itemGrupal.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                System.out.println(e.getActionCommand());
+                
+            }
+
+        });
+
+        // Evento do menú para crear un evento privado
+        itemPrivado.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                System.out.println(e.getActionCommand());
+                
+            }
+
+        });
+
+        // Evento do menú para crear un evento público
+        itemPublico.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                System.out.println(e.getActionCommand());
+                
+            }
+
+        });
+        
+        // Evento para repintar compoñentes
+        cambioModoCor.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
+                
+                repintarComponentes();
+                
+            }
+            
+        });
+
+    }
+
+    /**
+     * Actualiza os contidos do calendario para reflexar correctamente o mes. Precísase o seu
+     * uso cada vez que se fagan cambios no mes do calendario. 
+     */
     public void actualizarCalendario() {
 
+        String stringMes = Mes.values()[Calendario.getDataCalendario().getMonthValue() - 1] + ", " + Calendario.getDataCalendario().getYear();
+        LocalDate data;
         boolean primerDia = false;
 
-        for(int i = 0; i < 42; i++ ) {
+        textoMes.setText(stringMes);
+        
+        Calendario.setPrimerDiaMes(Calendario.getDataCalendario());
+
+        // data -> comeza no primer día do mes
+        int offset = Calendario.getDataCalendario().getDayOfWeek().ordinal();
+        data = Calendario.getDataCalendario().minusDays(offset);
+
+        for(int i = 0; i < celdasDias.length; i++ ) {
+
+            JButton celda = celdasDias[i];
+
+            celda.setText(Integer.toString(data.getDayOfMonth()) );
+            celda.setName(data.toString());   // Para identificar cada botón co seu día
 
             if(!primerDia ) {
 
@@ -297,21 +475,21 @@ public class CalendarioUI extends ElementoUI {
 
             celdasDias[i].setBackground(modoColor.getFondo());
 
+            data = data.plusDays(1);
+
         }
 
     }
 
     @Override
     public void actualizarTraduccions() {
-        
-        // NO afecta -> interfaceCalendario.getPanelCalendario().getComponentPopupMenu().setName("Crear");
+
         frame.setTitle(Calendario.getTraduccion("C01", "Calendario"));
-        itemPublico.setText(Calendario.getTraduccion("C03", "Público"));
-        itemPrivado.setText(Calendario.getTraduccion("C05", "Privado"));
-        itemGrupal.setText(Calendario.getTraduccion("C04", "Grupal"));
-
         cambioModoCor.setText(Calendario.getTraduccion("C02", "Cambiar tema de cor"));
-
+        itemPublico.setText(Calendario.getTraduccion("C03", "Público"));
+        itemGrupal.setText(Calendario.getTraduccion("C04", "Grupal"));
+        itemPrivado.setText(Calendario.getTraduccion("C05", "Privado"));
+    
     }
 
     public void repintarComponentes() {
@@ -349,7 +527,7 @@ public class CalendarioUI extends ElementoUI {
         listaEventos.setBackground(modoColor.getFondo());
         listaEventos.setForeground(modoColor.getTexto());
 
-        for (byte i = 0; i < 7; i++) {//engade cada etiqueta na posición que lle corresponde
+        for (byte i = 0; i < 7; i++) {
             gbc.gridx = i;
 
             JLabel lab = labelDias[i];

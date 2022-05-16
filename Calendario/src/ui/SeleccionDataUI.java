@@ -6,11 +6,16 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import calendario.Calendario;
+import utilidades.Mes;
 
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 
@@ -25,6 +30,7 @@ public class SeleccionDataUI extends ElementoUI {
     public SeleccionDataUI() {
 
         initSeleccionData();
+        iniciarListeners();
 
     }
 
@@ -92,6 +98,34 @@ public class SeleccionDataUI extends ElementoUI {
         gbc.gridwidth = 3;
         gbc.insets = new Insets(10, 0, 0, 0);
         seleccionData.add(ok, gbc);
+
+    }
+
+    private void iniciarListeners() {
+
+        String[] lista = Mes.getListaMeses();
+
+        anos.setModel(new SpinnerNumberModel( Calendario.getDataCalendario().getYear(), 1980, Calendario.getDataCalendario().getYear() + 10, 1));
+
+        for(int i = 0; i < lista.length; i++ ){
+
+            meses.addItem(lista[i]);
+
+        }
+
+        meses.setSelectedIndex(Calendario.getDataCalendario().getMonthValue() - 1);
+
+        ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Calendario.setDataCalendario(LocalDate.of((int)anos.getValue(), (int) meses.getSelectedIndex() + 1, 1));
+                seleccionData.dispose();
+                
+            }
+                    
+        });
 
     }
 
