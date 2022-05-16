@@ -6,14 +6,13 @@ DELIMITER $$
 USE CALENDARIO$$
 
 ## Rexistra un usuario e devolve a clave do novo usuario
+## Código 1062 se o nome xa está rexistrado
 DROP PROCEDURE IF EXISTS REXISTRAR_USUARIO$$
 CREATE PROCEDURE REXISTRAR_USUARIO(IN NOME_USUARIO VARCHAR(20), IN PASSWD VARCHAR(30))
     MODIFIES SQL DATA
     BEGIN
     
         INSERT INTO USUARIOS(NOME, PASSWD) VALUES (NOME_USUARIO, PASSWD);
-        
-        ## TODO: como se puede devolver el valor de un procedimiento a java
         
     END$$
     

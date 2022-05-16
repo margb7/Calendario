@@ -1,4 +1,6 @@
 
+USE CALENDARIO;
+
 ## Datos de proba ##
 
 CALL REXISTRAR_USUARIO("administrador", "renaido"); -- renaido non cumple como contrasinal válida
