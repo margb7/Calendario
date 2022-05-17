@@ -7,6 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.JSpinner.DateEditor;
+import javax.swing.plaf.InsetsUIResource;
+import javax.swing.text.DateFormatter;
+
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 public class CreacionEventoPrivadoUI extends ElementoUI {
 
@@ -17,6 +24,8 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
     private JSpinner horaEventoValor;
     private JButton crearEventoButton;
     private JButton cancelarButton;
+    private GridBagConstraints gbc;
+    private SpinnerDateModel mod;
 
     public CreacionEventoPrivadoUI() {
 
@@ -30,7 +39,10 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
     public void initCreacionEvento() {
 
-        JDialog dialogoCreacion = new JDialog();
+        dialogoCreacion = new JDialog();
+        dialogoCreacion.setLayout(new GridBagLayout());
+
+        gbc = new GridBagConstraints();
 
         nombreEventoLabel = new JLabel("Nombre:");
         nombreEventoLabel.setLabelFor(nombreEventoTexto);
@@ -39,19 +51,45 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
         nombreEventoTexto = new JTextField(15);
 
-        horaEventoValor = new JSpinner(new SpinnerDateModel());
-        horaEventoValor.setEditor(new JSpinner.DateEditor(horaEventoValor, "HH:mm"));
+        mod = new SpinnerDateModel();
+
+        horaEventoValor = new JSpinner(mod);
+
+        DateEditor editor = new JSpinner.DateEditor(horaEventoValor, "HH:mm");
+        DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false);
+        formatter.setOverwriteMode(false);
+        
+        horaEventoValor.setEditor(editor);
 
         crearEventoButton = new JButton("Crear");
 
         cancelarButton = new JButton("Cancelar");
 
-        dialogoCreacion.add(nombreEventoLabel);
-        dialogoCreacion.add(nombreEventoTexto);
-        dialogoCreacion.add(horaEventoLabel);
-        dialogoCreacion.add(horaEventoValor);
-        dialogoCreacion.add(crearEventoButton);
-        dialogoCreacion.add(cancelarButton);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        dialogoCreacion.add(nombreEventoLabel, gbc);
+
+        gbc.gridx = 1;
+        dialogoCreacion.add(nombreEventoTexto, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        dialogoCreacion.add(horaEventoLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        dialogoCreacion.add(horaEventoValor, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.insets = new InsetsUIResource(10, 0, 0, 0);
+        gbc.anchor = GridBagConstraints.LINE_START;
+        dialogoCreacion.add(crearEventoButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        dialogoCreacion.add(cancelarButton, gbc);
 
     }
 
@@ -70,9 +108,10 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
         int x,y;
 
+        dialogoCreacion.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialogoCreacion.setVisible(true);
         dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
-        dialogoCreacion.setSize(300, 100);
+        dialogoCreacion.setSize(300, 200);
 
         x = frame.getX() + (frame.getWidth() / 2) - (dialogoCreacion.getWidth() / 2);
         y = frame.getY() + (frame.getHeight() / 2) - (dialogoCreacion.getHeight() / 2);
