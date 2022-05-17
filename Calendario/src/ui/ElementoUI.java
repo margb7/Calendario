@@ -24,7 +24,7 @@ public abstract class ElementoUI {
         ElementoUI.modoColor = modoColor;
     }
 
-    protected void repintarComponentes() {}
+    abstract void repintarComponentes();
     public void actualizarTraduccions() {};
     abstract void mostrarUI();
 

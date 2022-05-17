@@ -142,9 +142,10 @@ public class SeleccionDataUI extends ElementoUI {
     public void mostrarUI() {
 
         actualizarTraduccions();
+        repintarComponentes();
         
         seleccionData.setVisible(true);
-        seleccionData.getContentPane().setBackground(modoColor.getFondo());
+        seleccionData.setAlwaysOnTop(true);
         seleccionData.setSize(300, 100);
 
         seleccionData.setLocationRelativeTo(null);
@@ -156,15 +157,23 @@ public class SeleccionDataUI extends ElementoUI {
         int x,y;
 
         actualizarTraduccions();
+        repintarComponentes();
 
         seleccionData.setVisible(true);
-        seleccionData.getContentPane().setBackground(modoColor.getFondo());
+        seleccionData.setAlwaysOnTop(true);
         seleccionData.setSize(300, 100);
 
         x = frame.getX() + (frame.getWidth() / 2) - (seleccionData.getWidth() / 2);
         y = frame.getY() + (frame.getHeight() / 2) - (seleccionData.getHeight() / 2);
 
         seleccionData.setLocation(x, y);
+
+    }
+
+    @Override
+    void repintarComponentes() {
+        
+        seleccionData.getContentPane().setBackground(modoColor.getFondo());
 
     }
 
