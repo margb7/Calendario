@@ -23,7 +23,6 @@ public class ErrorUI extends ElementoUI {
         dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE); // TODO: no seguro 
 
         label = new JLabel("", JLabel.CENTER);
-        label.setForeground(modoColor.getTexto());
         label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
         dialog.add(label);
 
@@ -50,10 +49,11 @@ public class ErrorUI extends ElementoUI {
                 
                 Toolkit tool = Toolkit.getDefaultToolkit();
 
+                repintarComponentes();
+                
                 dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
                 dialog.setVisible(true);
-                dialog.getContentPane().setBackground(modoColor.getFondo());
-                label.setForeground(modoColor.getTexto());
+
                 dialog.setSize(300, 100);
 
                 dialog.setLocationRelativeTo(null);
@@ -78,11 +78,12 @@ public class ErrorUI extends ElementoUI {
             public void run() {
                 
                 int x,y;
+
+                repintarComponentes();
         
                 dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
                 dialog.setVisible(true);
-                dialog.getContentPane().setBackground(modoColor.getFondo());
-                label.setForeground(modoColor.getTexto());
+                
                 dialog.setSize(300, 100);
 
                 x = frame.getX() + (frame.getWidth() / 2) - (dialog.getWidth() / 2);
@@ -93,6 +94,14 @@ public class ErrorUI extends ElementoUI {
             }
             
         });
+
+    }
+
+    @Override
+    void repintarComponentes() {
+
+        dialog.getContentPane().setBackground(modoColor.getFondo());
+        label.setForeground(modoColor.getTexto());
 
     }
 
