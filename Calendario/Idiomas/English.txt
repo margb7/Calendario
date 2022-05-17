@@ -1,4 +1,4 @@
--- ### ENGLISH (para debug)###
+-- ### ENGLISH ###
 
 -- DÍAS
 D01-Monday
@@ -7,8 +7,8 @@ D03-Tuesday
 D04-Tu.
 D05-Wednesday
 D06-We.
-D07-Jueves
-D08-Ju.
+D07-Thursday
+D08-Th.
 D09-Friday
 D10-Fr.
 D11-Saturday
