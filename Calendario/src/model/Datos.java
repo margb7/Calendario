@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
-
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -179,7 +181,38 @@ public class Datos {
         }
 
         return out;
-    } 
+    }
+
+    public static Usuario getUsuarioPorId(int id) throws UsuarioNonAtopadoException {
+
+        Usuario out = null;
+
+        try {
+
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT  FROM USUARIOS WHERE ID_USUARIO = ? ");
+
+            statement.setInt(1, id);
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if (set.next() ) {
+
+                out = new Usuario(id, set.getString(1));
+
+            } else {
+
+                throw new UsuarioNonAtopadoException("Para o id: " + id);
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para saber se o usuario está rexistrado");
+
+        }
+
+        return out;
+    }
 
     /**
      * Rexistra o usuario na base de datos. Se non se pode rexistrar este método devolverá un usuario
@@ -246,7 +279,7 @@ public class Datos {
     
                 for(String s : lines ) {
     
-                    if(!s.isEmpty() && !s.startsWith("--") ) {
+                    if(!s.isEmpty() && !s.startsWith("--") && s.matches("^[A-Z][0-9]{2}[-].*")) {
     
                         codigo = s.substring(0, 3);
                         significado = s.substring(4, s.length());
@@ -400,6 +433,34 @@ public class Datos {
         }
 
         return eventos;
+    }
+
+    public static EventoGrupal crearEventoGrupal(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
+
+        EventoGrupal out;
+
+        try {
+
+            CallableStatement cs = conexionBase.prepareCall("CALL CREAR_EVENTO_GRUPAL(?,?,?,?)");
+                
+            cs.setString(1, nome);
+            cs.setInt(2, creador.getId());
+            cs.setDate(3, Date.valueOf(data));
+            cs.setTime(4, Time.valueOf(hora));
+
+            cs.execute();
+                                // TODO: obter id xenerado na base de datos
+            out = new EventoGrupal(0, nome, creador.getId(), data, hora);
+
+        } catch (SQLException e) {
+            
+            out = null;
+            System.out.println("Erro ao intentar crear un evento grupal");
+
+        }
+
+        return out;
+
     }
 
     public static ResultSet sentenciaLectura(PreparedStatement st) {

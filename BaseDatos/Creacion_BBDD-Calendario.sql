@@ -35,6 +35,9 @@ CREATE TABLE EVENTOS(
         ON DELETE CASCADE
         ON UPDATE CASCADE,
         
+    -- Creo que fai falta un índice único para que non poidan existir eventos co
+    -- mesmo nome por usuario (UNIQUE INDEX AK_NOME_CREADOR(NOME, CREADOR))
+    
     INDEX FK_CREADOR_EVENTO(CREADOR),
 	INDEX INDEX_DATA_EVENTO(DATA_EVENTO),   -- > Xa que se van facer bastantes consultas ao redor da data do evento
 
