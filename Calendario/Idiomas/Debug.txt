@@ -66,3 +66,10 @@ E08-N0nv p0ido c03ctar c0e bvese d4 d3t0s
 S01-sgeq s s  fdata
 S02-deeee
 S03-0k.
+
+-- CreacionEventoPrivadoUI
+P01-Nombre:
+P02-Hora:
+P03-Crear
+P04-Cancelar
+P05-Cr34r 3v3nto pr1v4do

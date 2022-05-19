@@ -42,13 +42,13 @@ public class Calendario {
     private static CreacionEventoPrivadoUI interfaceCreacionEventoPrivado;
 
     /**
-     * @param args the command line arguments
+     * Método main do programa.
+     * @param args argumentos para main.
      */
     public static void main(String[] args) {
 
-        
+        // Cargar os idiomas e por por defecto o galego
         idiomasDisponibles = Datos.cargarIdiomas();
-
         setIdomaSeleccionado("Galego");
 
         // Tema de color para todos os elementos
@@ -67,17 +67,17 @@ public class Calendario {
         interfaceSeleccionData = new SeleccionDataUI();
         interfaceErro = new ErrorUI();
         interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
-            
-        if(Datos.iniciarConexionBBDD() ) {
+        
+        // Iniciar o programa
+        if(Datos.iniciarConexionBBDD() ) {  // Programa en modo normal
 
-            // Programa en modo normal
+            
             interfaceLogin.mostrarUI();
 
-        } else {
+        } else {    // Programa en modo limitado (mostra o calendario pero nada mais)
             
-            // Programa en modo limitado (mostra o calendario pero nada mais)
             mostrarErro(getTraduccion("E08", "Non se puido conectar coa base da datos"));
-            setUsuario(new Usuario(-1, "Default", ""));     // So serve para cando non hai conexion
+            setUsuario(new Usuario(-1, "Default", ""));     // usuario para cando non hai conexion
 
             mostrarCalendario();
 
@@ -117,7 +117,9 @@ public class Calendario {
     }
 
     /**
-     * @param idomaSeleccionado the idomaSeleccionado to set
+     * @param idomaSeleccionado selecciona un idioma de entre os idiomas dispoñibles. O nome de cada idioma
+     * se corresponde co nome do ficheiro na carpeta de idiomas sen a extensión .txt. Se se intenta seleccionar
+     * un idioma que non está dispoñible non fará ningún cambio.
      */
     public static void setIdomaSeleccionado(String idioma) {
         
@@ -130,17 +132,22 @@ public class Calendario {
     }
 
     public static void avanzarMes() {
-
         setDataCalendario(primerDiaMes.plusMonths(1));
-
     }
 
     public static void retrocederMes() {
-
         setDataCalendario(primerDiaMes.minusMonths(1));
-
     }
 
+    /**
+     * Inicia sesión como un usuario. Antes de devolver o obxecto do usuario encárgase de comprobar que o 
+     * usuario esté rexistrado e tamén que a contrasinal sexa a correcta.
+     * @param nome o nome de login do usuario.
+     * @param passwd a contrasinal do usuario.
+     * @return un obxecto <code>Usuario</code> que está rexistrado.
+     * @throws CredenciaisIncorrectasException se a contrasinal non é correcta.
+     * @throws UsuarioNonAtopadoException se o usuario non está rexistrado.
+     */
     public static Usuario logIn(String nome, String passwd ) throws CredenciaisIncorrectasException, UsuarioNonAtopadoException {
 
         Usuario user = Datos.getUsuarioPorNome(nome);   // Xa lanza automáticamente a excepción de 
@@ -217,6 +224,10 @@ public class Calendario {
 
     }
 
+    /**
+     * Lanza un diálogo mostrando información dun erro.
+     * @param str a mensaxe de erro.
+     */
     public static void mostrarErro(String str ) {
 
         interfaceErro.getLabel().setText(str);
@@ -247,15 +258,16 @@ public class Calendario {
         return out;
     }
 
+    /**
+     * Obtén todos os eventos para un día determinado e para o usuario que está a usar o calendario.
+     * @param dataDia a data da cal se queren buscar os eventos.
+     * @return un array con todos os eventos (grupais, públicos e privados).
+     */
     public static Evento[] obterEventos(LocalDate dataDia) {
-
         return Datos.getEventosDia(dataDia, usuario);
-
     }
 
     public static void pedirData(JFrame owner ) {
-
-        
 
         interfaceSeleccionData.mostrarUI(owner);
 

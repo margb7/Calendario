@@ -25,8 +25,8 @@ public abstract class ElementoUI {
     }
 
     abstract void repintarComponentes();
-    public void actualizarTraduccions() {};
     abstract void mostrarUI();
+    public void actualizarTraduccions() {};
 
 }
 

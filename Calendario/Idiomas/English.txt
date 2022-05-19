@@ -59,9 +59,16 @@ E04-Invalid username
 E05-Passwords doesn't match
 E06-User already registered
 E07-Error
-E08-Unable to connecto with database
+E08-Unable to connect with database
 
 -- SeleccionDataUI
 S01-Select time
 S02-of
 S03-Ok
+
+-- CreacionEventoPrivadoUI
+P01-Name:
+P02-Time:
+P03-Create
+P04-Cancel
+P05-Create private event

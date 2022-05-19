@@ -15,7 +15,6 @@ import calendario.Calendario;
 import model.Datos;
 
 import java.awt.Color;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -40,7 +39,7 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
     public CreacionEventoPrivadoUI() {
 
-        initCreacionEvento();
+        init();
         iniciarListeners();
 
     }
@@ -65,23 +64,23 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
     }
 
     /**
-     * @param data the data to set
+     * @param data
      */
     public void setData(LocalDate data) {
         this.data = data;
     }
 
-    public void initCreacionEvento() {
+    public void init() {
 
         dialogoCreacion = new JDialog();
         dialogoCreacion.setLayout(new GridBagLayout());
 
         gbc = new GridBagConstraints();
 
-        nombreEventoLabel = new JLabel("Nombre:");
+        nombreEventoLabel = new JLabel();
         nombreEventoLabel.setLabelFor(nombreEventoTexto);
 
-        horaEventoLabel = new JLabel("Hora:");
+        horaEventoLabel = new JLabel();
 
         nombreEventoTexto = new JTextField(15);
 
@@ -96,9 +95,9 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
         
         horaEventoValor.setEditor(editor);
 
-        crearEventoButton = new JButton("Crear");
+        crearEventoButton = new JButton();
 
-        cancelarButton = new JButton("Cancelar");
+        cancelarButton = new JButton();
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -145,9 +144,9 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                Datos.crearEventoGrupal("Eventoaaa", Calendario.getUsuario(), LocalDate.now(), LocalTime.now());
+                Datos.crearEventoGrupal(nombreEventoTexto.getText(), Calendario.getUsuario(), data, (LocalTime) horaEventoValor.getValue());
                 dialogoCreacion.dispose();
-                
+                horaEventoValor.getValue();
             }
 
         });
@@ -157,6 +156,9 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
     @Override
     public void mostrarUI() {
 
+        repintarComponentes();
+        actualizarTraduccions();
+
         dialogoCreacion.setVisible(true);
         dialogoCreacion.setSize(300, 100);
 
@@ -165,6 +167,9 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
     }
     
     public void mostrarUI(JFrame frame ) {
+        
+        repintarComponentes();
+        actualizarTraduccions();
 
         int x,y;
 
@@ -198,7 +203,6 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
         dialogoCreacion.setLocation(x, y);
         
-
     }
 
     @Override
@@ -211,6 +215,12 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
     @Override
     public void actualizarTraduccions() {
         
+        nombreEventoLabel.setText(Calendario.getTraduccion("P01", "Nome:"));
+        horaEventoLabel.setText(Calendario.getTraduccion("P02", "Hora:"));
+        crearEventoButton.setText(Calendario.getTraduccion("P03", "Crear"));
+        cancelarButton.setText(Calendario.getTraduccion("P04", "Cancelar"));
+        dialogoCreacion.setTitle(Calendario.getTraduccion("P05", "Crear evento privado"));
+
     }
 
 }

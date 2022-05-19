@@ -65,3 +65,10 @@ E08-No se pudo conectar con la base de datos
 S01-Selecciona una fecha
 S02-de
 S03-Ok
+
+-- CreacionEventoPrivadoUI
+P01-Nombre:
+P02-Hora:
+P03-Crear
+P04-Cancelar
+P05-Crear evento privado
