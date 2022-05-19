@@ -10,7 +10,7 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.JSpinner.DateEditor;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
-
+import java.awt.Color;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -35,6 +35,14 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
     public JDialog getDialogoCreacion() {
         return dialogoCreacion;
+    }
+
+    public JButton getCancelarButton() {
+        return cancelarButton;
+    }
+
+    public JButton getCrearEventoButton() {
+        return crearEventoButton;
     }
 
     public void initCreacionEvento() {
@@ -83,7 +91,7 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.insets = new InsetsUIResource(10, 0, 0, 0);
+        gbc.insets = new InsetsUIResource(20, 0, 0, 0);
         gbc.anchor = GridBagConstraints.LINE_START;
         dialogoCreacion.add(crearEventoButton, gbc);
 
@@ -109,14 +117,17 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
         int x,y;
 
         dialogoCreacion.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialogoCreacion.setVisible(true);
         dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
+        dialogoCreacion.setUndecorated(true);
+        dialogoCreacion.getRootPane().setBorder(new javax.swing.border.LineBorder(Color.GRAY, 1));
+        dialogoCreacion.setVisible(true);
         dialogoCreacion.setSize(300, 200);
 
         x = frame.getX() + (frame.getWidth() / 2) - (dialogoCreacion.getWidth() / 2);
         y = frame.getY() + (frame.getHeight() / 2) - (dialogoCreacion.getHeight() / 2);
 
         dialogoCreacion.setLocation(x, y);
+        
 
     }
     

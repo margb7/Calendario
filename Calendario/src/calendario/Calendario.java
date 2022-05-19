@@ -634,6 +634,30 @@ public class Calendario {
 
         });
 
+        interfaceCreacionEventoPrivado.getCancelarButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                interfaceCreacionEventoPrivado.getDialogoCreacion().dispose();
+                
+            }
+            
+        });
+
+        interfaceCreacionEventoPrivado.getCrearEventoButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                //TODO crear evento
+
+                interfaceCreacionEventoPrivado.getDialogoCreacion().dispose();
+                
+            }
+
+        });
+
         interfaceCreacionEventoPrivado.mostrarUI(owner);
 
     }
