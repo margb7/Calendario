@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +17,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import calendario.Calendario;
+import excepcions.CredenciaisIncorrectasException;
+import excepcions.UsuarioNonAtopadoException;
+import excepcions.UsuarioXaRexistradoException;
+import excepcions.CredenciaisIncorrectasException.Tipo;
+import model.Usuario;
 
 public class LoginUI extends ElementoUI {
 
@@ -41,29 +49,12 @@ public class LoginUI extends ElementoUI {
     public LoginUI() {
 
         init();
+        iniciarListeners();
 
     }
 
     public JFrame getFrame() {
         return frame;
-    }
-
-    public JPanel getCards() {
-        return cards;
-    }
-
-    /**
-     * @return the logInCard
-     */
-    public JPanel getLogInCard() {
-        return logInCard;
-    }
-
-    /**
-     * @return the signUpCard
-     */
-    public JPanel getSignUpCard() {
-        return signUpCard;
     }
 
     public JButton getLogInButton() {
@@ -274,6 +265,150 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    private void iniciarListeners() {
+
+        // Evento para cambiar ao modo rexistro dende o modo inicio de sesión
+        ActionListener cambiarTarxeta = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                CardLayout cl = (CardLayout) cards.getLayout();
+
+                cl.next(cards);
+                
+            }
+
+        };
+
+        logInButton.addActionListener(cambiarTarxeta);
+        signUpButton.addActionListener(cambiarTarxeta);
+
+        // Evento para cambiar o tema de cor
+        ActionListener cambiarCor = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
+                
+                repintarComponentes();
+
+            }
+            
+        };
+
+        cambioModoCorLogIn.addActionListener(cambiarCor);
+        cambioModoCorSignUp.addActionListener(cambiarCor);
+
+        listenersLogin();
+        listenersRexistro();
+
+    }
+
+    private void listenersLogin() {
+
+        
+        // Evento ao clicar no botón para iniciar sesión
+        submitLogIn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {              
+                
+                String nome = usernameLogIn.getText();
+                String passwd = new String(passwordLogin.getPassword());
+
+                try {
+
+                    Usuario user = Calendario.logIn(nome, passwd);
+
+                    Calendario.setUsuario(user);
+                    Calendario.mostrarCalendario();
+
+                    frame.setVisible(false);
+                    frame.dispose();
+                
+                }catch(UsuarioNonAtopadoException userExc ) {
+                    
+                    Calendario.mostrarErro(frame, Calendario.getTraduccion("E02", "O usuario non está rexistrado"));
+                    passwordLogin.setText("");
+                    usernameLogIn.setText("");
+
+                } catch(CredenciaisIncorrectasException credExc ) {
+
+                    Calendario.mostrarErro(frame, Calendario.getTraduccion("E01", "Credenciais incorrectas"));
+                    passwordLogin.setText("");
+                    usernameLogIn.setText("");
+
+                }
+
+            }
+            
+        });
+
+    }
+
+    private void listenersRexistro() {
+
+        // Evento ao clicar no botón para rexistrarse
+        submitSignUp.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String nome = usernameSignUp.getText();
+                String passwd = new String(passwordSignUp.getPassword());
+                String confirm = new String(confirmPassword.getPassword());
+
+                try {
+
+                    Usuario user = Calendario.rexistrarConta(nome, passwd, confirm);
+                    Calendario.setUsuario(user);
+                    Calendario.mostrarCalendario();
+                    
+                    frame.setVisible(false);
+                    frame.dispose();
+
+                } catch(UsuarioXaRexistradoException userExc ) {
+
+                    Calendario.mostrarErro(frame, Calendario.getTraduccion("E06", "Usuario xa rexistrado"));
+                    passwordSignUp.setText("");
+                    usernameSignUp.setText("");
+                    confirmPassword.setText("");
+
+                } catch(CredenciaisIncorrectasException credExc ) {
+
+                    if(credExc.getTipoErro() == Tipo.CONTRASINAL_NON_VALIDA ) {
+
+                        Calendario.mostrarErro(frame, Calendario.getTraduccion("E03", "A contrasinal non é válida"));
+                        passwordSignUp.setText("");
+                        usernameSignUp.setText("");
+                        confirmPassword.setText("");
+
+                    } else if(credExc.getTipoErro() == Tipo.CONTRASINAL_NON_COINCIDE ) {
+
+                        Calendario.mostrarErro(frame, Calendario.getTraduccion("E05", "As contrasinais non coinciden"));
+                        passwordSignUp.setText("");
+                        usernameSignUp.setText("");
+                        confirmPassword.setText("");
+
+                    } else if(credExc.getTipoErro() == Tipo.NOME_NON_VALIDO ) {
+
+                        Calendario.mostrarErro(frame, Calendario.getTraduccion("E04", "Nome de usuario non válido"));
+                        passwordSignUp.setText("");
+                        usernameSignUp.setText("");
+                        confirmPassword.setText("");
+
+                    } 
+
+                }
+                
+            }
+
+        });
+
+    }
+
     public void mostrarUI() {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -281,7 +416,11 @@ public class LoginUI extends ElementoUI {
             @Override
             public void run() {
                 
+                Toolkit tool = Toolkit.getDefaultToolkit();
+
                 frame.setVisible(true);
+                frame.setLocation((tool.getScreenSize().width - frame.getWidth()) / 2, (tool.getScreenSize().height - frame.getHeight() ) / 2 );
+                
                 
             }
             

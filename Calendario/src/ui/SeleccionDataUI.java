@@ -6,11 +6,16 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import calendario.Calendario;
+import utilidades.Mes;
 
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 
@@ -25,6 +30,7 @@ public class SeleccionDataUI extends ElementoUI {
     public SeleccionDataUI() {
 
         initSeleccionData();
+        iniciarListeners();
 
     }
 
@@ -95,6 +101,34 @@ public class SeleccionDataUI extends ElementoUI {
 
     }
 
+    private void iniciarListeners() {
+
+        String[] lista = Mes.getListaMeses();
+
+        anos.setModel(new SpinnerNumberModel( Calendario.getDataCalendario().getYear(), 1980, Calendario.getDataCalendario().getYear() + 10, 1));
+
+        for(int i = 0; i < lista.length; i++ ){
+
+            meses.addItem(lista[i]);
+
+        }
+
+        meses.setSelectedIndex(Calendario.getDataCalendario().getMonthValue() - 1);
+
+        ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Calendario.setDataCalendario(LocalDate.of((int)anos.getValue(), (int) meses.getSelectedIndex() + 1, 1));
+                seleccionData.dispose();
+                
+            }
+                    
+        });
+
+    }
+
     @Override
     public void actualizarTraduccions() {
 
@@ -108,9 +142,10 @@ public class SeleccionDataUI extends ElementoUI {
     public void mostrarUI() {
 
         actualizarTraduccions();
+        repintarComponentes();
         
         seleccionData.setVisible(true);
-        seleccionData.getContentPane().setBackground(modoColor.getFondo());
+        seleccionData.setAlwaysOnTop(true);
         seleccionData.setSize(300, 100);
 
         seleccionData.setLocationRelativeTo(null);
@@ -122,15 +157,23 @@ public class SeleccionDataUI extends ElementoUI {
         int x,y;
 
         actualizarTraduccions();
+        repintarComponentes();
 
         seleccionData.setVisible(true);
-        seleccionData.getContentPane().setBackground(modoColor.getFondo());
+        seleccionData.setAlwaysOnTop(true);
         seleccionData.setSize(300, 100);
 
         x = frame.getX() + (frame.getWidth() / 2) - (seleccionData.getWidth() / 2);
         y = frame.getY() + (frame.getHeight() / 2) - (seleccionData.getHeight() / 2);
 
         seleccionData.setLocation(x, y);
+
+    }
+
+    @Override
+    void repintarComponentes() {
+        
+        seleccionData.getContentPane().setBackground(modoColor.getFondo());
 
     }
 

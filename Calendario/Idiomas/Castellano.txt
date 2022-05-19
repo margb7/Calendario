@@ -36,6 +36,7 @@ C02-Cambiar modo de color
 C03-Público
 C04-Grupal
 C05-Privado
+C06-de
 
 -- LOGINUI
 L01-Inicio Sesión
@@ -58,6 +59,7 @@ E04-El nombre de usuario no es válido
 E05-Las contraseñas no coinciden
 E06-Usuario ya registrado
 E07-Error
+E08-No se pudo conectar con la base de datos
 
 -- SeleccionDataUI
 S01-Selecciona una fecha

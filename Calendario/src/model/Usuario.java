@@ -14,6 +14,11 @@ public class Usuario {
 
     }
 
+    public Usuario(int id, String nome ) {
+
+        this(id, nome, "");
+    }
+
     /**
      * @return the id
      */

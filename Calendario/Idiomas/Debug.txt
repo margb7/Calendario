@@ -37,6 +37,7 @@ C02-C83miar t3ma c0ol0r
 C03-p8nlico
 C04-g8tpal
 C05-prib8ado
+C06-de
 
 -- LOGINUI
 L01-inizio s3si0n
@@ -59,6 +60,7 @@ E04-geuqgqgq e tet t
 E05-fqfe  eff ef f ef 
 E06-fefeq t e tt 
 E07-eggg
+E08-N0nv p0ido c03ctar c0e bvese d4 d3t0s
 
 -- SeleccionDataUI
 S01-sgeq s s  fdata

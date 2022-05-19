@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import java.awt.Toolkit;
+
 import calendario.Calendario;
 
 /**
@@ -18,8 +20,11 @@ public class ErrorUI extends ElementoUI {
     public ErrorUI() {
 
         dialog = new JDialog();
+        dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE); // TODO: no seguro 
+
         label = new JLabel("", JLabel.CENTER);
-        label.setForeground(modoColor.getTexto());
+        label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
+        dialog.add(label);
 
     }
 
@@ -35,17 +40,29 @@ public class ErrorUI extends ElementoUI {
     }
 
     @Override
-    void mostrarUI() {
+    public void mostrarUI() {
 
-        label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));
-        dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
-        dialog.setVisible(true);
-        dialog.getContentPane().setBackground(modoColor.getFondo());
-        label.setForeground(modoColor.getTexto());
-        dialog.setSize(300, 100);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
-        dialog.setLocationRelativeTo(null);
+            @Override
+            public void run() {
+                
+                Toolkit tool = Toolkit.getDefaultToolkit();
 
+                repintarComponentes();
+                
+                dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
+                dialog.setVisible(true);
+
+                dialog.setSize(300, 100);
+
+                dialog.setLocationRelativeTo(null);
+                dialog.setLocation((tool.getScreenSize().width - dialog.getWidth()) / 2, (tool.getScreenSize().height - dialog.getHeight() ) / 2 );
+            
+            }
+            
+        });
+        
     }
 
     /**
@@ -55,18 +72,36 @@ public class ErrorUI extends ElementoUI {
      */
     public void mostrarUI(JFrame frame ) {
 
-        int x,y;
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                
+                int x,y;
+
+                repintarComponentes();
         
-        dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
-        dialog.setVisible(true);
+                dialog.setTitle(Calendario.getTraduccion("E07", "Erro"));
+                dialog.setVisible(true);
+                
+                dialog.setSize(300, 100);
+
+                x = frame.getX() + (frame.getWidth() / 2) - (dialog.getWidth() / 2);
+                y = frame.getY() + (frame.getHeight() / 2) - (dialog.getHeight() / 2);
+
+                dialog.setLocation(x, y);
+                
+            }
+            
+        });
+
+    }
+
+    @Override
+    void repintarComponentes() {
+
         dialog.getContentPane().setBackground(modoColor.getFondo());
         label.setForeground(modoColor.getTexto());
-        dialog.setSize(300, 100);
-
-        x = frame.getX() + (frame.getWidth() / 2) - (dialog.getWidth() / 2);
-        y = frame.getY() + (frame.getHeight() / 2) - (dialog.getHeight() / 2);
-
-        dialog.setLocation(x, y);
 
     }
 

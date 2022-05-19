@@ -2,10 +2,16 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -21,23 +27,50 @@ import excepcions.UsuarioXaRexistradoException;
 public class Datos {
     
     private static final String CARPETA_IDIOMAS = "Idiomas";
-    private static LocalDate data;
-    private static LocalTime tempo;
+    private static final String CONEXION_BASE = "jdbc:mysql://localhost/calendario";
+    private static final String USUARIO_CONEXION = "root";
+    private static final String PASSWD_CONEXION = "root";
+
+    private static Connection conexionBase;
 
     /**
      * Constructor privado para evitar instancias
      */
     private Datos() {}
 
-    /**
-     * Constructor estático para inicializar as datas
-     */
+    public static boolean iniciarConexionBBDD() {
 
-    public static void init() {
+        boolean out = true;
 
-        data = LocalDate.now();
-        tempo = LocalTime.now();
+        try {
 
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            try {
+
+                conexionBase = DriverManager.getConnection(CONEXION_BASE, USUARIO_CONEXION, PASSWD_CONEXION);
+
+            } catch (SQLException e) {
+
+                System.out.println("Non se puido conectar coa base de datos");
+                conexionBase = null;
+                out = false;
+
+            }
+            
+        } catch (ClassNotFoundException e) {
+            
+            System.out.println("Non se puido atopar o driver de jdbc");
+            conexionBase = null;
+            out = false;
+
+        }
+        
+        return out;
+    }
+
+    public static Connection getConexionBase() {
+        return conexionBase;
     }
 
     /**
@@ -46,34 +79,40 @@ public class Datos {
      * @param user o usuario dos eventos.
      * @return a lista de eventos con todos os eventos ou unha lista vacía de eventos
      */
-    public static Evento[] getEventosDia(LocalDate dataEvento, Usuario user) {    // Añadir usuario como parámetro
+    public static Evento[] getEventosDia(LocalDate dataEvento, Usuario user) {
 
-        Evento[] listaEventos = new Evento[0];
-
-        // getEventosPublicos(dia);
-        // getEventosPrivados(dia,user);
-        // getEventosGrupales(dia, user);
-
-        // TODO: gardar contido nun array de eventos
-
-        if(dataEvento.equals(LocalDate.of(2022, Month.JUNE, 2)) ) {
-
-            listaEventos = new Evento[2];
-            listaEventos[0] = new EventoPrivado(0, "Vacaciones", data, tempo);
-            listaEventos[1] = new EventoPrivado(0, "examenes = null", data, tempo);
-
-        } else if(dataEvento.getMonthValue() == 12 && dataEvento.getDayOfMonth() == 25 ) {
+        Evento[] out = new Evento[0];
+        ArrayList<Evento> eventos = new ArrayList<>();
         
-            listaEventos = new Evento[1];
-            listaEventos[0] = new EventoPrivado(0, "Navidad", data, tempo);
+        try {
 
-        } else {
+            getEventosPrivados(dataEvento, user).forEach(el -> {
 
-            listaEventos = getEventosPrivados(dataEvento, user);
+                eventos.add(el);
+    
+            });
+    
+            getEventosPublicos(dataEvento).forEach(el -> {
+    
+                eventos.add(el);
+                
+            });
+    
+            getEventosGrupales(dataEvento, user).forEach(el -> {
+    
+                eventos.add(el);
+                
+            });
+
+        } catch(NullPointerException e ) {
+
+            // Para cando non hai conexión coa base de datos (a conexión do jdbc é null)
 
         }
 
-        return listaEventos;
+        out = eventos.toArray(out);
+
+        return out;
     }
 
     /**
@@ -85,14 +124,32 @@ public class Datos {
     public static Usuario getUsuarioPorNome(String nome ) throws UsuarioNonAtopadoException{
 
         Usuario out = null;
+        
+        try {
 
-        if(nome.equals("administrador") ) {
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_USUARIO, PASSWD FROM USUARIOS WHERE NOME = ? ");
 
-            out = new Usuario(0, "administrador", "renaido");  // TODO: valor temporal para probas
+            statement.setString(1, nome);
 
-        } else {
+            ResultSet set = sentenciaLectura(statement);
 
-            throw new UsuarioNonAtopadoException("Para o nome : " + nome);
+            if (set.next() ) {
+
+                int id = set.getInt(1);
+                String passwd = set.getString(2);
+
+                out = new Usuario(id, nome, passwd);
+
+            } else {
+
+                throw new UsuarioNonAtopadoException("Para o usuario con nome: " + nome);
+
+            }
+
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter o usuario por nome");
 
         }
 
@@ -103,23 +160,96 @@ public class Datos {
 
         boolean out = false;
 
-        out = nome.equals("administrador");
+        try {
+
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_USUARIO FROM USUARIOS WHERE NOME = ? ");
+
+            statement.setString(1, nome);
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if (set.next() ) {
+
+                out = true;
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para saber se o usuario está rexistrado");
+
+        }
 
         return out;
-    } 
+    }
 
+    public static Usuario getUsuarioPorId(int id) throws UsuarioNonAtopadoException {
+
+        Usuario out = null;
+
+        try {
+
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT  FROM USUARIOS WHERE ID_USUARIO = ? ");
+
+            statement.setInt(1, id);
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if (set.next() ) {
+
+                out = new Usuario(id, set.getString(1));
+
+            } else {
+
+                throw new UsuarioNonAtopadoException("Para o id: " + id);
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para saber se o usuario está rexistrado");
+
+        }
+
+        return out;
+    }
+
+    /**
+     * Rexistra o usuario na base de datos. Se non se pode rexistrar este método devolverá un usuario
+     * co nome e contrasinal pasados como argumentos pero con <code>id = -1</code>
+     * @param nome o nome do usuario a rexistrar. Se xa está rexistrado saltará unha excepciṕn
+     * @param contrasinal a contrasinal do usuario.
+     * @return un <code>Usuario</code> co nome e contrasinal especificados
+     * @throws UsuarioXaRexistradoException se o usuario xa está rexistrado
+     */
     public static Usuario rexistrarUsuario(String nome, String contrasinal ) throws UsuarioXaRexistradoException{
 
         Usuario out;
+        int id = -1;
 
         if(usuarioEstaRexistrado(nome) ) {
 
             throw new UsuarioXaRexistradoException("Para o usuario: " + nome);
 
+        } else {
+
+            try {
+
+                CallableStatement cs = conexionBase.prepareCall("CALL REXISTRAR_USUARIO(?, ?)");
+                
+                cs.setString(1, nome);
+                cs.setString(2, contrasinal);
+
+                cs.execute();
+
+            } catch(SQLException e) {
+
+                System.out.println("Erro na consulta para rexistrar usuario");
+
+            }
         }
 
-        // TODO: id proporcionado pola base de datos
-        out = new Usuario(0, nome, contrasinal);
+        out = new Usuario(id, nome, contrasinal);
 
         return out;
     }
@@ -149,7 +279,7 @@ public class Datos {
     
                 for(String s : lines ) {
     
-                    if(!s.isEmpty() && !s.startsWith("--") ) {
+                    if(!s.isEmpty() && !s.startsWith("--") && s.matches("^[A-Z][0-9]{2}[-].*")) {
     
                         codigo = s.substring(0, 3);
                         significado = s.substring(4, s.length());
@@ -203,65 +333,152 @@ public class Datos {
 
         }
 
-        return out;
+        return lineas.toArray(out);
     }
 
-    private static Evento[] getEventosPrivados(LocalDate dia, Usuario user ) {
+    public static ArrayList<Evento> getEventosPrivados(LocalDate dia, Usuario user ) {
 
-        Evento[] out = null;
-        String[] consulta = null;
-        
-        consulta = leerFichero(Path.of("Test", "EjemplosEventos.txt").toString());    // = pedirDatosBBDD() 
+        ArrayList<Evento> eventos = new ArrayList<>();
 
-        out = new Evento[consulta.length];
+        try {
 
-        for(int i = 0; i < consulta.length; i++ ) {
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, HORA FROM VISTA_EVENTOS_PRIVADOS WHERE CREADOR = ? AND DATA_EVENTO = ? ");
 
-            out[i] = EventoPrivado.parse(consulta[i]);
+            statement.setInt(1, user.getId());
+            statement.setString(2, dia.toString());
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if(set != null ) {
+
+                while(set.next() ) {
+
+                    eventos.add(new EventoPrivado(set.getInt(1), set.getString(2), user.getId(), dia, set.getTime(3).toLocalTime() ));
+    
+                }
+
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter eventos privados");
+            e.printStackTrace();
+
+        }
+
+        return eventos;
+    }
+
+    public static ArrayList<Evento> getEventosPublicos(LocalDate dia ) {
+
+        ArrayList<Evento> eventos = new ArrayList<>();
+
+        try {
+
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, CREADOR, HORA FROM VISTA_EVENTOS_PUBLICOS WHERE DATA_EVENTO = ? ");
+
+            statement.setString(1, dia.toString());
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if(set != null ) {
+
+                while(set.next() ) {
+
+                    eventos.add(new EventoPublico(set.getInt(1), set.getString(2), set.getInt(3), dia, set.getTime(4).toLocalTime() ));
+    
+                }
+
+            }
+            
+
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter eventos públicos");
+            e.printStackTrace();
+
+        }
+
+        return eventos;
+    }
+
+    public static ArrayList<Evento> getEventosGrupales(LocalDate dia, Usuario user ) {
+
+        ArrayList<Evento> eventos = new ArrayList<>();
+
+        try {
+
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, CREADOR, HORA FROM VISTA_EVENTOS_GRUPAIS WHERE USUARIO = ? AND DATA_EVENTO = ?");
+
+            statement.setInt(1, user.getId());
+            statement.setString(2, dia.toString());
+
+            ResultSet set = sentenciaLectura(statement);
+
+            if(set != null ) {
+
+                while(set.next() ) {
+
+                    eventos.add(new EventoGrupal(set.getInt(1), set.getString(2), set.getInt(3), dia, set.getTime(4).toLocalTime() ));
+    
+                }
+
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("Error coa consulta para obter eventos grupais");
+            e.printStackTrace();
+
+        }
+
+        return eventos;
+    }
+
+    public static EventoGrupal crearEventoGrupal(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
+
+        EventoGrupal out;
+
+        try {
+
+            CallableStatement cs = conexionBase.prepareCall("CALL CREAR_EVENTO_GRUPAL(?,?,?,?)");
+                
+            cs.setString(1, nome);
+            cs.setInt(2, creador.getId());
+            cs.setDate(3, Date.valueOf(data));
+            cs.setTime(4, Time.valueOf(hora));
+
+            cs.execute();
+                                // TODO: obter id xenerado na base de datos
+            out = new EventoGrupal(0, nome, creador.getId(), data, hora);
+
+        } catch (SQLException e) {
+            
+            out = null;
+            System.out.println("Erro ao intentar crear un evento grupal");
 
         }
 
         return out;
+
     }
 
-    private static Evento[] getEventosPublicos(LocalDate dia ) {
+    public static ResultSet sentenciaLectura(PreparedStatement st) {
 
-        Evento[] out = null;
-        String[] consulta = null;       // consulta = pedirDatos() 
-        
-        /*
-        
-        out = new String[consulta.length];
+        ResultSet out;
 
-        for(int i = 0; i < consulta.length; i++ ) {
+        try {
 
-            out[i] = EventoPublico.parse(consulta[i]);
+            out = st.executeQuery();
+
+        } catch (SQLException e) {
+            
+            out = null;
 
         }
 
-        */
-
         return out;
-    }
 
-    private static Evento[] getEventosGrupales(LocalDate dia, Usuario user ) {
-
-        Evento[] out = null;
-        String[] consulta = null;       // consulta = pedirDatos() 
-        
-        /*
-        
-        out = new String[consulta.length];
-
-        for(int i = 0; i < consulta.length; i++ ) {
-
-            out[i] = EventoGrupal.parse(consulta[i]);
-
-        }
-
-        */
-
-        return out;
     }
 
 }
