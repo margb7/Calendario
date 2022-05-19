@@ -83,7 +83,6 @@ public class Calendario {
 
         }
 
-        
     }
 
     public static HashMap<String, HashMap<String, String>> getIdiomasDisponibles() {
@@ -144,7 +143,8 @@ public class Calendario {
 
     public static Usuario logIn(String nome, String passwd ) throws CredenciaisIncorrectasException, UsuarioNonAtopadoException {
 
-        Usuario user = Datos.getUsuarioPorNome(nome);
+        Usuario user = Datos.getUsuarioPorNome(nome);   // Xa lanza automáticamente a excepción de 
+                                                        // usuario non atopado
 
         if(!user.getContrasinal().equals(passwd) ) {     // Inicio de sesión correcto
 
@@ -155,46 +155,52 @@ public class Calendario {
         return user;
     }
 
+    /**
+     * Rexistra un novo usuario. Antes de rexistralo realiza as comprobacións para que o nome sexa válido, que a 
+     * contrasinal sexa válida e que coincida coa confirmación.
+     * @param nome o nome de login do usuario
+     * @param contrasinal a contrasinal do usuario
+     * @param confirmacion a confirmación da contrasinal
+     * @return un obxecto de usuario rexistrado
+     * @throws UsuarioXaRexistradoException se o usuario xa está rexistrado
+     * @throws CredenciaisIncorrectasException nas seguintes situacións:
+     * <ul>
+     *   <li>No caso de que o nome non sexa válido (neste caso o tipo da excepción será <code>Tipo.NOME_NON_VALIDO</code>)</li>
+     *   <li>No caso de que o contrasinal non sexa válido (neste caso o tipo da excepción será <code>Tipo.CONTRASINAL_NON_VALIDA</code>)</li>
+     *   <li>No caso de que a contrasinal e a confirmación non coincidan (neste caso o tipo da excepción será <code>Tipo.CONTRASINAL_NON_VALIDA</code>)</li>
+     * </ul>
+     */
     public static Usuario rexistrarConta(String nome, String contrasinal, String confirmacion ) throws UsuarioXaRexistradoException, CredenciaisIncorrectasException{
 
         Usuario user;
 
         if(!Datos.usuarioEstaRexistrado(nome) ) {
 
-            if(Funciones.nomeUsuarioValido(nome) ) {
-
-                if(Funciones.contrasinalValida(contrasinal) ) {
-
-                    if(contrasinal.equals(confirmacion) ) {
-
-                        user = Datos.rexistrarUsuario(nome, contrasinal);
-        
-                    } else {
-        
-                        throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_COINCIDE ,"A contrasinal e a confirmación non son correctas");
-        
-                    }
-
-                } else {
-
-                    throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_VALIDA, "A contrasinal non é válida");
-
-                }
-
-            } else {
-
-                throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.NOME_NON_VALIDO, "Nome de usuario non válido");
-
-            }
-
-        } else {
-
             throw new UsuarioXaRexistradoException("Para o nome :" + nome);
 
         }
 
-        return user;
+        if(!Funciones.nomeUsuarioValido(nome) ) {
 
+            throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.NOME_NON_VALIDO, "Nome de usuario non válido");
+
+        }
+
+        if(!Funciones.contrasinalValida(contrasinal) ) {
+            
+            throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_VALIDA, "A contrasinal non é válida");
+
+        }
+
+        if(contrasinal.equals(confirmacion) ) {
+
+            throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_COINCIDE ,"A contrasinal e a confirmación non son correctas");
+
+        } 
+
+        user = Datos.rexistrarUsuario(nome, contrasinal);
+
+        return user;
     }
 
 
@@ -210,7 +216,7 @@ public class Calendario {
         interfaceErro.getLabel().setText(str);
 
         // Evento para crear un diálgo de forma que ata que non se peche non 
-        // se poda interactuar co "owner"
+        // se poda interactuar co owner
         interfaceErro.getDialog().addWindowListener(new WindowAdapter() {
 
             @Override

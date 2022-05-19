@@ -216,7 +216,7 @@ public class Datos {
 
     /**
      * Rexistra o usuario na base de datos. Se non se pode rexistrar este método devolverá un usuario
-     * co nome e contrasinal pasados como argumentos pero con id -1
+     * co nome e contrasinal pasados como argumentos pero con <code>id = -1</code>
      * @param nome o nome do usuario a rexistrar. Se xa está rexistrado saltará unha excepciṕn
      * @param contrasinal a contrasinal do usuario.
      * @return un <code>Usuario</code> co nome e contrasinal especificados
