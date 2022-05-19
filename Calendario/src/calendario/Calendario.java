@@ -2,12 +2,9 @@ package calendario;
 
 import utilidades.Funciones;
 
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import excepcions.CredenciaisIncorrectasException;
@@ -52,7 +49,7 @@ public class Calendario {
         
         idiomasDisponibles = Datos.cargarIdiomas();
 
-        setIdomaSeleccionado("English");
+        setIdomaSeleccionado("Galego");
 
         // Tema de color para todos os elementos
         ElementoUI.setModoColor(ModoColorUI.MODO_CLARO);
@@ -215,38 +212,14 @@ public class Calendario {
      */
     public static void mostrarErro(JFrame owner, String str ) {
 
-        interfaceErro.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         interfaceErro.getLabel().setText(str);
-
-        // Evento para crear un diálgo de forma que ata que non se peche non 
-        // se poda interactuar co owner
-        interfaceErro.getDialog().addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                
-                owner.setEnabled(true);
-                
-            }
-
-            @Override
-            public void windowOpened(WindowEvent e) {
-                
-                owner.setEnabled(false);
-
-            }
-
-        });
-
         interfaceErro.mostrarUI(owner);
 
     }
 
     public static void mostrarErro(String str ) {
 
-        interfaceErro.getDialog().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         interfaceErro.getLabel().setText(str);
-
         interfaceErro.mostrarUI();
 
     }
@@ -282,73 +255,18 @@ public class Calendario {
 
     public static void pedirData(JFrame owner ) {
 
-        interfaceSeleccionData.getSeleccionData().addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                
-                owner.setEnabled(true);
-                
-            }
-
-            @Override
-            public void windowOpened(WindowEvent e) {
-                
-                owner.setEnabled(false);
-
-            }
-
-        });
+        
 
         interfaceSeleccionData.mostrarUI(owner);
 
     }
 
-    public static void pedirDatosEventoPrivado(JFrame owner) {
-
-        interfaceCreacionEventoPrivado.getDialogoCreacion().addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-
-                owner.setEnabled(true);
-                
-            }
-
-            @Override
-            public void windowOpened(WindowEvent e) {
-
-                owner.setEnabled(false);
-
-            }
-
-        });
-
-        interfaceCreacionEventoPrivado.getCancelarButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                interfaceCreacionEventoPrivado.getDialogoCreacion().dispose();
-                
-            }
-            
-        });
-
-        interfaceCreacionEventoPrivado.getCrearEventoButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                //TODO crear evento
-
-                interfaceCreacionEventoPrivado.getDialogoCreacion().dispose();
-                
-            }
-
-        });
+    public static void pedirDatosEventoPrivado(JFrame owner, LocalDate data) {
 
         interfaceCreacionEventoPrivado.mostrarUI(owner);
+
+    }
+
     public static void mostrarCalendario() {
 
         interfaceCalendario.mostrarUI();

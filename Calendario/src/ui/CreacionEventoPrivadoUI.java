@@ -10,8 +10,18 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.JSpinner.DateEditor;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
+
+import calendario.Calendario;
+import model.Datos;
+
 import java.awt.Color;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.awt.event.WindowAdapter;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
@@ -26,11 +36,20 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
     private JButton cancelarButton;
     private GridBagConstraints gbc;
     private SpinnerDateModel mod;
+    private LocalDate data;
 
     public CreacionEventoPrivadoUI() {
 
         initCreacionEvento();
+        iniciarListeners();
 
+    }
+
+    /**
+     * @return the data
+     */
+    public LocalDate getData() {
+        return data;
     }
 
     public JDialog getDialogoCreacion() {
@@ -43,6 +62,13 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
     public JButton getCrearEventoButton() {
         return crearEventoButton;
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     public void initCreacionEvento() {
@@ -101,11 +127,37 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
     }
 
+    private void iniciarListeners() {
+
+        cancelarButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                dialogoCreacion.dispose();
+                
+            }
+            
+        });
+
+        crearEventoButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                Datos.crearEventoGrupal("Eventoaaa", Calendario.getUsuario(), LocalDate.now(), LocalTime.now());
+                dialogoCreacion.dispose();
+                
+            }
+
+        });
+
+    }
+
     @Override
     public void mostrarUI() {
 
         dialogoCreacion.setVisible(true);
-        dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
         dialogoCreacion.setSize(300, 100);
 
         dialogoCreacion.setLocationRelativeTo(null);
@@ -116,8 +168,26 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
 
         int x,y;
 
+        dialogoCreacion.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+                frame.setEnabled(true);
+                
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+                frame.setEnabled(false);
+
+            }
+
+        });
+
         dialogoCreacion.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
+        
         dialogoCreacion.setUndecorated(true);
         dialogoCreacion.getRootPane().setBorder(new javax.swing.border.LineBorder(Color.GRAY, 1));
         dialogoCreacion.setVisible(true);
@@ -130,6 +200,17 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
         
 
     }
+
+    @Override
+    void repintarComponentes() {
+        
+        dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
+        
+    }
     
+    @Override
+    public void actualizarTraduccions() {
+        
+    }
 
 }

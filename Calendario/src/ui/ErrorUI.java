@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.Toolkit;
 
 import calendario.Calendario;
@@ -71,6 +73,26 @@ public class ErrorUI extends ElementoUI {
      * no medio desa ventá.
      */
     public void mostrarUI(JFrame frame ) {
+
+        // Evento para crear un diálgo de forma que ata que non se peche non 
+        // se poda interactuar co owner
+        dialog.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                
+                frame.setEnabled(true);
+                
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                
+                frame.setEnabled(false);
+
+            }
+
+        });
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 

@@ -8,6 +8,7 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.MenuElement;
 
 import calendario.Calendario;
 
@@ -43,9 +44,6 @@ public class CalendarioUI extends ElementoUI {
     private JButton[] celdasDias;
     private JButton avanzarMes;
     private JButton retrocederMes;
-    private JMenuItem itemPublico;
-    private JMenuItem itemPrivado;
-    private JMenuItem itemGrupal;
     private JButton cambioModoCor;
 
     /**
@@ -107,18 +105,6 @@ public class CalendarioUI extends ElementoUI {
         return frame;
     }
 
-    public JMenuItem getItemGrupal() {
-        return itemGrupal;
-    }
-
-    public JMenuItem getItemPrivado() {
-        return itemPrivado;
-    }
-
-    public JMenuItem getItemPublico() {
-        return itemPublico;
-    }
-
     public JButton getCambioModoCor() {
         return cambioModoCor;
     }
@@ -127,6 +113,7 @@ public class CalendarioUI extends ElementoUI {
     
         // Ten como finalidade actualizar o color no caso de que se actualizase o tema de cor 
         // despois de instanciar a clase
+        actualizarTraduccions();
         repintarComponentes();
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -197,17 +184,6 @@ public class CalendarioUI extends ElementoUI {
         panelCalendario = new JPanel(new GridBagLayout());
         panelCalendario.setOpaque(true);
 
-        panelCalendario.setComponentPopupMenu(new JPopupMenu());
-
-        itemPublico = new JMenuItem();
-        panelCalendario.getComponentPopupMenu().add(itemPublico);
-
-        itemGrupal = new JMenuItem();
-        panelCalendario.getComponentPopupMenu().add(itemGrupal);
-
-        itemPrivado = new JMenuItem();
-
-        panelCalendario.getComponentPopupMenu().add(itemPrivado);
         panelContido.add(panelCalendario, BorderLayout.CENTER);
 
         gbc.weightx = 1.0;
@@ -299,7 +275,65 @@ public class CalendarioUI extends ElementoUI {
 
         for(int i = 0; i < celdasDias.length; i++ ) {
 
-            celdasDias[i].addMouseListener(new MouseAdapter() {
+            JMenuItem itemPublico;
+            JMenuItem itemPrivado;
+            JMenuItem itemGrupal;
+            JButton boton = celdasDias[i];
+
+            boton.setComponentPopupMenu(new JPopupMenu());
+            
+            itemPublico = new JMenuItem();
+            itemPublico.setName("publico");
+            boton.getComponentPopupMenu().add(itemPublico);
+
+            itemGrupal = new JMenuItem();
+            itemGrupal.setName("grupal");
+            boton.getComponentPopupMenu().add(itemGrupal);
+
+            itemPrivado = new JMenuItem();
+            itemPrivado.setName("privado");
+            boton.getComponentPopupMenu().add(itemPrivado);
+
+            //TODO implementar as accións dos ítems do menú contextual
+            // Evento do menú para crear un evento grupal
+            itemGrupal.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    
+                    System.out.println(e.getSource().getClass());
+
+                    System.out.println(e.getActionCommand());
+                    
+                }
+
+            });
+
+            // Evento do menú para crear un evento privado
+            itemPrivado.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    
+                    Calendario.pedirDatosEventoPrivado(frame, LocalDate.parse(boton.getName()));
+                    
+                }
+
+            });
+
+            // Evento do menú para crear un evento público
+            itemPublico.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    
+                    System.out.println(e.getActionCommand());
+                    
+                }
+
+            });
+
+            boton.addMouseListener(new MouseAdapter() {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -363,43 +397,6 @@ public class CalendarioUI extends ElementoUI {
                 
                 Calendario.pedirData(frame);
 
-            }
-
-        });
-
-        //TODO implementar as accións dos ítems do menú contextual
-        // Evento do menú para crear un evento grupal
-        itemGrupal.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                System.out.println(e.getActionCommand());
-                
-            }
-
-        });
-
-        // Evento do menú para crear un evento privado
-        itemPrivado.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                System.out.println(e.getActionCommand());
-                
-            }
-
-        });
-
-        // Evento do menú para crear un evento público
-        itemPublico.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                System.out.println(e.getActionCommand());
-                
             }
 
         });
@@ -486,9 +483,38 @@ public class CalendarioUI extends ElementoUI {
 
         frame.setTitle(Calendario.getTraduccion("C01", "Calendario"));
         cambioModoCor.setText(Calendario.getTraduccion("C02", "Cambiar tema de cor"));
-        itemPublico.setText(Calendario.getTraduccion("C03", "Público"));
-        itemGrupal.setText(Calendario.getTraduccion("C04", "Grupal"));
-        itemPrivado.setText(Calendario.getTraduccion("C05", "Privado"));
+
+        for(int i = 0; i < celdasDias.length; i++ ) {
+
+            JButton boton = celdasDias[i];
+
+            if(boton.getComponentPopupMenu().getSubElements()[0] instanceof JMenuItem ) {
+
+                JMenuItem item = (JMenuItem) boton.getComponentPopupMenu().getSubElements()[0];
+
+                item.setText(Calendario.getTraduccion("C03", "Público"));
+
+            } else {
+
+                System.out.println("Tonto");
+
+            }
+
+        }
+
+        for(JButton boton : celdasDias ) {
+
+            MenuElement[] items = boton.getComponentPopupMenu().getSubElements();
+
+            JMenuItem publico = (JMenuItem) items[0];
+            JMenuItem grupal = (JMenuItem) items[1];
+            JMenuItem privado = (JMenuItem) items[2];
+            
+            publico.setText(Calendario.getTraduccion("C03", "Público"));
+            grupal.setText(Calendario.getTraduccion("C04", "Grupal"));
+            privado.setText(Calendario.getTraduccion("C05", "Privado"));
+
+        }
     
     }
 

@@ -14,10 +14,13 @@ import utilidades.Mes;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
+
+import java.time.LocalDate;
 
 public class SeleccionDataUI extends ElementoUI {
     
@@ -153,6 +156,24 @@ public class SeleccionDataUI extends ElementoUI {
     }
 
     public void mostrarUI(JFrame frame ) {
+
+        seleccionData.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                
+                frame.setEnabled(true);
+                
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                
+                frame.setEnabled(false);
+
+            }
+
+        });
 
         int x,y;
 
