@@ -162,6 +162,19 @@ public class Datos {
 
         try {
 
+            CallableStatement cs = conexionBase.prepareCall("CALL ESTA_USUARIO_REXISTRADO(?)");
+            ResultSet rs;
+
+            cs.setString(1, nome);
+
+            rs = cs.executeQuery();
+            
+            if(rs.next() && rs.getInt(1) != 0 ) {
+
+                out = true;
+
+            }
+
             PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_USUARIO FROM USUARIOS WHERE NOME = ? ");
 
             statement.setString(1, nome);
@@ -189,7 +202,7 @@ public class Datos {
 
         try {
 
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT  FROM USUARIOS WHERE ID_USUARIO = ? ");
+            PreparedStatement statement = conexionBase.prepareStatement("SELECT NOME FROM USUARIOS WHERE ID_USUARIO = ? ");
 
             statement.setInt(1, id);
 
@@ -236,17 +249,26 @@ public class Datos {
             try {
 
                 CallableStatement cs = conexionBase.prepareCall("CALL REXISTRAR_USUARIO(?, ?)");
-                
+                ResultSet rs;
+
                 cs.setString(1, nome);
                 cs.setString(2, contrasinal);
 
-                cs.execute();
+                rs = cs.executeQuery();
+                
+                if(rs.next() ) {
+
+                    id = rs.getInt(1);
+
+                }
 
             } catch(SQLException e) {
 
+                // Chegado aquí devólvese un usuario que so funciona como local (id = -1)
                 System.out.println("Erro na consulta para rexistrar usuario");
 
             }
+
         }
 
         out = new Usuario(id, nome, contrasinal);
@@ -342,7 +364,7 @@ public class Datos {
 
         try {
 
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, HORA FROM VISTA_EVENTOS_PRIVADOS WHERE CREADOR = ? AND DATA_EVENTO = ? ");
+            PreparedStatement statement = conexionBase.prepareStatement("CALL OBTER_EVENTOS_PRIVADOS(?, ?)");
 
             statement.setInt(1, user.getId());
             statement.setString(2, dia.toString());
@@ -375,7 +397,7 @@ public class Datos {
 
         try {
 
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, CREADOR, HORA FROM VISTA_EVENTOS_PUBLICOS WHERE DATA_EVENTO = ? ");
+            PreparedStatement statement = conexionBase.prepareStatement("CALL OBTER_EVENTOS_PUBLICOS(?)");
 
             statement.setString(1, dia.toString());
 
@@ -408,7 +430,7 @@ public class Datos {
 
         try {
 
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_EVENTO, NOME, CREADOR, HORA FROM VISTA_EVENTOS_GRUPAIS WHERE USUARIO = ? AND DATA_EVENTO = ?");
+            PreparedStatement statement = conexionBase.prepareStatement("CALL OBTER_EVENTOS_GRUPAIS(?, ?)");
 
             statement.setInt(1, user.getId());
             statement.setString(2, dia.toString());
@@ -435,24 +457,41 @@ public class Datos {
         return eventos;
     }
 
+    /**
+     * Crea un evento grupal cos parámetros dados. Non rexistra ningún usuario extra pero sí que rexistra 
+     * ao usuario creador.
+     * @param nome nome do evento.
+     * @param creador o usuario creador do evento.
+     * @param data a data do evento.
+     * @param hora a hora do evento.
+     * @return o evento xa creado.
+     */
     public static EventoGrupal crearEventoGrupal(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
 
         EventoGrupal out;
+        int id = -1;
 
         try {
 
             CallableStatement cs = conexionBase.prepareCall("CALL CREAR_EVENTO_GRUPAL(?,?,?,?)");
-                
+            ResultSet rs;
+
             cs.setString(1, nome);
             cs.setInt(2, creador.getId());
             cs.setDate(3, Date.valueOf(data));
             cs.setTime(4, Time.valueOf(hora));
 
-            cs.execute();
-                                // TODO: obter id xenerado na base de datos
-            out = new EventoGrupal(0, nome, creador.getId(), data, hora);
+            rs = cs.executeQuery();
+            
+            if(rs.next() ) {
 
-        } catch (SQLException e) {
+                id = rs.getInt(1);
+
+            }
+
+            out = new EventoGrupal(id, nome, creador.getId(), data, hora);
+
+        } catch (SQLException e) { // TODO: no debería capturarse el error así
             
             out = null;
             System.out.println("Erro ao intentar crear un evento grupal");
@@ -461,6 +500,76 @@ public class Datos {
 
         return out;
 
+    }
+
+    public static EventoPrivado crearEventoPrivado(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
+
+        EventoPrivado out;
+        int id = -1;
+
+        try {
+
+            CallableStatement cs = conexionBase.prepareCall("CALL CREAR_EVENTO_PRIVADO(?,?,?,?)");
+            ResultSet rs;
+
+            cs.setString(1, nome);
+            cs.setInt(2, creador.getId());
+            cs.setDate(3, Date.valueOf(data));
+            cs.setTime(4, Time.valueOf(hora));
+
+            rs = cs.executeQuery();
+            
+            if(rs.next() ) {
+
+                id = rs.getInt(1);
+
+            }
+            
+            out = new EventoPrivado(id, nome, creador.getId(), data, hora);
+            
+        } catch (SQLException e) {  // TODO: no debería capturarse el error así
+            
+            out = null;
+            System.out.println("Erro ao intentar crear un evento ");
+
+        }
+
+        return out;
+    }
+
+    public static EventoPublico crearEventoPublicoPrivado(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
+
+        EventoPublico out;
+        int id = -1;
+
+        try {
+
+            CallableStatement cs = conexionBase.prepareCall("CALL CREAR_EVENTO_PUBLICO(?,?,?,?)");
+            ResultSet rs;
+
+            cs.setString(1, nome);
+            cs.setInt(2, creador.getId());
+            cs.setDate(3, Date.valueOf(data));
+            cs.setTime(4, Time.valueOf(hora));
+
+            rs = cs.executeQuery();
+            
+            if(rs.next() ) {
+
+                id = rs.getInt(1);
+
+            }
+            
+            out = new EventoPublico(id, nome, creador.getId(), data, hora);
+            
+        } catch (SQLException e) {  // TODO: no debería capturarse el error así
+            
+            out = null;
+            System.out.println("Erro ao intentar crear un evento ");
+
+        }
+
+        return out;
     }
 
     public static ResultSet sentenciaLectura(PreparedStatement st) {

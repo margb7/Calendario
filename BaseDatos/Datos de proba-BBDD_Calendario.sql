@@ -34,8 +34,7 @@ SELECT ID_EVENTO INTO @ID_EV
     FROM EVENTOS
     WHERE NOME = "Evento grupal 2";
 
-CALL REXISTRAR_EN_EVENTO_GRUPAL(@ID_EV,@CLAVE1);
+CALL REXISTRAR_EN_EVENTO_GRUPAL(@ID_EV,@CLAVE1);	# Tiene que ser llamado en una transacción
 
 CALL CREAR_EVENTO_PRIVADO("Evento privado de admin", @CLAVE1, "2022-06-02", CURRENT_TIME());
 CALL CREAR_EVENTO_PRIVADO("Evento privado de user2", @CLAVE2, "2022-06-02", CURRENT_TIME());
-    

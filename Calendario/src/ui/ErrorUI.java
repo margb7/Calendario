@@ -22,7 +22,7 @@ public class ErrorUI extends ElementoUI {
     public ErrorUI() {
 
         dialog = new JDialog();
-        dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE); // TODO: no seguro 
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         label = new JLabel("", JLabel.CENTER);
         label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));

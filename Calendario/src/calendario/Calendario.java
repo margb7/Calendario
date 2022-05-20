@@ -181,7 +181,7 @@ public class Calendario {
 
         Usuario user;
 
-        if(!Datos.usuarioEstaRexistrado(nome) ) {
+        if(Datos.usuarioEstaRexistrado(nome) ) {
 
             throw new UsuarioXaRexistradoException("Para o nome :" + nome);
 
@@ -199,7 +199,7 @@ public class Calendario {
 
         }
 
-        if(contrasinal.equals(confirmacion) ) {
+        if(!contrasinal.equals(confirmacion) ) {
 
             throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.CONTRASINAL_NON_COINCIDE ,"A contrasinal e a confirmación non son correctas");
 
