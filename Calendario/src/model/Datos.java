@@ -73,6 +73,36 @@ public class Datos {
         return conexionBase;
     }
 
+    public static boolean existeEventoEnDia(String nome, LocalDate data ) {
+
+        boolean out = false;
+
+        try {
+            
+            CallableStatement cs = conexionBase.prepareCall("CALL BUSCAR_EVENTO_POR_DIA(?,?)");
+            ResultSet rs;
+
+            cs.setString(1, nome);
+            cs.setDate(2, Date.valueOf(data));
+
+            rs = cs.executeQuery();
+            
+            if(rs.next() && rs.getInt(1) != 0) {
+
+                out = true;
+
+            }
+
+        } catch (SQLException e) {
+            
+            System.out.println("Erro ao buscar un evento por día");
+            e.printStackTrace();
+
+        }
+        
+        return out;
+    }
+
     /**
      * Obtén da base de datos todos os eventos dun usuario e dunha data en concreto
      * @param dataEvento a data para buscar eventos.
@@ -170,18 +200,6 @@ public class Datos {
             rs = cs.executeQuery();
             
             if(rs.next() && rs.getInt(1) != 0 ) {
-
-                out = true;
-
-            }
-
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_USUARIO FROM USUARIOS WHERE NOME = ? ");
-
-            statement.setString(1, nome);
-
-            ResultSet set = sentenciaLectura(statement);
-
-            if (set.next() ) {
 
                 out = true;
 
@@ -374,8 +392,8 @@ public class Datos {
             if(set != null ) {
 
                 while(set.next() ) {
-
-                    eventos.add(new EventoPrivado(set.getInt(1), set.getString(2), user.getId(), dia, set.getTime(3).toLocalTime() ));
+                    
+                    eventos.add(new EventoPrivado(set.getInt(1), set.getString(2), user.getId(), dia, set.getTime(4).toLocalTime() ));
     
                 }
 

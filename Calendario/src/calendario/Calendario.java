@@ -3,11 +3,13 @@ package calendario;
 import utilidades.Funciones;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
 
 import excepcions.CredenciaisIncorrectasException;
+import excepcions.EventoXaExisteException;
 import excepcions.UsuarioNonAtopadoException;
 import excepcions.UsuarioXaRexistradoException;
 
@@ -17,6 +19,7 @@ import model.Usuario;
 
 import ui.CalendarioUI;
 import ui.CreacionEventoPrivadoUI;
+import ui.CreacionEventoPublicoUI;
 import ui.ElementoUI;
 import ui.ErrorUI;
 import ui.LoginUI;
@@ -40,6 +43,7 @@ public class Calendario {
     private static SeleccionDataUI interfaceSeleccionData;
     private static ErrorUI interfaceErro;
     private static CreacionEventoPrivadoUI interfaceCreacionEventoPrivado;
+    private static CreacionEventoPublicoUI interfaceCreacionEventoPublico;
 
     /**
      * Método main do programa.
@@ -67,6 +71,7 @@ public class Calendario {
         interfaceSeleccionData = new SeleccionDataUI();
         interfaceErro = new ErrorUI();
         interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
+        interfaceCreacionEventoPublico = new CreacionEventoPublicoUI();
         
         // Iniciar o programa
         if(Datos.iniciarConexionBBDD() ) {  // Programa en modo normal
@@ -267,6 +272,30 @@ public class Calendario {
         return Datos.getEventosDia(dataDia, usuario);
     }
 
+    public static void crearEventoPrivado(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException{
+
+        if(Datos.existeEventoEnDia(nome, data) ) {
+
+            throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
+
+        }
+
+        Datos.crearEventoPrivado(nome, usuario, data, hora);
+
+    }
+
+    public static void crearEventoPublico(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException{
+
+        if(Datos.existeEventoEnDia(nome, data) ) {
+
+            throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
+
+        }
+
+        Datos.crearEventoPublicoPrivado(nome, usuario, data, hora);
+
+    }
+
     public static void pedirData(JFrame owner ) {
 
         interfaceSeleccionData.mostrarUI(owner);
@@ -275,7 +304,15 @@ public class Calendario {
 
     public static void pedirDatosEventoPrivado(JFrame owner, LocalDate data) {
 
+        interfaceCreacionEventoPrivado.setData(data);
         interfaceCreacionEventoPrivado.mostrarUI(owner);
+
+    }
+
+    public static void pedirDatosEventoPublico(JFrame owner, LocalDate data) {
+
+        interfaceCreacionEventoPublico.setData(data);
+        interfaceCreacionEventoPublico.mostrarUI(owner);
 
     }
 

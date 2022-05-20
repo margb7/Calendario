@@ -327,7 +327,7 @@ public class CalendarioUI extends ElementoUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     
-                    System.out.println(e.getActionCommand());
+                    Calendario.pedirDatosEventoPublico(frame, LocalDate.parse(boton.getName()));
                     
                 }
 
@@ -484,24 +484,6 @@ public class CalendarioUI extends ElementoUI {
         frame.setTitle(Calendario.getTraduccion("C01", "Calendario"));
         cambioModoCor.setText(Calendario.getTraduccion("C02", "Cambiar tema de cor"));
 
-        for(int i = 0; i < celdasDias.length; i++ ) {
-
-            JButton boton = celdasDias[i];
-
-            if(boton.getComponentPopupMenu().getSubElements()[0] instanceof JMenuItem ) {
-
-                JMenuItem item = (JMenuItem) boton.getComponentPopupMenu().getSubElements()[0];
-
-                item.setText(Calendario.getTraduccion("C03", "Público"));
-
-            } else {
-
-                System.out.println("Tonto");
-
-            }
-
-        }
-
         for(JButton boton : celdasDias ) {
 
             MenuElement[] items = boton.getComponentPopupMenu().getSubElements();
@@ -554,7 +536,6 @@ public class CalendarioUI extends ElementoUI {
         listaEventos.setForeground(modoColor.getTexto());
 
         for (byte i = 0; i < 7; i++) {
-            gbc.gridx = i;
 
             JLabel lab = labelDias[i];
 

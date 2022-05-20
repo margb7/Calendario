@@ -28,18 +28,17 @@ CREATE TABLE EVENTOS(
     ID_EVENTO INT UNSIGNED NOT NULL AUTO_INCREMENT,
     NOME VARCHAR(25) NOT NULL,
     DATA_EVENTO DATE NOT NULL,
-    HORA TIME NULL,
+    HORA TIME NOT NULL,
     CREADOR INT UNSIGNED NOT NULL,
 
     FOREIGN KEY (CREADOR) REFERENCES USUARIOS(ID_USUARIO)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
         
-    -- Creo que fai falta un índice único para que non poidan existir eventos co
-    -- mesmo nome por usuario (UNIQUE INDEX AK_NOME_CREADOR(NOME, CREADOR))
-    
     INDEX FK_CREADOR_EVENTO(CREADOR),
 	INDEX INDEX_DATA_EVENTO(DATA_EVENTO),   -- > Xa que se van facer bastantes consultas ao redor da data do evento
+    
+    UNIQUE INDEX AK_NOME_DATA(NOME, DATA_EVENTO),
 
 	PRIMARY KEY (ID_EVENTO)
 

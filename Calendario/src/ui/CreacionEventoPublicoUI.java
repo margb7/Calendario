@@ -25,7 +25,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
-public class CreacionEventoPrivadoUI extends ElementoUI {
+public class CreacionEventoPublicoUI extends ElementoUI {
 
     private JDialog dialogoCreacion;
     private JLabel nombreEventoLabel;
@@ -38,7 +38,7 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
     private SpinnerDateModel mod;
     private LocalDate data;
 
-    public CreacionEventoPrivadoUI() {
+    public CreacionEventoPublicoUI() {
 
         init();
         iniciarListeners();
@@ -152,8 +152,8 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
                         Calendario.mostrarErro("Non é un nome válido");
 
                     } else {
-
-                        Calendario.crearEventoPrivado(nombreEventoTexto.getText(), data, LocalTime.of(16, 30));
+                                                                                        // TODO: problemas con time
+                        Calendario.crearEventoPublico(nombreEventoTexto.getText(), data, LocalTime.of(16, 30));
                         dialogoCreacion.dispose();
 
                     }
