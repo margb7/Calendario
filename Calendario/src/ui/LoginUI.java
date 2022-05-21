@@ -22,6 +22,7 @@ import excepcions.UsuarioNonAtopadoException;
 import excepcions.UsuarioXaRexistradoException;
 import excepcions.CredenciaisIncorrectasException.Tipo;
 import model.Usuario;
+import utilidades.Funciones;
 
 public class LoginUI extends ElementoUI {
 
@@ -315,7 +316,7 @@ public class LoginUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {              
                 
-                String nome = usernameLogIn.getText();
+                String nome = Funciones.purificarString(usernameLogIn.getText() );
                 String passwd = new String(passwordLogin.getPassword());
 
                 try {
@@ -356,7 +357,7 @@ public class LoginUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String nome = usernameSignUp.getText();
+                String nome = Funciones.purificarString(usernameSignUp.getText());
                 String passwd = new String(passwordSignUp.getPassword());
                 String confirm = new String(confirmPassword.getPassword());
 

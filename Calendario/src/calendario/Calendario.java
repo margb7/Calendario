@@ -4,6 +4,7 @@ import utilidades.Funciones;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -36,6 +37,7 @@ public class Calendario {
     private static LocalDate dataCalendario;
     private static LocalDate primerDiaMes;
     private static Usuario usuario;
+    private static boolean conectado;
 
     // Interfaces de usuario
     private static CalendarioUI interfaceCalendario;
@@ -73,10 +75,12 @@ public class Calendario {
         interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
         interfaceCreacionEventoPublico = new CreacionEventoPublicoUI();
         
-        // Iniciar o programa
-        if(Datos.iniciarConexionBBDD() ) {  // Programa en modo normal
+        // Iniciar a base de datos
+        conectado = Datos.iniciarConexionBBDD();
 
-            
+        // Mostrar interfaz
+        if(conectado ) {  // Programa en modo normal
+
             interfaceLogin.mostrarUI();
 
         } else {    // Programa en modo limitado (mostra o calendario pero nada mais)
@@ -104,6 +108,10 @@ public class Calendario {
 
     public static Usuario getUsuario() {
         return usuario;
+    }
+
+    public static boolean isConectado() {
+        return conectado;
     }
 
     public static void setPrimerDiaMes(LocalDate primerDiaMes) {
@@ -272,11 +280,17 @@ public class Calendario {
         return Datos.getEventosDia(dataDia, usuario);
     }
 
-    public static void crearEventoPrivado(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException{
+    public static void crearEventoPrivado(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException, CredenciaisIncorrectasException {
 
         if(Datos.existeEventoEnDia(nome, data) ) {
 
             throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
+
+        }
+
+        if(nome.isEmpty() ) {
+
+            throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.NOME_NON_VALIDO, "O nome non pode ser unha cadea vacía");
 
         }
 
@@ -284,7 +298,7 @@ public class Calendario {
 
     }
 
-    public static void crearEventoPublico(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException{
+    public static void crearEventoPublico(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException, CredenciaisIncorrectasException {
 
         if(Datos.existeEventoEnDia(nome, data) ) {
 
@@ -292,8 +306,31 @@ public class Calendario {
 
         }
 
+        if(nome.isEmpty() ) {
+
+            throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.NOME_NON_VALIDO, "O nome non pode ser unha cadea vacía");
+
+        }
+
         Datos.crearEventoPublicoPrivado(nome, usuario, data, hora);
 
+    }
+
+    public static void crearEventoGrupal(String nome, LocalDate data, LocalTime hora, ArrayList<Integer> users ) throws EventoXaExisteException, CredenciaisIncorrectasException{
+
+        if(Datos.existeEventoEnDia(nome, data) ) {
+
+            throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
+
+        }
+
+        if(nome.isEmpty() ) {
+
+            throw new CredenciaisIncorrectasException(CredenciaisIncorrectasException.Tipo.NOME_NON_VALIDO, "O nome non pode ser unha cadea vacía");
+
+        }
+
+        Datos.crearEventoGrupal(nome, usuario, data, hora, users);
     }
 
     public static void pedirData(JFrame owner ) {

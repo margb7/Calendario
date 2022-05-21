@@ -47,4 +47,20 @@ public class Funciones {
 
     }
 
+    /**
+     * Purifica unha cadea de texto para que a hora de introducila na base de datos non de problemas 
+     * (por exemplo 'hola' para a base de datos é igual a 'hola ').
+     * @param str a cadea para purificar
+     * @return o resultado
+     */
+    public static String purificarString(String str ) {
+
+        String out = str;
+        
+        out = out.trim();
+        out = out.replaceAll("( )+", " ");
+
+        return out;
+    }
+
 }

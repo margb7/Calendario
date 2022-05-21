@@ -90,13 +90,13 @@ public class Datos {
             if(rs.next() && rs.getInt(1) != 0) {
 
                 out = true;
+                System.out.println("");
 
             }
 
         } catch (SQLException e) {
             
             System.out.println("Erro ao buscar un evento por día");
-            e.printStackTrace();
 
         }
         
@@ -483,17 +483,21 @@ public class Datos {
      * @param creador o usuario creador do evento.
      * @param data a data do evento.
      * @param hora a hora do evento.
+     * @param usuarios un <code>ArrayList</code> con id de usuarios que participan no evento
      * @return o evento xa creado.
      */
-    public static EventoGrupal crearEventoGrupal(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
+    public static EventoGrupal crearEventoGrupal(String nome, Usuario creador, LocalDate data, LocalTime hora, ArrayList<Integer> usuarios ) {
 
         EventoGrupal out;
         int id = -1;
 
-        try {
-
-            CallableStatement cs = conexionBase.prepareCall("CALL CREAR_EVENTO_GRUPAL(?,?,?,?)");
+        try (CallableStatement cs = conexionBase.prepareCall("CALL CREAR_EVENTO_GRUPAL(?,?,?,?)") ) {   // Esta operación será realizada nunha transacción
+            
             ResultSet rs;
+            CallableStatement rexistro;
+
+            conexionBase.setAutoCommit(false);
+            rexistro = conexionBase.prepareCall("CALL REXISTRAR_EN_EVENTO_GRUPAL(?,?)");
 
             cs.setString(1, nome);
             cs.setInt(2, creador.getId());
@@ -508,17 +512,43 @@ public class Datos {
 
             }
 
+            // Comezo da transacción
+            
+
+            rexistro.setInt(1, id);
+
+            for(int idUser : usuarios ) {
+
+                rexistro.setInt(2, idUser);
+
+                rexistro.executeUpdate();
+
+            }
+
+            conexionBase.commit();
+
             out = new EventoGrupal(id, nome, creador.getId(), data, hora);
+
+            conexionBase.setAutoCommit(true);
 
         } catch (SQLException e) { // TODO: no debería capturarse el error así
             
             out = null;
+
+            try {
+
+                conexionBase.rollback();
+                conexionBase.setAutoCommit(true);
+
+            } catch (SQLException e1) {
+
+            }
+
             System.out.println("Erro ao intentar crear un evento grupal");
 
         }
 
         return out;
-
     }
 
     public static EventoPrivado crearEventoPrivado(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
@@ -546,7 +576,7 @@ public class Datos {
             
             out = new EventoPrivado(id, nome, creador.getId(), data, hora);
             
-        } catch (SQLException e) {  // TODO: no debería capturarse el error así
+        } catch (SQLException e) {
             
             out = null;
             System.out.println("Erro ao intentar crear un evento ");
@@ -581,10 +611,11 @@ public class Datos {
             
             out = new EventoPublico(id, nome, creador.getId(), data, hora);
             
-        } catch (SQLException e) {  // TODO: no debería capturarse el error así
+        } catch (SQLException e) {
             
             out = null;
-            System.out.println("Erro ao intentar crear un evento ");
+            System.out.println("Erro ao intentar crear un evento publico");
+            e.printStackTrace();
 
         }
 

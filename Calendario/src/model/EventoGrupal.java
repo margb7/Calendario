@@ -11,7 +11,7 @@ public class EventoGrupal extends Evento {
 
     @Override
     public String toString() {
-        return getNome() + " | G - creado por id : " + getCreador();
+        return getNome() + "   - " + getTempo().toString();
     }
 
 }

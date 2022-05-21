@@ -117,8 +117,8 @@ CREATE PROCEDURE CREAR_EVENTO_GRUPAL(IN NOME_EV VARCHAR(25), IN ID_CREAD INT UNS
         SELECT @ID_EV;
         
     END$$
-
-
+    
+    
 
 # Rexistra a un usuario como participante nun evento grupal
 DROP PROCEDURE IF EXISTS REXISTRAR_EN_EVENTO_GRUPAL$$

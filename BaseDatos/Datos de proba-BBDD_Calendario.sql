@@ -7,7 +7,6 @@ CALL REXISTRAR_USUARIO("administrador", "renaido"); -- renaido non cumple como c
 CALL REXISTRAR_USUARIO("user2", "abc123");
 CALL REXISTRAR_USUARIO("sineventos", "abc123");   -- usuario de proba -> solo deberían aparecerlle os eventos públicos
 
-
 SELECT ID_USUARIO INTO @CLAVE1 
     FROM USUARIOS
     WHERE NOME = "ADMINISTRADOR";
@@ -38,6 +37,3 @@ CALL REXISTRAR_EN_EVENTO_GRUPAL(@ID_EV,@CLAVE1);	# Tiene que ser llamado en una 
 
 CALL CREAR_EVENTO_PRIVADO("Evento privado de admin", @CLAVE1, "2022-06-02", CURRENT_TIME());
 CALL CREAR_EVENTO_PRIVADO("Evento privado de user2", @CLAVE2, "2022-06-02", CURRENT_TIME());
-
-
-CALL BORRAR_EVENTO(14);

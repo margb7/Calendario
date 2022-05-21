@@ -173,6 +173,13 @@ public class SeleccionDataUI extends ElementoUI {
 
             }
 
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                
+                seleccionData.dispose();
+
+            }
+
         });
 
         int x,y;
