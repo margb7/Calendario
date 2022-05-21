@@ -157,11 +157,11 @@ public class Datos {
         
         try {
 
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT ID_USUARIO, PASSWD FROM USUARIOS WHERE NOME = ? ");
+            PreparedStatement statement = conexionBase.prepareStatement("CALL BUSCAR_USUARIO_POR_NOME(?)");
 
             statement.setString(1, nome);
 
-            ResultSet set = sentenciaLectura(statement);
+            ResultSet set = statement.executeQuery();
 
             if (set.next() ) {
 
@@ -214,6 +214,7 @@ public class Datos {
         return out;
     }
 
+    @Deprecated
     public static Usuario getUsuarioPorId(int id) throws UsuarioNonAtopadoException {
 
         Usuario out = null;
@@ -224,7 +225,7 @@ public class Datos {
 
             statement.setInt(1, id);
 
-            ResultSet set = sentenciaLectura(statement);
+            ResultSet set = statement.executeQuery();
 
             if (set.next() ) {
 
@@ -387,7 +388,7 @@ public class Datos {
             statement.setInt(1, user.getId());
             statement.setString(2, dia.toString());
 
-            ResultSet set = sentenciaLectura(statement);
+            ResultSet set = statement.executeQuery();
 
             if(set != null ) {
 
@@ -419,7 +420,7 @@ public class Datos {
 
             statement.setString(1, dia.toString());
 
-            ResultSet set = sentenciaLectura(statement);
+            ResultSet set = statement.executeQuery();
 
             if(set != null ) {
 
@@ -453,7 +454,7 @@ public class Datos {
             statement.setInt(1, user.getId());
             statement.setString(2, dia.toString());
 
-            ResultSet set = sentenciaLectura(statement);
+            ResultSet set = statement.executeQuery();
 
             if(set != null ) {
 
@@ -588,24 +589,6 @@ public class Datos {
         }
 
         return out;
-    }
-
-    public static ResultSet sentenciaLectura(PreparedStatement st) {
-
-        ResultSet out;
-
-        try {
-
-            out = st.executeQuery();
-
-        } catch (SQLException e) {
-            
-            out = null;
-
-        }
-
-        return out;
-
     }
 
 }

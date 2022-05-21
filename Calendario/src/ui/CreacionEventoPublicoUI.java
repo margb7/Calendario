@@ -13,7 +13,6 @@ import javax.swing.text.DateFormatter;
 
 import calendario.Calendario;
 import excepcions.EventoXaExisteException;
-import model.Datos;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -226,6 +225,8 @@ public class CreacionEventoPublicoUI extends ElementoUI {
     void repintarComponentes() {
         
         dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
+        nombreEventoLabel.setForeground(modoColor.getTexto());
+        nombreEventoLabel.setBackground(modoColor.getFondo());
         
     }
     
