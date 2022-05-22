@@ -13,6 +13,8 @@ import javax.swing.JSpinner.DateEditor;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
 
+import calendario.Calendario;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
@@ -214,6 +216,19 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         y = frame.getY() + (frame.getHeight() / 2) - (dialogoCreacion.getHeight() / 2);
 
         dialogoCreacion.setLocation(x, y);
+
+    }
+
+    @Override
+    public void actualizarTraduccions() {
+        
+        nombreEventoLabel.setText(Calendario.getTraduccion("G01", "Nome:"));
+        horaEventoLabel.setText(Calendario.getTraduccion("G02", "Hora:"));
+        crearEventoButton.setText(Calendario.getTraduccion("G03", "Crear"));
+        cancelarButton.setText(Calendario.getTraduccion("G04", "Cancelar"));
+        participanteLabel.setText(Calendario.getTraduccion("G05", "Nome participante"));
+        listaLabel.setText(Calendario.getTraduccion("G07", "Participantes"));
+        dialogoCreacion.setTitle(Calendario.getTraduccion("G07", "Crear evento privado"));
 
     }
     

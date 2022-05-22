@@ -72,3 +72,12 @@ P02-Hora:
 P03-Crear
 P04-Cancelar
 P05-Crear evento privado
+
+-- CreacionEventoGrupalUI
+G01-Nombre:
+G02-Hora:
+G03-Crear
+G04-Cancelar
+G05-Nombre participante
+G06-Añadir
+G07-Crear evento grupal
