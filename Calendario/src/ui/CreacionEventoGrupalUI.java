@@ -1,13 +1,10 @@
 package ui;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -15,8 +12,6 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.JSpinner.DateEditor;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
-
-import model.Usuario;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
