@@ -13,7 +13,6 @@ import javax.swing.text.DateFormatter;
 
 import calendario.Calendario;
 import excepcions.EventoXaExisteException;
-import model.Datos;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -226,7 +225,23 @@ public class CreacionEventoPublicoUI extends ElementoUI {
     void repintarComponentes() {
         
         dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
-        
+        nombreEventoLabel.setForeground(modoColor.getTexto());
+        horaEventoLabel.setForeground(modoColor.getTexto());
+        nombreEventoTexto.setForeground(modoColor.getTexto());
+        nombreEventoTexto.setBackground(modoColor.getFondo());
+        nombreEventoTexto.setCaretColor(modoColor.getTexto());
+        horaEventoValor.getComponent(0).setBackground(modoColor.getFondo());
+        horaEventoValor.getComponent(0).setForeground(modoColor.getTexto());
+        horaEventoValor.getComponent(1).setBackground(modoColor.getFondo());
+        horaEventoValor.getComponent(1).setForeground(modoColor.getTexto());
+        horaEventoValor.getEditor().getComponent(0).setBackground(modoColor.getFondo());
+        horaEventoValor.getEditor().getComponent(0).setForeground(modoColor.getTexto());
+        horaEventoValor.getComponent(2).setForeground(modoColor.getTexto());
+        crearEventoButton.setForeground(modoColor.getTexto());
+        crearEventoButton.setBackground(modoColor.getFondo());
+        cancelarButton.setForeground(modoColor.getTexto());
+        cancelarButton.setBackground(modoColor.getFondo());
+
     }
     
     @Override

@@ -86,6 +86,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         participanteTexto = new JTextField(15);
 
         engadirButton = new JButton("default");
+        engadirButton.setFocusPainted(false);
 
         listaLabel = new JLabel("default");
 
@@ -98,8 +99,10 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         panelLista.setColumnHeaderView(listaLabel);
 
         crearEventoButton = new JButton("default");
+        crearEventoButton.setFocusPainted(false);
 
         cancelarButton = new JButton("default");
+        cancelarButton.setFocusPainted(false);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -131,11 +134,14 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 10;
+        gbc.insets = new InsetsUIResource(10, 0, 0, 5);
         dialogoCreacion.add(participanteTexto, gbc);
 
         gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.LINE_START;
         gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new InsetsUIResource(10, 0, 0, 0);
         dialogoCreacion.add(engadirButton, gbc);
 
         gbc.gridy = 4;
@@ -170,7 +176,32 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
     @Override
     void repintarComponentes() {
-        // TODO Auto-generated method stub
+        
+        dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
+        nombreEventoLabel.setForeground(modoColor.getTexto());
+        horaEventoLabel.setForeground(modoColor.getTexto());
+        participanteLabel.setForeground(modoColor.getTexto());
+        participanteTexto.setForeground(modoColor.getTexto());
+        participanteTexto.setBackground(modoColor.getFondo());
+        participanteTexto.setCaretColor(modoColor.getTexto());
+        nombreEventoTexto.setForeground(modoColor.getTexto());
+        nombreEventoTexto.setBackground(modoColor.getFondo());
+        nombreEventoTexto.setCaretColor(modoColor.getTexto());
+        horaEventoValor.getComponent(0).setBackground(modoColor.getFondo());
+        horaEventoValor.getComponent(0).setForeground(modoColor.getTexto());
+        horaEventoValor.getComponent(1).setBackground(modoColor.getFondo());
+        horaEventoValor.getComponent(1).setForeground(modoColor.getTexto());
+        horaEventoValor.getEditor().getComponent(0).setBackground(modoColor.getFondo());
+        horaEventoValor.getEditor().getComponent(0).setForeground(modoColor.getTexto());
+        horaEventoValor.getComponent(2).setForeground(modoColor.getTexto());
+        crearEventoButton.setForeground(modoColor.getTexto());
+        crearEventoButton.setBackground(modoColor.getFondo());
+        cancelarButton.setForeground(modoColor.getTexto());
+        cancelarButton.setBackground(modoColor.getFondo());
+        engadirButton.setForeground(modoColor.getTexto());
+        engadirButton.setBackground(modoColor.getFondo());
+        //participantesLista.setForeground(modoColor.getTexto()); TODO se non atopo unha forma fácil, pintar unha lista é infernal
+        panelLista.setForeground(modoColor.getTexto());
         
     }
 
@@ -227,6 +258,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         crearEventoButton.setText(Calendario.getTraduccion("G03", "Crear"));
         cancelarButton.setText(Calendario.getTraduccion("G04", "Cancelar"));
         participanteLabel.setText(Calendario.getTraduccion("G05", "Nome participante"));
+        engadirButton.setText(Calendario.getTraduccion("G06", "Engadir"));
         listaLabel.setText(Calendario.getTraduccion("G07", "Participantes"));
         dialogoCreacion.setTitle(Calendario.getTraduccion("G07", "Crear evento privado"));
 
