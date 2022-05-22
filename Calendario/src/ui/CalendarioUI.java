@@ -300,10 +300,8 @@ public class CalendarioUI extends ElementoUI {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    
-                    System.out.println(e.getSource().getClass());
 
-                    System.out.println(e.getActionCommand());
+                    Calendario.pedirDatosEventoGrupal(frame, LocalDate.parse(boton.getName()));
                     
                 }
 

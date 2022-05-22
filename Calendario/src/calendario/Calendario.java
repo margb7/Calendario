@@ -20,6 +20,7 @@ import model.Usuario;
 import ui.CalendarioUI;
 import ui.CreacionEventoPrivadoUI;
 import ui.CreacionEventoPublicoUI;
+import ui.CreacionEventoGrupalUI;
 import ui.ElementoUI;
 import ui.ErrorUI;
 import ui.LoginUI;
@@ -44,6 +45,7 @@ public class Calendario {
     private static ErrorUI interfaceErro;
     private static CreacionEventoPrivadoUI interfaceCreacionEventoPrivado;
     private static CreacionEventoPublicoUI interfaceCreacionEventoPublico;
+    private static CreacionEventoGrupalUI interfaCreacionEventoGrupalUI;
 
     /**
      * Método main do programa.
@@ -72,6 +74,7 @@ public class Calendario {
         interfaceErro = new ErrorUI();
         interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
         interfaceCreacionEventoPublico = new CreacionEventoPublicoUI();
+        interfaCreacionEventoGrupalUI = new CreacionEventoGrupalUI();
         
         // Iniciar o programa
         if(Datos.iniciarConexionBBDD() ) {  // Programa en modo normal
@@ -313,6 +316,13 @@ public class Calendario {
 
         interfaceCreacionEventoPublico.setData(data);
         interfaceCreacionEventoPublico.mostrarUI(owner);
+
+    }
+
+    public static void pedirDatosEventoGrupal(JFrame owner, LocalDate data) {
+
+        interfaCreacionEventoGrupalUI.setData(data);
+        interfaCreacionEventoGrupalUI.mostrarUI(owner);
 
     }
 
