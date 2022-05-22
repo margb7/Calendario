@@ -13,7 +13,6 @@ import javax.swing.text.DateFormatter;
 
 import calendario.Calendario;
 import excepcions.EventoXaExisteException;
-import model.Datos;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

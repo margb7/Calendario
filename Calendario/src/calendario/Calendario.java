@@ -299,6 +299,18 @@ public class Calendario {
 
     }
 
+    public static void crearEventoGrupal(String nome, LocalDate data, LocalTime hora, String[] participantes) throws EventoXaExisteException {
+
+        if(Datos.existeEventoEnDia(nome, data) ) {
+
+            throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
+
+        }
+
+        Datos.crearEventoGrupal(nome, usuario, data, hora);
+
+    }
+
     public static void pedirData(JFrame owner ) {
 
         interfaceSeleccionData.mostrarUI(owner);

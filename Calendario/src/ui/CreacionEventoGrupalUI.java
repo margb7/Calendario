@@ -14,14 +14,19 @@ import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
 
 import calendario.Calendario;
+import excepcions.EventoXaExisteException;
+import model.Datos;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.awt.event.WindowEvent;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 
 public class CreacionEventoGrupalUI extends ElementoUI {
 
@@ -171,7 +176,93 @@ public class CreacionEventoGrupalUI extends ElementoUI {
     }
 
     private void iniciarListeners() {
+
+        //TODO listener para eliminar elemento da lista con doble click (?????)
         
+        cancelarButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                dialogoCreacion.dispose();
+                
+            }
+            
+        });
+
+        crearEventoButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                try {
+                    
+                    if(nombreEventoTexto.getText().isEmpty() ) {
+
+                        Calendario.mostrarErro("Non é un nome válido");
+
+                    } else {
+
+                        //TODO implementación un pouco a cegas
+
+                        int tamanhoLista = participantesLista.getModel().getSize();
+
+                        String[] participantes = new String[tamanhoLista];
+                        
+                        for (int i = 0; i < tamanhoLista; i++) {
+
+                            participantes[i] = participantesLista.getModel().getElementAt(i);
+
+                        }
+
+                                                                                        // TODO: problemas con time
+                        Calendario.crearEventoGrupal(nombreEventoTexto.getText(), data, LocalTime.of(16, 30), participantes);
+                        dialogoCreacion.dispose();
+
+                    }
+
+                } catch (EventoXaExisteException exc ) {
+                    
+                    Calendario.mostrarErro("O evento xa existe");
+
+                }
+
+            }
+
+        });
+
+        engadirButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                String participante = participanteTexto.getText().trim();
+                participanteTexto.setText("");
+
+                if (Datos.usuarioEstaRexistrado(participante)) {
+
+                    int tamanhoLista = participantesLista.getModel().getSize();
+
+                    String[] participantes = new String[tamanhoLista + 1];
+
+                    for (int i = 0; i < participantesLista.getModel().getSize(); i++) {
+
+                        participantesLista.getModel().getElementAt(i);
+                        
+                    }
+
+                    participantes[tamanhoLista] = participante;
+
+                } else {
+
+                    Calendario.mostrarErro("O usuario non existe");
+
+                }             
+                
+            }            
+
+        });
+
     }
 
     @Override
