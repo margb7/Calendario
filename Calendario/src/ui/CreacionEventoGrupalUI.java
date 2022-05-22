@@ -255,7 +255,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                 } else {
 
-                    Calendario.mostrarErro("O usuario non existe");
+                    Calendario.mostrarErro(Calendario.getTraduccion("E02", "O usuario non está rexistrado")); //TODO tradución
 
                 }             
                 
