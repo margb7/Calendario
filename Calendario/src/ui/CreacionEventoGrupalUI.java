@@ -15,6 +15,7 @@ import javax.swing.text.DateFormatter;
 
 import calendario.Calendario;
 import excepcions.EventoXaExisteException;
+import excepcions.UsuarioNonAtopadoException;
 import model.Datos;
 
 import java.awt.GridBagConstraints;
@@ -207,11 +208,11 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                         int tamanhoLista = participantesLista.getModel().getSize();
 
-                        String[] participantes = new String[tamanhoLista];
+                        int[] participantes = new int[tamanhoLista];
                         
                         for (int i = 0; i < tamanhoLista; i++) {
 
-                            participantes[i] = participantesLista.getModel().getElementAt(i);
+                            participantes[i] = Datos.getUsuarioPorNome(participantesLista.getModel().getElementAt(i)).getId();
 
                         }
 
@@ -223,7 +224,11 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                 } catch (EventoXaExisteException exc ) {
                     
-                    Calendario.mostrarErro("O evento xa existe");
+                    Calendario.mostrarErro("O evento xa existe"); //TODO tradución
+
+                } catch (UsuarioNonAtopadoException e1) {
+                    
+                    Calendario.mostrarErro("Usuario non atopado"); //TODO tradución
 
                 }
 

@@ -299,7 +299,7 @@ public class Calendario {
 
     }
 
-    public static void crearEventoGrupal(String nome, LocalDate data, LocalTime hora, String[] participantes) throws EventoXaExisteException {
+    public static void crearEventoGrupal(String nome, LocalDate data, LocalTime hora, int[] participantes) throws EventoXaExisteException {
 
         if(Datos.existeEventoEnDia(nome, data) ) {
 
