@@ -28,6 +28,9 @@ import java.awt.event.WindowEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataListener;
 
 public class CreacionEventoGrupalUI extends ElementoUI {
 
@@ -47,6 +50,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
     private JScrollPane panelLista;
     private SpinnerDateModel mod;
     private LocalDate data;
+    private static DefaultListModel model;
 
     public CreacionEventoGrupalUI() {
 
@@ -95,9 +99,9 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         engadirButton.setFocusPainted(false);
 
         listaLabel = new JLabel("default");
-
-        String[] defList = {"default", "default", "default"}; //TODO borrar cando se finalice a implementacion
-        participantesLista = new JList<>(defList);
+        
+        model = new DefaultListModel();
+        participantesLista = new JList<>();
 
         panelLista = new JScrollPane();
         panelLista.setViewportView(participantesLista);
@@ -246,18 +250,9 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                 if (Datos.usuarioEstaRexistrado(participante)) {
 
-                    int tamanhoLista = participantesLista.getModel().getSize();
-
-                    String[] participantes = new String[tamanhoLista + 1];
-
-                    for (int i = 0; i < participantesLista.getModel().getSize(); i++) {
-
-                        participantesLista.getModel().getElementAt(i);
-                        
-                    }
-
-                    participantes[tamanhoLista] = participante;
-
+                    model.addElement(participante);
+                    participantesLista.setModel(model);
+                    
                 } else {
 
                     Calendario.mostrarErro(Calendario.getTraduccion("E02", "O usuario non está rexistrado")); //TODO tradución
