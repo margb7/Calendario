@@ -80,4 +80,5 @@ G03-Create
 G04-Cancel
 G05-Participant name
 G06-Add
-G07-Create group event
+G07-Participants
+G08-Create group event

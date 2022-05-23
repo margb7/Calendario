@@ -356,7 +356,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         participanteLabel.setText(Calendario.getTraduccion("G05", "Nome participante"));
         engadirButton.setText(Calendario.getTraduccion("G06", "Engadir"));
         listaLabel.setText(Calendario.getTraduccion("G07", "Participantes"));
-        dialogoCreacion.setTitle(Calendario.getTraduccion("G07", "Crear evento privado"));
+        dialogoCreacion.setTitle(Calendario.getTraduccion("G08", "Crear evento grupal"));
 
     }
     

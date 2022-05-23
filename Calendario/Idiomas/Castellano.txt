@@ -80,4 +80,5 @@ G03-Crear
 G04-Cancelar
 G05-Nombre participante
 G06-Añadir
-G07-Crear evento grupal
+G07-Participantes
+G08-Crear evento grupal
