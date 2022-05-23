@@ -29,8 +29,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
-import javax.swing.event.ListDataListener;
 
 public class CreacionEventoGrupalUI extends ElementoUI {
 
@@ -50,7 +48,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
     private JScrollPane panelLista;
     private SpinnerDateModel mod;
     private LocalDate data;
-    private static DefaultListModel model;
+    private static DefaultListModel<String> model;
 
     public CreacionEventoGrupalUI() {
 
@@ -100,7 +98,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
         listaLabel = new JLabel("default");
         
-        model = new DefaultListModel();
+        model = new DefaultListModel<>();
         participantesLista = new JList<>();
 
         panelLista = new JScrollPane();
