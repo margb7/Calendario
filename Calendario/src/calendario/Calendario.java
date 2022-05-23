@@ -4,6 +4,8 @@ import utilidades.Funciones;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -37,6 +39,7 @@ public class Calendario {
     private static LocalDate dataCalendario;
     private static LocalDate primerDiaMes;
     private static Usuario usuario;
+    private static boolean conectado;
 
     // Interfaces de usuario
     private static CalendarioUI interfaceCalendario;
@@ -76,10 +79,12 @@ public class Calendario {
         interfaceCreacionEventoPublico = new CreacionEventoPublicoUI();
         interfaCreacionEventoGrupalUI = new CreacionEventoGrupalUI();
         
-        // Iniciar o programa
-        if(Datos.iniciarConexionBBDD() ) {  // Programa en modo normal
+        // Iniciar a base de datos
+        conectado = Datos.iniciarConexionBBDD();
 
-            
+        // Mostrar interfaz
+        if(conectado ) {  // Programa en modo normal
+
             interfaceLogin.mostrarUI();
 
         } else {    // Programa en modo limitado (mostra o calendario pero nada mais)
