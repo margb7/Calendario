@@ -275,63 +275,70 @@ public class CalendarioUI extends ElementoUI {
 
         for(int i = 0; i < celdasDias.length; i++ ) {
 
-            JMenuItem itemPublico;
-            JMenuItem itemPrivado;
-            JMenuItem itemGrupal;
             JButton boton = celdasDias[i];
 
-            boton.setComponentPopupMenu(new JPopupMenu());
-            
-            itemPublico = new JMenuItem();
-            itemPublico.setName("publico");
-            boton.getComponentPopupMenu().add(itemPublico);
+            // Se a bbdd está desconectada -> non se da a opción de crear eventos
+            if(Calendario.isConectado()) {
 
-            itemGrupal = new JMenuItem();
-            itemGrupal.setName("grupal");
-            boton.getComponentPopupMenu().add(itemGrupal);
+                JMenuItem itemPublico;
+                JMenuItem itemPrivado;
+                JMenuItem itemGrupal;
+                
 
-            itemPrivado = new JMenuItem();
-            itemPrivado.setName("privado");
-            boton.getComponentPopupMenu().add(itemPrivado);
+                boton.setComponentPopupMenu(new JPopupMenu());
+                
+                itemPublico = new JMenuItem();
+                itemPublico.setName("publico");
+                boton.getComponentPopupMenu().add(itemPublico);
 
-            //TODO implementar as accións dos ítems do menú contextual
-            // Evento do menú para crear un evento grupal
-            itemGrupal.addActionListener(new ActionListener() {
+                itemGrupal = new JMenuItem();
+                itemGrupal.setName("grupal");
+                boton.getComponentPopupMenu().add(itemGrupal);
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    
-                    System.out.println(e.getSource().getClass());
+                itemPrivado = new JMenuItem();
+                itemPrivado.setName("privado");
+                boton.getComponentPopupMenu().add(itemPrivado);
 
-                    System.out.println(e.getActionCommand());
-                    
-                }
+                //TODO implementar as accións dos ítems do menú contextual
+                // Evento do menú para crear un evento grupal
+                itemGrupal.addActionListener(new ActionListener() {
 
-            });
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        
+                        System.out.println(e.getSource().getClass());
 
-            // Evento do menú para crear un evento privado
-            itemPrivado.addActionListener(new ActionListener() {
+                        System.out.println(e.getActionCommand());
+                        
+                    }
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    
-                    Calendario.pedirDatosEventoPrivado(frame, LocalDate.parse(boton.getName()));
-                    
-                }
+                });
 
-            });
+                // Evento do menú para crear un evento privado
+                itemPrivado.addActionListener(new ActionListener() {
 
-            // Evento do menú para crear un evento público
-            itemPublico.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        
+                        Calendario.pedirDatosEventoPrivado(frame, LocalDate.parse(boton.getName()));
+                        
+                    }
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    
-                    Calendario.pedirDatosEventoPublico(frame, LocalDate.parse(boton.getName()));
-                    
-                }
+                });
 
-            });
+                // Evento do menú para crear un evento público
+                itemPublico.addActionListener(new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        
+                        Calendario.pedirDatosEventoPublico(frame, LocalDate.parse(boton.getName()));
+                        
+                    }
+
+                });
+
+            }
 
             boton.addMouseListener(new MouseAdapter() {
 
@@ -484,17 +491,22 @@ public class CalendarioUI extends ElementoUI {
         frame.setTitle(Calendario.getTraduccion("C01", "Calendario"));
         cambioModoCor.setText(Calendario.getTraduccion("C02", "Cambiar tema de cor"));
 
-        for(JButton boton : celdasDias ) {
+        // Se a bbdd está desconectada -> non se da a opción de crear eventos
+        if(Calendario.isConectado() ) {
 
-            MenuElement[] items = boton.getComponentPopupMenu().getSubElements();
+            for(JButton boton : celdasDias ) {
 
-            JMenuItem publico = (JMenuItem) items[0];
-            JMenuItem grupal = (JMenuItem) items[1];
-            JMenuItem privado = (JMenuItem) items[2];
-            
-            publico.setText(Calendario.getTraduccion("C03", "Público"));
-            grupal.setText(Calendario.getTraduccion("C04", "Grupal"));
-            privado.setText(Calendario.getTraduccion("C05", "Privado"));
+                MenuElement[] items = boton.getComponentPopupMenu().getSubElements();
+    
+                JMenuItem publico = (JMenuItem) items[0];
+                JMenuItem grupal = (JMenuItem) items[1];
+                JMenuItem privado = (JMenuItem) items[2];
+                
+                publico.setText(Calendario.getTraduccion("C03", "Público"));
+                grupal.setText(Calendario.getTraduccion("C04", "Grupal"));
+                privado.setText(Calendario.getTraduccion("C05", "Privado"));
+    
+            }
 
         }
     

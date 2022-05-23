@@ -3,7 +3,6 @@ package ui;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import java.awt.event.WindowAdapter;
