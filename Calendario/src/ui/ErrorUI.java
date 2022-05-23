@@ -44,6 +44,24 @@ public class ErrorUI extends ElementoUI {
     @Override
     public void mostrarUI() {
 
+        dialog.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                
+                dialog.setAlwaysOnTop(true);
+                
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                
+                dialog.dispose();
+
+            }
+            
+        });
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
             @Override
@@ -81,6 +99,8 @@ public class ErrorUI extends ElementoUI {
             @Override
             public void windowClosed(WindowEvent e) {
                 
+                frame.setFocusable(true);
+                frame.setFocusableWindowState(true);
                 frame.setEnabled(true);
                 
             }
@@ -88,10 +108,32 @@ public class ErrorUI extends ElementoUI {
             @Override
             public void windowOpened(WindowEvent e) {
                 
+                dialog.setAlwaysOnTop(true);
+
+                frame.setFocusable(false);
+                frame.setFocusableWindowState(false);
                 frame.setEnabled(false);
+                
+                frame.addWindowListener(new WindowAdapter() {
+
+                    @Override
+                    public void windowGainedFocus(WindowEvent e) {
+                        
+                        frame.setEnabled(false);
+
+                    } 
+
+                });
 
             }
 
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                
+                dialog.toFront();
+
+            }
+            
         });
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

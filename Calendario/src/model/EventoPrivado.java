@@ -14,7 +14,7 @@ public class EventoPrivado extends Evento {
 
     @Override
     public String toString() {
-        return getNome() + " | Pr - creado por id : " + getCreador();
+        return getNome() + "   - " + getTempo().toString();
     }
 
 }

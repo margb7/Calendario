@@ -7,7 +7,6 @@ CALL REXISTRAR_USUARIO("administrador", "renaido"); -- renaido non cumple como c
 CALL REXISTRAR_USUARIO("user2", "abc123");
 CALL REXISTRAR_USUARIO("sineventos", "abc123");   -- usuario de proba -> solo deberían aparecerlle os eventos públicos
 
-
 SELECT ID_USUARIO INTO @CLAVE1 
     FROM USUARIOS
     WHERE NOME = "ADMINISTRADOR";

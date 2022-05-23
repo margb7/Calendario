@@ -14,6 +14,7 @@ import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
 
 import calendario.Calendario;
+import excepcions.CredenciaisIncorrectasException;
 import excepcions.EventoXaExisteException;
 import excepcions.UsuarioNonAtopadoException;
 import model.Datos;
@@ -24,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.awt.event.WindowEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -210,11 +212,11 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                         int tamanhoLista = participantesLista.getModel().getSize();
 
-                        int[] participantes = new int[tamanhoLista];
+                        ArrayList<Integer> participantes = new ArrayList<>();
                         
                         for (int i = 0; i < tamanhoLista; i++) {
 
-                            participantes[i] = Datos.getUsuarioPorNome(participantesLista.getModel().getElementAt(i)).getId();
+                            participantes.add(Datos.getUsuarioPorNome(participantesLista.getModel().getElementAt(i)).getId());
 
                         }
 
@@ -232,6 +234,10 @@ public class CreacionEventoGrupalUI extends ElementoUI {
                     
                     Calendario.mostrarErro("Usuario non atopado"); //TODO tradución
 
+                } catch (CredenciaisIncorrectasException e1) {
+                    
+                    Calendario.mostrarErro(Calendario.getTraduccion("E02", "Usuario non rexistrado"));
+                    
                 }
 
             }

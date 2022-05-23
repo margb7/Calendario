@@ -12,7 +12,9 @@ import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
 
 import calendario.Calendario;
+import excepcions.CredenciaisIncorrectasException;
 import excepcions.EventoXaExisteException;
+import utilidades.Funciones;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.WindowAdapter;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -146,20 +150,24 @@ public class CreacionEventoPublicoUI extends ElementoUI {
                 
                 try {
                     
-                    if(nombreEventoTexto.getText().isEmpty() ) {
+                    Calendar cal = Calendar.getInstance();
+                    String nome = Funciones.purificarString(nombreEventoTexto.getText() );
+                    LocalTime hora;
 
-                        Calendario.mostrarErro("Non é un nome válido");
+                    cal.setTime((Date)(horaEventoValor.getValue()));
 
-                    } else {
-                                                                                        // TODO: problemas con time
-                        Calendario.crearEventoPublico(nombreEventoTexto.getText(), data, LocalTime.of(16, 30));
-                        dialogoCreacion.dispose();
+                    hora = LocalTime.of(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE)); 
 
-                    }
+                    Calendario.crearEventoPublico(nome, data, hora);
+                    dialogoCreacion.dispose();
 
                 } catch (EventoXaExisteException exc ) {
                     
                     Calendario.mostrarErro("O evento xa existe");
+
+                } catch(CredenciaisIncorrectasException credExc ) {
+
+                    Calendario.mostrarErro("O nome non pode estar vacío");
 
                 }
 
@@ -226,7 +234,9 @@ public class CreacionEventoPublicoUI extends ElementoUI {
         
         dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
         nombreEventoLabel.setForeground(modoColor.getTexto());
+        nombreEventoLabel.setBackground(modoColor.getFondo());
         horaEventoLabel.setForeground(modoColor.getTexto());
+        horaEventoLabel.setBackground(modoColor.getFondo());
         nombreEventoTexto.setForeground(modoColor.getTexto());
         nombreEventoTexto.setBackground(modoColor.getFondo());
         nombreEventoTexto.setCaretColor(modoColor.getTexto());
@@ -241,7 +251,7 @@ public class CreacionEventoPublicoUI extends ElementoUI {
         crearEventoButton.setBackground(modoColor.getFondo());
         cancelarButton.setForeground(modoColor.getTexto());
         cancelarButton.setBackground(modoColor.getFondo());
-
+        
     }
     
     @Override

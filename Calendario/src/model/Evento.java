@@ -43,7 +43,7 @@ public abstract class Evento {
 
     @Override
     public String toString() {
-        return nome + " | creado por id : " + creador;
+        return nome;
     }
 
 }
