@@ -24,6 +24,14 @@ public abstract class VistaEvento extends ElementoUI {
 
     }
 
+    protected JPanel getInfo() {
+        return info;
+    }
+
+    public JDialog getDialogo() {
+        return dialogo;
+    }
+
     private void init(String texto, String nome, String tipoEv, String usuario, String horaEv) {//TODO traducións
 
         dialogo = new JDialog();
@@ -49,6 +57,18 @@ public abstract class VistaEvento extends ElementoUI {
         
         dialogo.setContentPane(contido);
 
+    }
+
+    @Override
+    void repintarComponentes() {
+
+        info.setBackground(modoColor.getFondo());
+        hora.setForeground(modoColor.getTexto());
+        creador.setForeground(modoColor.getTexto());
+        tipo.setForeground(modoColor.getTexto());
+        detalles.setBackground(modoColor.getFondo());
+        detallesTexto.setForeground(modoColor.getTexto());
+        
     }
     
 }
