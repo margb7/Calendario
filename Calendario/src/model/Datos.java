@@ -545,6 +545,7 @@ public class Datos {
             }
 
             System.out.println("Erro ao intentar crear un evento grupal");
+            e.printStackTrace();
 
         }
 

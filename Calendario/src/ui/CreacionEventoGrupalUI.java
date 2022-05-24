@@ -192,6 +192,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
+                participantesLista.setListData(new String[0]);
                 dialogoCreacion.dispose();
                 
             }
@@ -213,14 +214,12 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                     } else {
 
-                        //TODO implementación un pouco a cegas
                         int tamanhoLista = participantesLista.getModel().getSize();
 
                         ArrayList<Integer> participantes = new ArrayList<>();
                         Calendar cal = Calendar.getInstance();
-                        String nome = Funciones.purificarString(nombreEventoTexto.getText());
                         LocalTime hora;
-                        
+
                         for (int i = 0; i < tamanhoLista; i++) {
 
                             participantes.add(Datos.getUsuarioPorNome(participantesLista.getModel().getElementAt(i)).getId());
@@ -230,6 +229,8 @@ public class CreacionEventoGrupalUI extends ElementoUI {
                         cal.setTime((Date)(horaEventoValor.getValue()));
 
                         hora = LocalTime.of(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE));
+
+                        participantesLista.setListData(new String[0]);
 
                         Calendario.crearEventoGrupal(nomeEvento, data, hora, participantes);
                         dialogoCreacion.dispose();
@@ -264,8 +265,28 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                 if (Datos.usuarioEstaRexistrado(participante)) {
 
-                    model.addElement(participante);
-                    participantesLista.setModel(model);
+                    boolean xaIncluido = false;
+
+                    for(int i = 0; i < participantesLista.getModel().getSize() && !xaIncluido; i++ ) {
+
+                        if(participantesLista.getModel().getElementAt(i).equals(participante) ) {
+
+                            xaIncluido = true;
+
+                        }
+
+                    }
+
+                    if(xaIncluido ) {
+
+                        Calendario.mostrarErro("Xa está incluído na lista de participantes"); //TODO :  traducción
+
+                    } else {
+
+                        model.addElement(participante);
+                        participantesLista.setModel(model);
+
+                    }
                     
                 } else {
 
@@ -317,8 +338,6 @@ public class CreacionEventoGrupalUI extends ElementoUI {
     }
 
     public void mostrarUI(JFrame frame) {
-
-        participantesLista.removeAll();
 
         repintarComponentes();
         actualizarTraduccions();
