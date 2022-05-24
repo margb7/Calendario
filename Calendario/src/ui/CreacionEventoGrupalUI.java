@@ -192,6 +192,9 @@ public class CreacionEventoGrupalUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
+                nombreEventoTexto.setText("");
+                participanteTexto.setText("");
+                model.removeAllElements();
                 dialogoCreacion.dispose();
                 
             }
