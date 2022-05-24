@@ -139,8 +139,8 @@ public class CalendarioUI extends ElementoUI {
         frame = new JFrame();//Ventá da aplicación
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
-        frame.setMinimumSize(new Dimension(600, 400));
+        frame.setSize(700, 400);
+        frame.setMinimumSize(new Dimension(700, 400));
 
         frame.setLayout(new GridBagLayout());//layout manager para organizar elementos en cuadrícula
         gbc = new GridBagConstraints();//parámetros para o layout manager
