@@ -18,6 +18,7 @@ import excepcions.CredenciaisIncorrectasException;
 import excepcions.EventoXaExisteException;
 import excepcions.UsuarioNonAtopadoException;
 import model.Datos;
+import utilidades.Funciones;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -26,6 +27,8 @@ import java.awt.event.WindowAdapter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.WindowEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -201,18 +204,22 @@ public class CreacionEventoGrupalUI extends ElementoUI {
             public void actionPerformed(ActionEvent e) {
                 
                 try {
-                    
-                    if(nombreEventoTexto.getText().isEmpty() ) {
+
+                    String nomeEvento = Funciones.purificarString(nombreEventoTexto.getText());
+
+                    if(nomeEvento.isEmpty() ) {
 
                         Calendario.mostrarErro("Non é un nome válido");
 
                     } else {
 
                         //TODO implementación un pouco a cegas
-
                         int tamanhoLista = participantesLista.getModel().getSize();
 
                         ArrayList<Integer> participantes = new ArrayList<>();
+                        Calendar cal = Calendar.getInstance();
+                        String nome = Funciones.purificarString(nombreEventoTexto.getText());
+                        LocalTime hora;
                         
                         for (int i = 0; i < tamanhoLista; i++) {
 
@@ -220,8 +227,11 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                         }
 
-                                                                                        // TODO: problemas con time
-                        Calendario.crearEventoGrupal(nombreEventoTexto.getText(), data, LocalTime.of(16, 30), participantes);
+                        cal.setTime((Date)(horaEventoValor.getValue()));
+
+                        hora = LocalTime.of(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE));
+
+                        Calendario.crearEventoGrupal(nomeEvento, data, hora, participantes);
                         dialogoCreacion.dispose();
 
                     }
@@ -249,7 +259,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                String participante = participanteTexto.getText().trim();
+                String participante = Funciones.purificarString(participanteTexto.getText());
                 participanteTexto.setText("");
 
                 if (Datos.usuarioEstaRexistrado(participante)) {
@@ -302,11 +312,13 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
     @Override
     void mostrarUI() {
-        // TODO Auto-generated method stub
+        
         
     }
 
     public void mostrarUI(JFrame frame) {
+
+        participantesLista.removeAll();
 
         repintarComponentes();
         actualizarTraduccions();
