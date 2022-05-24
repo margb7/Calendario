@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+
+import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,18 +11,18 @@ import javax.swing.JSplitPane;
 
 public abstract class VistaEvento extends ElementoUI {
 
-    private JDialog dialogo;
-    private JSplitPane contido;
-    private JPanel info;
-    private JScrollPane detalles;
-    private JLabel hora;
-    private JLabel creador;
-    private JLabel tipo;
-    private JLabel detallesTexto;
+    protected JDialog dialogo;
+    protected JSplitPane contido;
+    protected JPanel info;
+    protected JScrollPane detalles;
+    protected JLabel hora;
+    protected JLabel creador;
+    protected JLabel tipo;
+    protected JLabel detallesTexto;
 
-    protected VistaEvento(String nome, String texto, String tipo, String usuario, String hora) {
+    protected VistaEvento() {
 
-        init(texto, nome, tipo, usuario, hora);
+        init();
 
     }
 
@@ -32,24 +34,25 @@ public abstract class VistaEvento extends ElementoUI {
         return dialogo;
     }
 
-    private void init(String texto, String nome, String tipoEv, String usuario, String horaEv) {//TODO traducións
+    private void init() {//TODO traducións
 
         dialogo = new JDialog();
-        dialogo.setTitle(nome);
 
-        info = new JPanel(new BorderLayout());
+        info = new JPanel();
 
-        hora = new JLabel("Hora: " + horaEv);
+        info.setLayout(new BoxLayout(info, BoxLayout.PAGE_AXIS));
 
-        creador = new JLabel("Creador:" + usuario); 
+        hora = new JLabel();
 
-        tipo = new JLabel("Tipo: " + tipoEv);
+        creador = new JLabel(); 
 
-        info.add(hora, BorderLayout.NORTH);
-        info.add(creador, BorderLayout.NORTH);
-        info.add(tipo, BorderLayout.NORTH);
+        tipo = new JLabel();
 
-        detallesTexto = new JLabel(texto);
+        info.add(hora);
+        info.add(creador);
+        info.add(tipo);
+
+        detallesTexto = new JLabel();
 
         detalles = new JScrollPane(detallesTexto);
 

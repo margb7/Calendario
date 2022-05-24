@@ -16,6 +16,7 @@ import excepcions.UsuarioXaRexistradoException;
 
 import model.Datos;
 import model.Evento;
+import model.EventoPrivado;
 import model.Usuario;
 
 import ui.CalendarioUI;
@@ -27,6 +28,9 @@ import ui.ErrorUI;
 import ui.LoginUI;
 import ui.ModoColorUI;
 import ui.SeleccionDataUI;
+import ui.VistaEventoGrupal;
+import ui.VistaEventoPrivado;
+import ui.VistaEventoPublico;
 
 /**
  * Clase que contén o main do programa. Tamén actúa como controlador do programa
@@ -48,6 +52,9 @@ public class Calendario {
     private static CreacionEventoPrivadoUI interfaceCreacionEventoPrivado;
     private static CreacionEventoPublicoUI interfaceCreacionEventoPublico;
     private static CreacionEventoGrupalUI interfaCreacionEventoGrupalUI;
+    private static VistaEventoGrupal vistaEventoGrupal;
+    private static VistaEventoPrivado vistaEventoPrivado;
+    private static VistaEventoPublico vistaEventoPublico;
 
     /**
      * Método main do programa.
@@ -80,6 +87,9 @@ public class Calendario {
         interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
         interfaceCreacionEventoPublico = new CreacionEventoPublicoUI();
         interfaCreacionEventoGrupalUI = new CreacionEventoGrupalUI();
+        vistaEventoGrupal = new VistaEventoGrupal();
+        vistaEventoPrivado = new VistaEventoPrivado();
+        vistaEventoPublico = new VistaEventoPublico();
 
         // Mostrar interfaz
         if(conectado ) {  // Programa en modo normal
@@ -360,6 +370,12 @@ public class Calendario {
 
         interfaCreacionEventoGrupalUI.setData(data);
         interfaCreacionEventoGrupalUI.mostrarUI(owner);
+
+    }
+
+    public static void mostrarEventoPrivado(JFrame owner, EventoPrivado ev) {
+        
+        vistaEventoPrivado.mostrarUI(owner, ev);
 
     }
 

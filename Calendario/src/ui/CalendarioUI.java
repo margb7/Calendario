@@ -9,11 +9,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import calendario.Calendario;
 
 import model.Evento;
-
+import model.EventoPrivado;
 import utilidades.Dia;
 import utilidades.Mes;
 
@@ -45,6 +47,7 @@ public class CalendarioUI extends ElementoUI {
     private JButton avanzarMes;
     private JButton retrocederMes;
     private JButton cambioModoCor;
+
 
     /**
      * Constructor privado para evitar instancias
@@ -245,6 +248,23 @@ public class CalendarioUI extends ElementoUI {
     }
 
     private void iniciarListeners() {
+
+        listaEventos.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                
+                Evento ev = listaEventos.getSelectedValue();
+
+                if (ev instanceof EventoPrivado) {
+
+                    Calendario.mostrarEventoPrivado(frame, (EventoPrivado)ev);
+
+                }
+                
+            }
+            
+        });
 
         // Botón (">") na dereita para avanzar o mes
         avanzarMes.addActionListener(new ActionListener() {

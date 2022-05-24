@@ -2,9 +2,8 @@ package ui;
 
 public class VistaEventoGrupal extends VistaEvento {
 
-    public VistaEventoGrupal(String nome, String texto, String tipo, String usuario, String hora) {
-
-        super(nome, texto, tipo, usuario, hora);
+    public VistaEventoGrupal() {
+        
         //TODO
 
     }

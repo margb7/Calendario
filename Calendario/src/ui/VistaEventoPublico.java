@@ -2,9 +2,8 @@ package ui;
 
 public class VistaEventoPublico extends VistaEvento {
 
-    public VistaEventoPublico(String nome, String texto, String tipo, String usuario, String hora) {
-
-        super(nome, texto, tipo, usuario, hora);
+    public VistaEventoPublico() {
+        
         //TODO
 
     }
