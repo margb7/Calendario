@@ -284,7 +284,6 @@ public class CalendarioUI extends ElementoUI {
                 JMenuItem itemPrivado;
                 JMenuItem itemGrupal;
                 
-
                 boton.setComponentPopupMenu(new JPopupMenu());
                 
                 itemPublico = new JMenuItem();

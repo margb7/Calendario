@@ -163,11 +163,11 @@ public class CreacionEventoPublicoUI extends ElementoUI {
 
                 } catch (EventoXaExisteException exc ) {
                     
-                    Calendario.mostrarErro("O evento xa existe");
+                    Calendario.mostrarErro(Calendario.getTraduccion("E10", "O evento xa existe"));
 
                 } catch(CredenciaisIncorrectasException credExc ) {
 
-                    Calendario.mostrarErro("O nome non pode estar vacío");
+                    Calendario.mostrarErro(Calendario.getTraduccion("E13", "O nome non pode estar vacío"));
 
                 }
 

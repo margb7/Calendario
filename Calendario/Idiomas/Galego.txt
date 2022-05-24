@@ -64,6 +64,7 @@ E09-Non é un nome válido
 E10-O evento xa existe
 E11-Usuario non atopado
 E12-Xa está incluído en la lista de participantes
+E13-O nome non pode estar vacío
 
 -- SeleccionDataUI
 S01-Selecciona unha data

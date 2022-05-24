@@ -64,6 +64,7 @@ E09-Not a valid name
 E10-Event already exists
 E11-User not found
 E12-Already included on list
+E13-Name field can't be empty
 
 -- SeleccionDataUI
 S01-Select time
