@@ -1,16 +1,15 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 
 import excepcions.UsuarioNonAtopadoException;
 import model.Datos;
@@ -18,6 +17,7 @@ import model.EventoPrivado;
 
 public class VistaEventoPrivado extends VistaEvento {
 
+    JPanel panelBoton;
     private JButton borrarEventoButton;
 
     public VistaEventoPrivado() {
@@ -29,7 +29,12 @@ public class VistaEventoPrivado extends VistaEvento {
     @Override
     void repintarComponentes() {
 
-        super.repintarComponentes();
+        info.setBackground(modoColor.getFondo());
+        hora.setForeground(modoColor.getTexto());
+        creador.setForeground(modoColor.getTexto());
+        tipo.setForeground(modoColor.getTexto());
+        detalles.setBackground(modoColor.getFondo());
+        detallesTexto.setForeground(modoColor.getTexto());
         borrarEventoButton.setForeground(modoColor.getTexto());
         borrarEventoButton.setBackground(modoColor.getFondo());
         
@@ -92,11 +97,14 @@ public class VistaEventoPrivado extends VistaEvento {
 
     private void init() {
 
+        panelBoton = new JPanel(new BorderLayout());
+
         borrarEventoButton = new JButton("Borrar evento");//TODO tradución
         borrarEventoButton.setFocusPainted(false);
-        borrarEventoButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        getInfo().add(borrarEventoButton);
+        panelBoton.add(borrarEventoButton, BorderLayout.SOUTH);
+        
+        contido.add(panelBoton, BorderLayout.SOUTH);
 
                 
 
