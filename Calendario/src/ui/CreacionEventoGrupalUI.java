@@ -210,7 +210,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                     if(nomeEvento.isEmpty() ) {
 
-                        Calendario.mostrarErro("Non é un nome válido");
+                        Calendario.mostrarErro(Calendario.getTraduccion("E09", "Non é un nome válido"));
 
                     } else {
 
@@ -227,27 +227,26 @@ public class CreacionEventoGrupalUI extends ElementoUI {
                         }
 
                         cal.setTime((Date)(horaEventoValor.getValue()));
-
                         hora = LocalTime.of(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE));
 
-                        participantesLista.setListData(new String[0]);
-
                         Calendario.crearEventoGrupal(nomeEvento, data, hora, participantes);
+
+                        participantesLista.setListData(new String[0]);
                         dialogoCreacion.dispose();
 
                     }
 
                 } catch (EventoXaExisteException exc ) {
                     
-                    Calendario.mostrarErro("O evento xa existe"); //TODO tradución
+                    Calendario.mostrarErro(Calendario.getTraduccion("E10", "O evento xa existe"));
 
                 } catch (UsuarioNonAtopadoException e1) {
                     
-                    Calendario.mostrarErro("Usuario non atopado"); //TODO tradución
+                    Calendario.mostrarErro(Calendario.getTraduccion("E11", "Usuario non atopado"));
 
                 } catch (CredenciaisIncorrectasException e1) {
                     
-                    Calendario.mostrarErro(Calendario.getTraduccion("E02", "Usuario non rexistrado"));
+                    Calendario.mostrarErro(Calendario.getTraduccion("E09", "Non é un nome válido"));
                     
                 }
 
@@ -279,7 +278,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                     if(xaIncluido ) {
 
-                        Calendario.mostrarErro("Xa está incluído na lista de participantes"); //TODO :  traducción
+                        Calendario.mostrarErro(Calendario.getTraduccion("E12", "Xa está incluído na lista de participantes")); //TODO :  traducción
 
                     } else {
 

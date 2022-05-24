@@ -60,6 +60,10 @@ E05-Las contraseñas no coinciden
 E06-Usuario ya registrado
 E07-Error
 E08-No se pudo conectar con la base de datos
+E09-No es un nombre válido
+E10-El evento ya existe
+E11-Usuario no encontrado
+E12-Ya está incluído en la lista de participantes
 
 -- SeleccionDataUI
 S01-Selecciona una fecha

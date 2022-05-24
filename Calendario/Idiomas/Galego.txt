@@ -60,6 +60,10 @@ E05-As contrasinais non coinciden
 E06-Usuario xa rexistrado
 E07-Erro
 E08-Non se puido conectar coa base de datos
+E09-Non é un nome válido
+E10-O evento xa existe
+E11-Usuario non atopado
+E12-Xa está incluído en la lista de participantes
 
 -- SeleccionDataUI
 S01-Selecciona unha data

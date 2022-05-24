@@ -60,6 +60,10 @@ E05-Passwords doesn't match
 E06-User already registered
 E07-Error
 E08-Unable to connect with database
+E09-Not a valid name
+E10-Event already exists
+E11-User not found
+E12-Already included on list
 
 -- SeleccionDataUI
 S01-Select time
