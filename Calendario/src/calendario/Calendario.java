@@ -54,6 +54,9 @@ public class Calendario {
      * @param args argumentos para main.
      */
     public static void main(String[] args) {
+        
+        // Iniciar a base de datos
+        conectado = Datos.iniciarConexionBBDD();
 
         // Cargar os idiomas e por por defecto o galego
         idiomasDisponibles = Datos.cargarIdiomas();
@@ -77,9 +80,6 @@ public class Calendario {
         interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
         interfaceCreacionEventoPublico = new CreacionEventoPublicoUI();
         interfaCreacionEventoGrupalUI = new CreacionEventoGrupalUI();
-        
-        // Iniciar a base de datos
-        conectado = Datos.iniciarConexionBBDD();
 
         // Mostrar interfaz
         if(conectado ) {  // Programa en modo normal
