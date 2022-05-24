@@ -24,7 +24,7 @@ hs_err_pid*
 /Calendario/nbproject/private/
 Test.java
 /Calendario/build/
-
+*/.vscode
 
 # Git no ignore
 !mysql-connector-java-8.0.27.jar
