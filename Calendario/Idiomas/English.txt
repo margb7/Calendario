@@ -72,3 +72,13 @@ P02-Time:
 P03-Create
 P04-Cancel
 P05-Create private event
+
+-- CreacionEventoGrupalUI
+G01-Name:
+G02-Time:
+G03-Create
+G04-Cancel
+G05-Participant name
+G06-Add
+G07-Participants
+G08-Create group event

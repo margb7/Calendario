@@ -235,9 +235,22 @@ public class CreacionEventoPublicoUI extends ElementoUI {
         dialogoCreacion.getContentPane().setBackground(modoColor.getFondo());
         nombreEventoLabel.setForeground(modoColor.getTexto());
         nombreEventoLabel.setBackground(modoColor.getFondo());
-
         horaEventoLabel.setForeground(modoColor.getTexto());
         horaEventoLabel.setBackground(modoColor.getFondo());
+        nombreEventoTexto.setForeground(modoColor.getTexto());
+        nombreEventoTexto.setBackground(modoColor.getFondo());
+        nombreEventoTexto.setCaretColor(modoColor.getTexto());
+        horaEventoValor.getComponent(0).setBackground(modoColor.getFondo());
+        horaEventoValor.getComponent(0).setForeground(modoColor.getTexto());
+        horaEventoValor.getComponent(1).setBackground(modoColor.getFondo());
+        horaEventoValor.getComponent(1).setForeground(modoColor.getTexto());
+        horaEventoValor.getEditor().getComponent(0).setBackground(modoColor.getFondo());
+        horaEventoValor.getEditor().getComponent(0).setForeground(modoColor.getTexto());
+        horaEventoValor.getComponent(2).setForeground(modoColor.getTexto());
+        crearEventoButton.setForeground(modoColor.getTexto());
+        crearEventoButton.setBackground(modoColor.getFondo());
+        cancelarButton.setForeground(modoColor.getTexto());
+        cancelarButton.setBackground(modoColor.getFondo());
         
     }
     

@@ -299,16 +299,12 @@ public class CalendarioUI extends ElementoUI {
                 itemPrivado.setName("privado");
                 boton.getComponentPopupMenu().add(itemPrivado);
 
-                //TODO implementar as accións dos ítems do menú contextual
-                // Evento do menú para crear un evento grupal
                 itemGrupal.addActionListener(new ActionListener() {
-
+                    
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         
-                        System.out.println(e.getSource().getClass());
-
-                        System.out.println(e.getActionCommand());
+                        Calendario.pedirDatosEventoGrupal(frame, LocalDate.parse(boton.getName()));
                         
                     }
 
