@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -43,10 +44,13 @@ public abstract class VistaEvento extends ElementoUI {
         info.setLayout(new BoxLayout(info, BoxLayout.PAGE_AXIS));
 
         hora = new JLabel();
+        hora.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        creador = new JLabel(); 
+        creador = new JLabel();
+        creador.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         tipo = new JLabel();
+        tipo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         info.add(hora);
         info.add(creador);

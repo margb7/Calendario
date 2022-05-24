@@ -3,6 +3,7 @@ package ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -93,6 +94,7 @@ public class VistaEventoPrivado extends VistaEvento {
 
         borrarEventoButton = new JButton("Borrar evento");//TODO tradución
         borrarEventoButton.setFocusPainted(false);
+        borrarEventoButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         getInfo().add(borrarEventoButton);
 
