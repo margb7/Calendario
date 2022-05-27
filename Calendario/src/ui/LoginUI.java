@@ -6,9 +6,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.nio.file.FileSystems;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -109,6 +111,7 @@ public class LoginUI extends ElementoUI {
         frame.setSize(600, 400);
         frame.setMinimumSize(new Dimension(400, 300));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIconImage(new ImageIcon(FileSystems.getDefault().getPath("Imaxes", "login2.png").toString()).getImage());
         
         cards = new JPanel(new CardLayout());
         frame.setContentPane(cards);

@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.time.LocalDate;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -138,8 +141,9 @@ public class CalendarioUI extends ElementoUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setMinimumSize(new Dimension(600, 400));
-
+        frame.setIconImage(new ImageIcon(FileSystems.getDefault().getPath("Imaxes", "icono.png").toString()).getImage());
         frame.setLayout(new GridBagLayout());//layout manager para organizar elementos en cuadrícula
+        
         gbc = new GridBagConstraints();//parámetros para o layout manager
  
         gbc.weightx = 0.5;

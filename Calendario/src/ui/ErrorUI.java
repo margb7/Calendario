@@ -1,5 +1,6 @@
 package ui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -7,6 +8,7 @@ import javax.swing.UIManager;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.nio.file.FileSystems;
 import java.awt.Toolkit;
 
 import calendario.Calendario;
@@ -23,6 +25,7 @@ public class ErrorUI extends ElementoUI {
 
         dialog = new JDialog();
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setIconImage(new ImageIcon(FileSystems.getDefault().getPath("Imaxes", "erro.png").toString()).getImage());
 
         label = new JLabel("", JLabel.CENTER);
         label.setIcon(UIManager.getIcon("OptionPane.errorIcon"));

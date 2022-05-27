@@ -12,6 +12,8 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.JSpinner.DateEditor;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.DateFormatter;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 
 import calendario.Calendario;
 import excepcions.CredenciaisIncorrectasException;
@@ -24,16 +26,18 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.awt.event.WindowEvent;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import javax.swing.DefaultListModel;
 
 public class CreacionEventoGrupalUI extends ElementoUI {
 
@@ -105,6 +109,32 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         
         model = new DefaultListModel<>();
         participantesLista = new JList<>();
+
+        participantesLista.setCellRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+                    boolean cellHasFocus) {
+                    
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if(isSelected ) {
+
+                    setBackground(modoColor.getAcento());
+
+                } else {
+                    
+                    setBackground(modoColor.getFondo());
+
+                }
+                
+                setForeground(modoColor.getTexto());
+
+                return c;
+
+            }
+            
+        });
 
         panelLista = new JScrollPane();
         panelLista.setViewportView(participantesLista);
@@ -325,9 +355,11 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         cancelarButton.setBackground(modoColor.getFondo());
         engadirButton.setForeground(modoColor.getTexto());
         engadirButton.setBackground(modoColor.getFondo());
-        //participantesLista.setForeground(modoColor.getTexto()); TODO se non atopo unha forma fácil, pintar unha lista é infernal
-        panelLista.setForeground(modoColor.getTexto());
+
+        panelLista.getViewport().setBackground(modoColor.getFondo());
         
+        panelLista.setForeground(modoColor.getTexto());
+        panelLista.setBackground(modoColor.getFondo());
     }
 
     @Override

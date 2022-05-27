@@ -55,7 +55,7 @@ public class Datos {
                 System.out.println("Non se puido conectar coa base de datos");
                 conexionBase = null;
                 out = false;
-
+                e.printStackTrace();
             }
             
         } catch (ClassNotFoundException e) {
