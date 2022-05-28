@@ -19,8 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 
 import calendario.Calendario;
 import excepcions.CredenciaisIncorrectasException;
@@ -272,7 +270,9 @@ public class LoginUI extends ElementoUI {
             public void actionPerformed(ActionEvent e) {
                 
                 ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
-                
+                cambioModoCorLogIn.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
+                cambioModoCorSignUp.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
+
                 repintarComponentes();
 
             }
