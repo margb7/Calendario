@@ -73,24 +73,24 @@ public class Datos {
         return conexionBase;
     }
 
-    public static boolean existeEventoEnDia(String nome, LocalDate data ) {
+    public static boolean existeEventoEnDia(String nome, LocalDate data, Usuario creador ) {
 
         boolean out = false;
 
         try {
             
-            CallableStatement cs = conexionBase.prepareCall("CALL BUSCAR_EVENTO_POR_DIA(?,?)");
+            CallableStatement cs = conexionBase.prepareCall("CALL BUSCAR_EVENTO(?,?,?)");
             ResultSet rs;
 
             cs.setString(1, nome);
             cs.setDate(2, Date.valueOf(data));
+            cs.setInt(3, creador.getId());
 
             rs = cs.executeQuery();
             
             if(rs.next() && rs.getInt(1) != 0) {
 
                 out = true;
-                System.out.println("");
 
             }
 
@@ -531,7 +531,7 @@ public class Datos {
 
             conexionBase.setAutoCommit(true);
 
-        } catch (SQLException e) { // TODO: no debería capturarse el error así
+        } catch (SQLException e) {
             
             out = null;
 

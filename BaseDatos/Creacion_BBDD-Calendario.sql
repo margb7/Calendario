@@ -39,7 +39,8 @@ CREATE TABLE EVENTOS(
 	INDEX INDEX_DATA_EVENTO(DATA_EVENTO),   -- > Xa que se van facer bastantes consultas ao redor da data do evento
     
     UNIQUE INDEX AK_NOME_DATA(NOME, DATA_EVENTO),
-
+	UNIQUE INDEX AK_NOME_CREADOR(NOME, CREADOR),
+    
 	PRIMARY KEY (ID_EVENTO)
 
 ) ENGINE = INNODB;

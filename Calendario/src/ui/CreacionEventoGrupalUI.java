@@ -5,6 +5,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -133,7 +134,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
                 return c;
 
             }
-            
+
         });
 
         panelLista = new JScrollPane();
@@ -222,6 +223,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
+                model.removeAllElements();  // Reset para que no seguinte evento non se "arrastren" usuarios do anterior evento 
                 participantesLista.setListData(new String[0]);
                 dialogoCreacion.dispose();
                 
@@ -261,6 +263,8 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                         Calendario.crearEventoGrupal(nomeEvento, data, hora, participantes);
 
+                        model.removeAllElements();  // Reset para que no seguinte evento non se "arrastren" usuarios do anterior evento 
+
                         participantesLista.setListData(new String[0]);
                         dialogoCreacion.dispose();
 
@@ -294,26 +298,34 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                 if (Datos.usuarioEstaRexistrado(participante)) {
 
-                    boolean xaIncluido = false;
+                    if(!participante.equals(Calendario.getUsuario().getNome()) ) {
 
-                    for(int i = 0; i < participantesLista.getModel().getSize() && !xaIncluido; i++ ) {
+                        boolean xaIncluido = false;
 
-                        if(participantesLista.getModel().getElementAt(i).equals(participante) ) {
+                        for(int i = 0; i < participantesLista.getModel().getSize() && !xaIncluido; i++ ) {
 
-                            xaIncluido = true;
+                            if(participantesLista.getModel().getElementAt(i).equals(participante) ) {
+
+                                xaIncluido = true;
+
+                            }
 
                         }
 
-                    }
+                        if(xaIncluido ) {
 
-                    if(xaIncluido ) {
+                            Calendario.mostrarErro(Calendario.getTraduccion("E12", "Xa está incluído na lista de participantes")); //TODO :  traducción
 
-                        Calendario.mostrarErro(Calendario.getTraduccion("E12", "Xa está incluído na lista de participantes")); //TODO :  traducción
+                        } else {
+
+                            model.addElement(participante);
+                            participantesLista.setModel(model);
+
+                        }
 
                     } else {
 
-                        model.addElement(participante);
-                        participantesLista.setModel(model);
+                        Calendario.mostrarErro(Calendario.getTraduccion("", "O creador xa está incluído"));
 
                     }
                     
@@ -360,6 +372,8 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         
         panelLista.setForeground(modoColor.getTexto());
         panelLista.setBackground(modoColor.getFondo());
+
+        participantesLista.setBackground(modoColor.getFondo());
     }
 
     @Override

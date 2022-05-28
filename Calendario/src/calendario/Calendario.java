@@ -285,7 +285,7 @@ public class Calendario {
 
     public static void crearEventoPrivado(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException, CredenciaisIncorrectasException {
 
-        if(Datos.existeEventoEnDia(nome, data) ) {
+        if(Datos.existeEventoEnDia(nome, data, usuario) ) {
 
             throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
 
@@ -303,7 +303,7 @@ public class Calendario {
 
     public static void crearEventoPublico(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException, CredenciaisIncorrectasException {
 
-        if(Datos.existeEventoEnDia(nome, data) ) {
+        if(Datos.existeEventoEnDia(nome, data, usuario) ) {
 
             throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
 
@@ -321,7 +321,7 @@ public class Calendario {
 
     public static void crearEventoGrupal(String nome, LocalDate data, LocalTime hora, ArrayList<Integer> users ) throws EventoXaExisteException, CredenciaisIncorrectasException{
 
-        if(Datos.existeEventoEnDia(nome, data) ) {
+        if(Datos.existeEventoEnDia(nome, data, usuario) ) {
 
             throw new EventoXaExisteException("Para nom: " + nome + " - data: " + data + " hora: " + hora);
 
