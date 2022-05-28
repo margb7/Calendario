@@ -65,6 +65,7 @@ E10-Event already exists
 E11-User not found
 E12-Already included on list
 E13-Name field can't be empty
+E14-Event creator already included
 
 -- SeleccionDataUI
 S01-Select time

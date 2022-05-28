@@ -325,7 +325,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                     } else {
 
-                        Calendario.mostrarErro(Calendario.getTraduccion("", "O creador xa está incluído"));
+                        Calendario.mostrarErro(Calendario.getTraduccion("E", "O creador xa está incluído"));
 
                     }
                     

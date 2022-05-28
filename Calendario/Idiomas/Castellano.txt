@@ -65,6 +65,7 @@ E10-El evento ya existe
 E11-Usuario no encontrado
 E12-Ya está incluído en la lista de participantes
 E13-El nombre no puede estar vacío
+E14-El creador ya está incluído
 
 -- SeleccionDataUI
 S01-Selecciona una fecha
