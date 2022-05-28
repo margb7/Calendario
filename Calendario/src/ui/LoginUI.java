@@ -10,13 +10,17 @@ import java.nio.file.FileSystems;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import calendario.Calendario;
 import excepcions.CredenciaisIncorrectasException;
@@ -48,60 +52,15 @@ public class LoginUI extends ElementoUI {
     private JLabel confirmPswdLabel;
     private JButton cambioModoCorLogIn;
     private JButton cambioModoCorSignUp;
+    private JComboBox<String> listadoIdiomasLogIn;
+    private JComboBox<String> listadoIdiomasSignUp;
+    private DefaultComboBoxModel<String> modeloIdiomas;
 
     public LoginUI() {
 
         init();
         iniciarListeners();
 
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public JButton getLogInButton() {
-        return logInButton;
-    }
-
-    public JButton getSignUpButton() {
-        return signUpButton;
-    }
-
-    public JTextField getUsernameSignUp() {
-        return usernameSignUp;
-    }
-
-    public JTextField getUsernameLogIn() {
-        return usernameLogIn;
-    }
-
-    public JPasswordField getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public JPasswordField getPasswordLogin() {
-        return passwordLogin;
-    }
-
-    public JPasswordField getPasswordSignUp() {
-        return passwordSignUp;
-    }
-
-    public JButton getSubmitLogIn() {
-        return submitLogIn;
-    }
-
-    public JButton getSubmitSignUp() {
-        return submitSignUp;
-    }
-
-    public JButton getCambioModoCorLogIn() {
-        return cambioModoCorLogIn;
-    }
-
-    public JButton getCambioModoCorSignUp() {
-        return cambioModoCorSignUp;
     }
 
     public void init() {
@@ -115,6 +74,13 @@ public class LoginUI extends ElementoUI {
         
         cards = new JPanel(new CardLayout());
         frame.setContentPane(cards);
+
+
+        // Modelo cos idiomas disponibles 
+        String[] arr = Calendario.getIdiomasDisponibles().keySet().toArray(new String[0]);
+
+        modeloIdiomas = new DefaultComboBoxModel<>(arr);
+        modeloIdiomas.setSelectedItem("Galego");
 
         initLogIn();
         initSignUp();
@@ -147,6 +113,9 @@ public class LoginUI extends ElementoUI {
         signUpButton = new JButton();
 
         cambioModoCorLogIn = new JButton();
+
+        listadoIdiomasLogIn = new JComboBox<>();
+        listadoIdiomasLogIn.setModel(modeloIdiomas);
         
         gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
@@ -174,9 +143,11 @@ public class LoginUI extends ElementoUI {
         gbc.gridy = 3;
         logInCard.add(signUpButton, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 4;
         logInCard.add(cambioModoCorLogIn, gbc);
+
+        gbc.gridy = 5;
+        logInCard.add(listadoIdiomasLogIn, gbc);
 
     }
 
@@ -203,6 +174,9 @@ public class LoginUI extends ElementoUI {
         logInButton = new JButton();
 
         cambioModoCorSignUp = new JButton();
+
+        listadoIdiomasSignUp = new JComboBox<>();
+        listadoIdiomasSignUp.setModel(modeloIdiomas);
         
         gbc.insets = new Insets(10, 0, 0, 5);
         gbc.gridx = 0;
@@ -232,6 +206,7 @@ public class LoginUI extends ElementoUI {
         gbc.insets = new Insets(10, 0, 5, 5);
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
+
         gbc.gridx = 0;
         gbc.gridy = 3;
         signUpCard.add(submitSignUp, gbc);
@@ -239,9 +214,11 @@ public class LoginUI extends ElementoUI {
         gbc.gridy = 4;
         signUpCard.add(logInButton, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 5;
         signUpCard.add(cambioModoCorSignUp, gbc);
+
+        gbc.gridy = 6;
+        signUpCard.add(listadoIdiomasSignUp, gbc);
 
     }
 
@@ -312,7 +289,19 @@ public class LoginUI extends ElementoUI {
 
     private void listenersLogin() {
 
-        
+        // Cambio de idiomas
+        listadoIdiomasLogIn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Calendario.setIdomaSeleccionado(listadoIdiomasLogIn.getItemAt(listadoIdiomasLogIn.getSelectedIndex()));
+                actualizarTraduccions();
+
+            }
+
+        });
+
         // Evento ao clicar no botón para iniciar sesión
         submitLogIn.addActionListener(new ActionListener() {
 
@@ -353,6 +342,20 @@ public class LoginUI extends ElementoUI {
     }
 
     private void listenersRexistro() {
+
+        // Cambio de idiomas
+        listadoIdiomasSignUp.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Calendario.setIdomaSeleccionado(listadoIdiomasSignUp.getItemAt(listadoIdiomasSignUp.getSelectedIndex()));
+                actualizarTraduccions();
+
+            }
+
+        });
+
 
         // Evento ao clicar no botón para rexistrarse
         submitSignUp.addActionListener(new ActionListener() {

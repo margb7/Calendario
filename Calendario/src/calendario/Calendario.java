@@ -16,6 +16,7 @@ import excepcions.UsuarioXaRexistradoException;
 
 import model.Datos;
 import model.Evento;
+import model.EventoGrupal;
 import model.Usuario;
 
 import ui.CalendarioUI;
@@ -334,6 +335,20 @@ public class Calendario {
         }
 
         Datos.crearEventoGrupal(nome, usuario, data, hora, users);
+    }
+
+    public static void borrarEvento(Evento ev) {
+
+        if(ev.getCreador() == usuario.getId() ) {
+
+            mostrarErro(getTraduccion("E15", "Non eres o creador do evento"));
+        
+        } else {
+
+            Datos.borrarEvento(ev);
+
+        }
+
     }
 
     public static void pedirData(JFrame owner ) {

@@ -66,6 +66,7 @@ E11-Usuario non atopado
 E12-Xa está incluído en la lista de participantes
 E13-O nome non pode estar vacío
 E14-O creador xa está incluído
+E15-Non eres o creador do evento
 
 -- SeleccionDataUI
 S01-Selecciona unha data

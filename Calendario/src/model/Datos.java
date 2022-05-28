@@ -623,4 +623,25 @@ public class Datos {
         return out;
     }
 
+    /**
+     * Borra un evento da base de datos
+     * @param ev o evento que se quere borrar
+     */
+    public static void borrarEvento(Evento ev ) {
+
+        try {
+
+            CallableStatement cs = conexionBase.prepareCall("CALL BORRAR_EVENTO(?)");
+
+            cs.setInt(1, ev.getId());
+            cs.execute();
+            
+        } catch (SQLException e) {
+
+            System.out.println("Erro ao intentar borrar un evento");
+
+        }
+
+    }
+
 }
