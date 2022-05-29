@@ -12,19 +12,18 @@ import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
 
 import calendario.Calendario;
-
 import model.Evento;
-
 import utilidades.Dia;
 import utilidades.Mes;
+
+import java.nio.file.FileSystems;
+import java.time.LocalDate;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.nio.file.FileSystems;
-import java.time.LocalDate;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
@@ -32,6 +31,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
+/**
+ * Interface para mostrar o calendario
+ */
 public class CalendarioUI extends ElementoUI {
 
     private JList<Evento> listaEventos;
@@ -49,7 +51,7 @@ public class CalendarioUI extends ElementoUI {
     private JButton cambioModoCor;
 
     /**
-     * Constructor privado para evitar instancias
+     * Constructor para esta interface
      */
     public CalendarioUI() {
 
@@ -59,58 +61,10 @@ public class CalendarioUI extends ElementoUI {
         repintarComponentes();
 
     }
-
-    /**
-     * @return the avanzarMes
-     */
-    public JButton getAvanzarMes() {
-        return avanzarMes;
-    }
-
-    /**
-     * @return the retrocederMes
-     */
-    public JButton getRetrocederMes() {
-        return retrocederMes;
-    }
-
-    public JList<Evento> getListaEventos() {
-        return listaEventos;
-    }
-
-    /**
-     * @return the celdasDias
-     */
-    public JButton[] getCeldasDias() {
-        return celdasDias;
-    }
-
-    /**
-     * @return the panelCalendario
-     */
-    public JPanel getPanelCalendario() {
-        return panelCalendario;
-    }
     
     /**
-     * @return the textoMes
+     * Mostra a interface
      */
-    public JButton getTextoMes() {
-        return textoMes;
-    }
-
-    public JLabel getTextoDia() {
-        return textoDia;
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public JButton getCambioModoCor() {
-        return cambioModoCor;
-    }
-    
     public void mostrarUI() {
     
         // Ten como finalidade actualizar o color no caso de que se actualizase o tema de cor 
@@ -133,9 +87,12 @@ public class CalendarioUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicializa os elementos da interface
+     */
     public void init() {
 
-        frame = new JFrame();//Ventá da aplicación
+        frame = new JFrame(); //Ventá da aplicación
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
@@ -247,6 +204,9 @@ public class CalendarioUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicia os listeners de eventos para diversos elementos da interface
+     */
     private void iniciarListeners() {
 
         // Botón (">") na dereita para avanzar o mes
@@ -412,7 +372,7 @@ public class CalendarioUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
+                ElementoUI.setModoColor(modoColor == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
                 
                 repintarComponentes();
                 
@@ -510,6 +470,7 @@ public class CalendarioUI extends ElementoUI {
     
     }
 
+    @Override
     public void repintarComponentes() {
 
         panelLateral.setBackground(modoColor.getFondo());

@@ -6,26 +6,34 @@ import java.awt.Insets;
 
 import javax.swing.border.Border;
 
+/**
+ * Clase para xuntar o comportamento dos elementos da interface gráfica
+ */
 public abstract class ElementoUI {
     
     protected static ModoColorUI modoColor;
 
     /**
-     * @return the modoColor
-     */
-    public static final ModoColorUI getModoColor() {
-        return modoColor;
-    }
-
-    /**
-     * @param modoColor the modoColor to set
+     * Establece o modo de color da aplicación
+     * @param modoColor o novo modo de color a aplicar 
      */
     public static final void setModoColor(ModoColorUI modoColor) {
         ElementoUI.modoColor = modoColor;
     }
 
+    /**
+     * Repinta os elementos da interface para que conteñan as cores do tema de cor establecido
+     */
     abstract void repintarComponentes();
+
+    /**
+     * Mostra a interface deste elemento
+     */
     abstract void mostrarUI();
+
+    /**
+     * Actualiza as traduccions ao idioma establecido
+     */
     public void actualizarTraduccions() {};
 
 }

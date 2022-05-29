@@ -38,6 +38,10 @@ public class Datos {
      */
     private Datos() {}
 
+    /**
+     * Inicia a conexión coa base de datos
+     * @return true se se realizou a conexión
+     */
     public static boolean iniciarConexionBBDD() {
 
         boolean out = true;
@@ -69,17 +73,20 @@ public class Datos {
         return out;
     }
 
-    public static Connection getConexionBase() {
-        return conexionBase;
-    }
-
+    /**
+     * Método para comprobar se existe un evento nun día, cun nome determinado
+     * e cun creador determinado
+     * @param nome o nome do evento
+     * @param data a data do evento
+     * @param creador o usuario creador do evento
+     * @return true se xa existe o evento
+     */
     public static boolean existeEventoEnDia(String nome, LocalDate data, Usuario creador ) {
 
         boolean out = false;
 
-        try {
+        try(CallableStatement cs = conexionBase.prepareCall("CALL BUSCAR_EVENTO(?,?,?)")) {
             
-            CallableStatement cs = conexionBase.prepareCall("CALL BUSCAR_EVENTO(?,?,?)");
             ResultSet rs;
 
             cs.setString(1, nome);
@@ -93,6 +100,8 @@ public class Datos {
                 out = true;
 
             }
+
+            rs.close();
 
         } catch (SQLException e) {
             
@@ -114,7 +123,7 @@ public class Datos {
         Evento[] out = new Evento[0];
         ArrayList<Evento> eventos = new ArrayList<>();
         
-        try {
+        if(conexionBase != null ) {
 
             getEventosPrivados(dataEvento, user).forEach(el -> {
 
@@ -134,10 +143,6 @@ public class Datos {
                 
             });
 
-        } catch(NullPointerException e ) {
-
-            // Para cando non hai conexión coa base de datos (a conexión do jdbc é null)
-
         }
 
         out = eventos.toArray(out);
@@ -155,9 +160,7 @@ public class Datos {
 
         Usuario out = null;
         
-        try {
-
-            PreparedStatement statement = conexionBase.prepareStatement("CALL BUSCAR_USUARIO_POR_NOME(?)");
+        try(PreparedStatement statement = conexionBase.prepareStatement("CALL BUSCAR_USUARIO_POR_NOME(?)")) {
 
             statement.setString(1, nome);
 
@@ -176,6 +179,7 @@ public class Datos {
 
             }
 
+            set.close();
 
         } catch (SQLException e) {
 
@@ -186,13 +190,17 @@ public class Datos {
         return out;
     }
 
+    /**
+     * Método para saber se un usuario está rexistrado a partir do seu nome
+     * @param nome o nome do usuario
+     * @return true se está rexistrado
+     */
     public static boolean usuarioEstaRexistrado(String nome ) {
 
         boolean out = false;
 
-        try {
+        try(CallableStatement cs = conexionBase.prepareCall("CALL ESTA_USUARIO_REXISTRADO(?)")) {
 
-            CallableStatement cs = conexionBase.prepareCall("CALL ESTA_USUARIO_REXISTRADO(?)");
             ResultSet rs;
 
             cs.setString(1, nome);
@@ -205,6 +213,8 @@ public class Datos {
 
             }
 
+            rs.close();
+
         } catch (SQLException e) {
 
             System.out.println("Error coa consulta para saber se o usuario está rexistrado");
@@ -214,14 +224,17 @@ public class Datos {
         return out;
     }
 
-    @Deprecated
+    /**
+     * Obtén un usuario na base de datos a partir do seu id
+     * @param id o id do usuario
+     * @return o usuario
+     * @throws UsuarioNonAtopadoException se o usuario non se atopa na base de datos
+     */
     public static Usuario getUsuarioPorId(int id) throws UsuarioNonAtopadoException {
 
         Usuario out = null;
 
-        try {
-
-            PreparedStatement statement = conexionBase.prepareStatement("SELECT NOME FROM USUARIOS WHERE ID_USUARIO = ? ");
+        try(PreparedStatement statement = conexionBase.prepareStatement("SELECT NOME FROM USUARIOS WHERE ID_USUARIO = ? ") ) {
 
             statement.setInt(1, id);
 
@@ -236,6 +249,8 @@ public class Datos {
                 throw new UsuarioNonAtopadoException("Para o id: " + id);
 
             }
+
+            set.close();
 
         } catch (SQLException e) {
 
@@ -265,9 +280,9 @@ public class Datos {
 
         } else {
 
-            try {
+            try(CallableStatement cs = conexionBase.prepareCall("CALL REXISTRAR_USUARIO(?, ?)") ) {
 
-                CallableStatement cs = conexionBase.prepareCall("CALL REXISTRAR_USUARIO(?, ?)");
+                
                 ResultSet rs;
 
                 cs.setString(1, nome);
@@ -280,6 +295,8 @@ public class Datos {
                     id = rs.getInt(1);
 
                 }
+
+                rs.close();
 
             } catch(SQLException e) {
 

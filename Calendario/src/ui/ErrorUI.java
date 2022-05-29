@@ -21,6 +21,9 @@ public class ErrorUI extends ElementoUI {
     private JDialog dialog;
     private JLabel label;      
 
+    /**
+     * Constructor para esta interface
+     */
     public ErrorUI() {
 
         dialog = new JDialog();
@@ -33,12 +36,9 @@ public class ErrorUI extends ElementoUI {
 
     }
 
-    public JDialog getDialog() {
-        return dialog;
-    }
-
     /**
-     * @return a <code>JLabel</code> que representa a mensaxe de erro
+     * Devolve o JLabel coa información do erro 
+     * @return o JLabel da interface de erro 
      */
     public JLabel getLabel() {
         return label;

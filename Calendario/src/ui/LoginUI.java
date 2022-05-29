@@ -77,6 +77,12 @@ public class LoginUI extends ElementoUI {
         // Modelo cos idiomas disponibles 
         String[] arr = Calendario.getIdiomasDisponibles().keySet().toArray(new String[0]);
 
+        if(arr.length == 0 ) {
+
+            arr = new String[]{"Galego"};
+
+        } 
+
         modeloIdiomas = new DefaultComboBoxModel<>(arr);
         modeloIdiomas.setSelectedItem("Galego");
 
@@ -91,6 +97,9 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicia os compoñentes da tarxeta de login
+     */
     private void initLogIn() {
 
         logInCard = new JPanel(new GridBagLayout());
@@ -149,6 +158,9 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicia os compoñentes da tarxeta de inicio de sesión
+     */
     private void initSignUp() {
 
         signUpCard = new JPanel(new GridBagLayout());
@@ -231,7 +243,7 @@ public class LoginUI extends ElementoUI {
         pswdLoginLabel.setText(Calendario.getTraduccion("L05", "Contrasinal"));
         submitLogIn.setText(Calendario.getTraduccion("L06", "Log in"));
         signUpButton.setText(Calendario.getTraduccion("L07", "Crea unha nova conta"));
-        cambioModoCorLogIn.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
+        cambioModoCorLogIn.setText(modoColor == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
 
         // Para rexistro
         signUpCard.setName(Calendario.getTraduccion("L03", "Sign up"));
@@ -240,10 +252,13 @@ public class LoginUI extends ElementoUI {
         confirmPswdLabel.setText(Calendario.getTraduccion("L10", "Confirma o contrasinal"));
         submitSignUp.setText(Calendario.getTraduccion("L03", "Sign up"));
         logInButton.setText(Calendario.getTraduccion("L11", "Xa estás rexistrado?"));
-        cambioModoCorSignUp.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
+        cambioModoCorSignUp.setText(modoColor == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
 
     }
 
+    /**
+     * Inicia os listeners de eventos para diversos elementos da interface
+     */
     private void iniciarListeners() {
 
         // Evento para cambiar ao modo rexistro dende o modo inicio de sesión
@@ -269,9 +284,9 @@ public class LoginUI extends ElementoUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                ElementoUI.setModoColor(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
-                cambioModoCorLogIn.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
-                cambioModoCorSignUp.setText(ElementoUI.getModoColor() == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
+                ElementoUI.setModoColor(modoColor == ModoColorUI.MODO_CLARO ? ModoColorUI.MODO_OSCURO : ModoColorUI.MODO_CLARO);
+                cambioModoCorLogIn.setText(modoColor == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
+                cambioModoCorSignUp.setText(modoColor == ModoColorUI.MODO_CLARO ? Calendario.getTraduccion("L08", "Modo escuro") : Calendario.getTraduccion("L09", "Modo claro"));
 
                 repintarComponentes();
 
@@ -287,6 +302,9 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicia os listeners de eventos para o modo login
+     */
     private void listenersLogin() {
 
         // Cambio de idiomas
@@ -341,6 +359,9 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicia os listeners de eventos para o modo rexistro
+     */
     private void listenersRexistro() {
 
         // Cambio de idiomas
@@ -416,6 +437,7 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    @Override
     public void mostrarUI() {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -436,9 +458,9 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    @Override
     public void repintarComponentes() {
-
-        //frame;
+        
         //cards;
         logInCard.setBackground(modoColor.getFondo());
         signUpCard.setBackground(modoColor.getFondo());
