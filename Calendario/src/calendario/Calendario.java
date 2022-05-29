@@ -16,7 +16,6 @@ import excepcions.UsuarioXaRexistradoException;
 
 import model.Datos;
 import model.Evento;
-import model.EventoGrupal;
 import model.Usuario;
 
 import ui.CalendarioUI;
@@ -98,34 +97,66 @@ public class Calendario {
 
     }
 
+    /**
+     * Devolve os idiomas dispoñibles cargados no programa
+     * @return un HashMap que conténn <nome_idioma, <código_traducción, texto_traducción>>
+     */
     public static HashMap<String, HashMap<String, String>> getIdiomasDisponibles() {
         return idiomasDisponibles;
     }
 
+    /**
+     * Obtén a data do calendario
+     * @return a data do calendario
+     */
     public static LocalDate getDataCalendario() {
         return dataCalendario;
     }
 
+    /**
+     * Obtén o primer día do mes
+     * @return o primer día do mes
+     */
     public static LocalDate getPrimerDiaMes() {
         return primerDiaMes;
     }
 
+    /**
+     * Devolve o obxecto do usuario que está a manexar o calendario
+     * @return o usuario do calendario
+     */
     public static Usuario getUsuario() {
         return usuario;
     }
 
+    /**
+     * Método para saber se o programa está conectado ou non a base de datos
+     * @return
+     */
     public static boolean isConectado() {
         return conectado;
     }
 
+    /**
+     * Setter para colocar o primer día do mes
+     * @param primerDiaMes o novo primer día do mes
+     */
     public static void setPrimerDiaMes(LocalDate primerDiaMes) {
         Calendario.primerDiaMes = primerDiaMes;
     }
 
+    /**
+     * Setter para colocar o usuario que manexa o calendario
+     * @param usuario o usuario
+     */
     public static void setUsuario(Usuario usuario) {
         Calendario.usuario = usuario;
     }
 
+    /**
+     * Setter para colocar a data do calendario
+     * @param dataCalendario a nova data do calendario
+     */
     public static void setDataCalendario(LocalDate dataCalendario) {
         Calendario.dataCalendario = dataCalendario;
         Calendario.primerDiaMes = dataCalendario;
@@ -134,9 +165,10 @@ public class Calendario {
     }
 
     /**
-     * @param idomaSeleccionado selecciona un idioma de entre os idiomas dispoñibles. O nome de cada idioma
+     * Selecciona un idioma de entre os idiomas dispoñibles. O nome de cada idioma
      * se corresponde co nome do ficheiro na carpeta de idiomas sen a extensión .txt. Se se intenta seleccionar
      * un idioma que non está dispoñible non fará ningún cambio.
+     * @param idomaSeleccionado o idioma 
      */
     public static void setIdomaSeleccionado(String idioma) {
         
@@ -148,10 +180,16 @@ public class Calendario {
 
     }
 
+    /**
+     * Avanza un mes no calendario
+     */
     public static void avanzarMes() {
         setDataCalendario(primerDiaMes.plusMonths(1));
     }
 
+    /**
+     * Retrocede un mes no calendario
+     */
     public static void retrocederMes() {
         setDataCalendario(primerDiaMes.minusMonths(1));
     }
@@ -284,6 +322,14 @@ public class Calendario {
         return Datos.getEventosDia(dataDia, usuario);
     }
 
+    /**
+     * Crea un evento privado e o rexistra na base de datos. O creador será o usuario do calendario
+     * @param nome o nome do evento
+     * @param data a data do evento
+     * @param hora a hora do evento
+     * @throws EventoXaExisteException se o evento xa existe
+     * @throws CredenciaisIncorrectasException se algún dato non é correcto
+     */
     public static void crearEventoPrivado(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException, CredenciaisIncorrectasException {
 
         if(Datos.existeEventoEnDia(nome, data, usuario) ) {
@@ -302,6 +348,14 @@ public class Calendario {
 
     }
 
+    /**
+     * Crea un evento público e o rexistra na base de datos. O creador será o usuario do calendario
+     * @param nome o nome do evento
+     * @param data a data do evento
+     * @param hora a hora do evento
+     * @throws EventoXaExisteException se o evento xa existe
+     * @throws CredenciaisIncorrectasException se algún dato non é correcto
+     */
     public static void crearEventoPublico(String nome, LocalDate data, LocalTime hora ) throws EventoXaExisteException, CredenciaisIncorrectasException {
 
         if(Datos.existeEventoEnDia(nome, data, usuario) ) {
@@ -320,6 +374,15 @@ public class Calendario {
 
     }
 
+    /**
+     * Crea un evento grupal e o rexistra na base de datos. O creador será o usuario do calendario.
+     * @param nome o nome do evento
+     * @param data a data do evento
+     * @param hora a hora do evento
+     * @param users un arraylist con id de usuarios que participan no evento
+     * @throws EventoXaExisteException se o evento xa existe
+     * @throws CredenciaisIncorrectasException se algún dato non é correcto
+     */
     public static void crearEventoGrupal(String nome, LocalDate data, LocalTime hora, ArrayList<Integer> users ) throws EventoXaExisteException, CredenciaisIncorrectasException{
 
         if(Datos.existeEventoEnDia(nome, data, usuario) ) {
@@ -337,6 +400,10 @@ public class Calendario {
         Datos.crearEventoGrupal(nome, usuario, data, hora, users);
     }
 
+    /**
+     * Borra o evento
+     * @param ev o evento a borrar
+     */
     public static void borrarEvento(Evento ev) {
 
         if(ev.getCreador() == usuario.getId() ) {
@@ -351,12 +418,21 @@ public class Calendario {
 
     }
 
+    /**
+     * Método para pedir unha data ao usuario mediante a interface de selección de data
+     * @param owner o frame que quedará bloqueado esperando pola data
+     */
     public static void pedirData(JFrame owner ) {
 
         interfaceSeleccionData.mostrarUI(owner);
 
     }
 
+    /**
+     * Método para pedir unha datos dun evento privado ao usuario mediante a interface para pedir eventos privados
+     * @param owner o frame que quedará bloqueado esperando pola data
+     * @param data a data do evento
+     */
     public static void pedirDatosEventoPrivado(JFrame owner, LocalDate data) {
 
         interfaceCreacionEventoPrivado.setData(data);
@@ -364,6 +440,11 @@ public class Calendario {
 
     }
 
+    /**
+     * Método para pedir unha datos dun evento público ao usuario mediante a interface para pedir eventos público
+     * @param owner o frame que quedará bloqueado esperando pola data
+     * @param data a data do evento
+     */
     public static void pedirDatosEventoPublico(JFrame owner, LocalDate data) {
 
         interfaceCreacionEventoPublico.setData(data);
@@ -371,6 +452,11 @@ public class Calendario {
 
     }
 
+    /**
+     * Método para pedir unha datos dun evento grupal ao usuario mediante a interface para pedir eventos grupais
+     * @param owner o frame que quedará bloqueado esperando pola data
+     * @param data a data do evento
+     */
     public static void pedirDatosEventoGrupal(JFrame owner, LocalDate data) {
 
         interfaCreacionEventoGrupalUI.setData(data);
@@ -378,6 +464,9 @@ public class Calendario {
 
     }
 
+    /**
+     * Método para mostrar o calendario
+     */
     public static void mostrarCalendario() {
 
         interfaceCalendario.mostrarUI();
