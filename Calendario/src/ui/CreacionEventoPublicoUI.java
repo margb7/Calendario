@@ -28,6 +28,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+/**
+ * Interface para crear un evento público
+ */
 public class CreacionEventoPublicoUI extends ElementoUI {
 
     private JDialog dialogoCreacion;
@@ -41,6 +44,9 @@ public class CreacionEventoPublicoUI extends ElementoUI {
     private SpinnerDateModel mod;
     private LocalDate data;
 
+    /**
+     * Constructor da interface para crear eventos públicos
+     */
     public CreacionEventoPublicoUI() {
 
         init();
@@ -49,31 +55,16 @@ public class CreacionEventoPublicoUI extends ElementoUI {
     }
 
     /**
-     * @return the data
-     */
-    public LocalDate getData() {
-        return data;
-    }
-
-    public JDialog getDialogoCreacion() {
-        return dialogoCreacion;
-    }
-
-    public JButton getCancelarButton() {
-        return cancelarButton;
-    }
-
-    public JButton getCrearEventoButton() {
-        return crearEventoButton;
-    }
-
-    /**
-     * @param data
+     * Setter para declarar o día no cal acontecerá o evento creado
+     * @param data a data na cal ocorre o evento
      */
     public void setData(LocalDate data) {
         this.data = data;
     }
-
+    
+    /**
+     * Inicializa os compoñentes desta interface
+     */
     public void init() {
 
         dialogoCreacion = new JDialog();
@@ -130,6 +121,9 @@ public class CreacionEventoPublicoUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicia os listeners de eventos desta interface
+     */
     private void iniciarListeners() {
 
         cancelarButton.addActionListener(new ActionListener() {
@@ -190,6 +184,10 @@ public class CreacionEventoPublicoUI extends ElementoUI {
         
     }
     
+    /**
+     * Mostra a interface gráfica deste elemento
+     * @param frame o frame que chama a esta interface e que quedará bloqueado
+     */
     public void mostrarUI(JFrame frame ) {
         
         repintarComponentes();

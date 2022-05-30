@@ -2,6 +2,9 @@ package utilidades;
 
 import calendario.Calendario;
 
+/**
+ * Enumeracion cos meses do ano e cuxos valores estarán traducidos ao idioma da aplicación
+ */
 public enum Mes {
     
     XANEIRO(1),
@@ -19,12 +22,20 @@ public enum Mes {
 
     private int num;
 
+    /**
+     * Cotnstructor da enumeración
+     * @param num o numero do mes
+     */
     Mes(int num ) {
 
         this.num = num;
 
     }
 
+    /**
+     * Devolve unha lista cos nomes de todos os meses 
+     * @return un array de Strings cos nomes dos meses
+     */
     public static String[] getListaMeses() {
 
         String[] out = new String[values().length];
@@ -39,6 +50,10 @@ public enum Mes {
 
     }
 
+    /**
+     * Obtén o nome do mes
+     * @return unha cadea co nome do mes xa traducido ao idioma da aplicación
+     */
     public String getNome() {
 
         String nome;

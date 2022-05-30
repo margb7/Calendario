@@ -39,6 +39,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Interface para crear un evento grupal
+ */
 public class CreacionEventoGrupalUI extends ElementoUI {
 
     private JDialog dialogoCreacion;
@@ -59,6 +62,9 @@ public class CreacionEventoGrupalUI extends ElementoUI {
     private LocalDate data;
     private static DefaultListModel<String> model;
 
+    /**
+     * Constructor para a interface de creación dun evento grupal
+     */
     public CreacionEventoGrupalUI() {
 
         init();
@@ -66,10 +72,17 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
     }
 
+    /**
+     * Setter para declarar o día no cal acontecerá o evento creado
+     * @param data a data na cal ocorre o evento
+     */
     public void setData(LocalDate data) {
         this.data = data;
     }
 
+    /**
+     * Inicializa os compoñentes desta interface
+     */
     private void init() {
 
         gbc = new GridBagConstraints();
@@ -213,10 +226,11 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicia os listeners de eventos desta interface
+     */
     private void iniciarListeners() {
 
-        //TODO listener para eliminar elemento da lista con doble click (?????)
-        
         cancelarButton.addActionListener(new ActionListener() {
 
             @Override
@@ -313,7 +327,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
 
                         if(xaIncluido ) {
 
-                            Calendario.mostrarErro(Calendario.getTraduccion("E12", "Xa está incluído na lista de participantes")); //TODO :  traducción
+                            Calendario.mostrarErro(Calendario.getTraduccion("E12", "Xa está incluído na lista de participantes"));
 
                         } else {
 
@@ -330,7 +344,7 @@ public class CreacionEventoGrupalUI extends ElementoUI {
                     
                 } else {
 
-                    Calendario.mostrarErro(Calendario.getTraduccion("E02", "O usuario non está rexistrado")); //TODO tradución
+                    Calendario.mostrarErro(Calendario.getTraduccion("E02", "O usuario non está rexistrado"));
 
                 }             
                 
@@ -381,6 +395,10 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         
     }
 
+    /**
+     * Mostra a interface gráfica deste elemento
+     * @param frame o frame que chama a esta interface e que quedará bloqueado
+     */
     public void mostrarUI(JFrame frame) {
 
         repintarComponentes();

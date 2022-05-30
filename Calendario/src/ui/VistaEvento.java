@@ -23,6 +23,9 @@ import model.Evento;
 import model.EventoPrivado;
 import model.EventoPublico;
 
+/**
+ * Interface para visualizar información relativa a eventos do calendario
+ */
 public class VistaEvento extends ElementoUI {
 
     private JDialog dialogo;
@@ -37,21 +40,19 @@ public class VistaEvento extends ElementoUI {
     private JButton borrarEventoButton;
     private Evento evento;
 
+    /**
+     * Constructor da vista de eventos
+     */
     public VistaEvento() {
 
         init();
         iniciarListeners();
 
     }
-
-    protected JPanel getInfo() {
-        return info;
-    }
-
-    public JDialog getDialogo() {
-        return dialogo;
-    }
-
+ 
+    /**
+     * Inicializa os compoñentes deste elemento
+     */
     private void init() {
 
         dialogo = new JDialog();
@@ -116,13 +117,18 @@ public class VistaEvento extends ElementoUI {
         
     }
 
+    /**
+     * Mostra a interface 
+     * @param frame o frame que chama a vista de eventos 
+     * @param ev o evento a mostrar
+     */
     public void mostrarUI(JFrame frame, Evento ev ) {
 
         dialogo.setTitle(ev.getNome());
 
         this.evento = ev;
 
-        borrarEventoButton.setText(Calendario.getTraduccion("V0", "Borrar evento"));
+        borrarEventoButton.setText(Calendario.getTraduccion("V04", "Borrar evento"));
 
         hora.setText(Calendario.getTraduccion("V02", "Hora: ") + ev.getTempo().getHour() + ":" + ev.getTempo().getMinute());
 
@@ -155,7 +161,7 @@ public class VistaEvento extends ElementoUI {
 
         int x,y;
 
-        getDialogo().addWindowListener(new WindowAdapter() {
+        dialogo.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosed(WindowEvent e) {
@@ -173,17 +179,20 @@ public class VistaEvento extends ElementoUI {
 
         });
 
-        getDialogo().setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        getDialogo().setVisible(true);
-        getDialogo().setSize(300, 200);
+        dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialogo.setVisible(true);
+        dialogo.setSize(300, 200);
 
-        x = frame.getX() + (frame.getWidth() / 2) - (getDialogo().getWidth() / 2);
-        y = frame.getY() + (frame.getHeight() / 2) - (getDialogo().getHeight() / 2);
+        x = frame.getX() + (frame.getWidth() / 2) - (dialogo.getWidth() / 2);
+        y = frame.getY() + (frame.getHeight() / 2) - (dialogo.getHeight() / 2);
 
-        getDialogo().setLocation(x, y);
+        dialogo.setLocation(x, y);
 
     }
 
+    /**
+     * Inicia os listeners de eventos de este elemento
+     */
     private void iniciarListeners() {
 
         borrarEventoButton.addActionListener(new ActionListener() {
