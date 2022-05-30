@@ -27,6 +27,7 @@ import ui.ErrorUI;
 import ui.LoginUI;
 import ui.ModoColorUI;
 import ui.SeleccionDataUI;
+import ui.VistaEvento;
 
 /**
  * Clase que contén o main do programa. Tamén actúa como controlador do programa
@@ -48,6 +49,7 @@ public class Calendario {
     private static CreacionEventoPrivadoUI interfaceCreacionEventoPrivado;
     private static CreacionEventoPublicoUI interfaceCreacionEventoPublico;
     private static CreacionEventoGrupalUI interfaCreacionEventoGrupalUI;
+    private static VistaEvento interfaceVistaEventos;
 
     /**
      * Método main do programa.
@@ -80,6 +82,7 @@ public class Calendario {
         interfaceCreacionEventoPrivado = new CreacionEventoPrivadoUI();
         interfaceCreacionEventoPublico = new CreacionEventoPublicoUI();
         interfaCreacionEventoGrupalUI = new CreacionEventoGrupalUI();
+        interfaceVistaEventos = new VistaEvento();
 
         // Mostrar interfaz
         if(conectado ) {  // Programa en modo normal
@@ -95,6 +98,14 @@ public class Calendario {
 
         }
 
+    }
+
+    /**
+     * Devolve a interface para mostrar o calendario
+     * @return un CalendarioUI da interface
+     */
+    public static CalendarioUI getInterfaceCalendario() {
+        return interfaceCalendario;
     }
 
     /**
@@ -406,7 +417,7 @@ public class Calendario {
      */
     public static void borrarEvento(Evento ev) {
 
-        if(ev.getCreador() == usuario.getId() ) {
+        if(ev.getCreador() != usuario.getId() ) {
 
             mostrarErro(getTraduccion("E15", "Non eres o creador do evento"));
         
@@ -470,6 +481,17 @@ public class Calendario {
     public static void mostrarCalendario() {
 
         interfaceCalendario.mostrarUI();
+
+    }
+
+    /**
+     * Método para mostrar a vista de eventos
+     * @param frame o frame da interface que chama este método
+     * @param ev o evento a mostrar
+     */
+    public static void mostrarEvento(JFrame frame, Evento ev ) {
+
+        interfaceVistaEventos.mostrarUI(frame, ev);
 
     }
     

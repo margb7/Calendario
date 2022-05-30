@@ -89,3 +89,9 @@ G05-Nome participante
 G06-Engadir
 G07-Participantes
 G08-Crear evento grupal
+
+-- VISTAEVENTOSUI
+V01-Creador: 
+V02-Hora: 
+V03-Tipo: 
+V04-Borrar evento

@@ -10,6 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import calendario.Calendario;
 import model.Evento;
@@ -209,6 +211,22 @@ public class CalendarioUI extends ElementoUI {
      */
     private void iniciarListeners() {
 
+        listaEventos.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                
+                if(listaEventos.getSelectedValue() != null ) {
+
+                    Calendario.mostrarEvento(frame, listaEventos.getSelectedValue());
+
+                }
+                
+            }
+         
+            
+        });
+
         // Botón (">") na dereita para avanzar o mes
         avanzarMes.addActionListener(new ActionListener() {
 
@@ -308,7 +326,6 @@ public class CalendarioUI extends ElementoUI {
 
                     // Uso do nome do botón para obter o día que representa
                     LocalDate dataDia = LocalDate.parse(boton.getName());
-                    Evento[] eventos = Calendario.obterEventos(dataDia);
                     String texto = Dia.values()[dataDia.getDayOfWeek().ordinal()].getNome() + " " + dataDia.getDayOfMonth() + " " +
                                 Calendario.getTraduccion("C06", "de") + " " + Mes.values()[dataDia.getMonthValue() - 1].getNome();
 
@@ -317,11 +334,7 @@ public class CalendarioUI extends ElementoUI {
                     // Vaciar a lista para que non conteña eventos que non corresponden 
                     listaEventos.setListData(new Evento[0]);
 
-                    if(eventos.length != 0 ) {
-
-                        listaEventos.setListData(eventos);
-
-                    }
+                    actualizarListaEventos(dataDia);
 
                     // Se o mes do día seleccionado non coincide co mes do calendario -> pásase a mostrar ese mes
                     if(dataDia.getMonthValue() != Calendario.getPrimerDiaMes().getMonthValue() ) {
@@ -379,6 +392,18 @@ public class CalendarioUI extends ElementoUI {
             }
             
         });
+
+    }
+
+    public void actualizarListaEventos(LocalDate data ) {
+
+        Evento[] eventos = Calendario.obterEventos(data);
+
+        if(eventos.length != 0 ) {
+
+            listaEventos.setListData(eventos);
+
+        }
 
     }
 

@@ -89,3 +89,9 @@ G05-Participant name
 G06-Add
 G07-Participants
 G08-Create group event
+
+-- VISTAEVENTOSUI
+V01-Owner: 
+V02-Time: 
+V03-Type: 
+V04-Delete event
