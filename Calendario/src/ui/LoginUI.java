@@ -116,10 +116,16 @@ public class LoginUI extends ElementoUI {
         pswdLoginLabel.setLabelFor(passwordLogin);
 
         submitLogIn = new JButton();
+        submitLogIn.setBorder(new BordeRedondo(RADIO_BORDE));
+        submitLogIn.setFocusPainted(false);
 
         signUpButton = new JButton();
+        signUpButton.setBorder(new BordeRedondo(RADIO_BORDE));
+        signUpButton.setFocusPainted(false);
 
         cambioModoCorLogIn = new JButton();
+        cambioModoCorLogIn.setBorder(new BordeRedondo(RADIO_BORDE));
+        cambioModoCorLogIn.setFocusPainted(false);
 
         listadoIdiomasLogIn = new JComboBox<>();
         listadoIdiomasLogIn.setModel(modeloIdiomas);
@@ -180,10 +186,16 @@ public class LoginUI extends ElementoUI {
         confirmPswdLabel = new JLabel();
 
         submitSignUp = new JButton();
+        submitSignUp.setBorder(new BordeRedondo(RADIO_BORDE));
+        submitSignUp.setFocusPainted(false);
 
         logInButton = new JButton();
+        logInButton.setBorder(new BordeRedondo(RADIO_BORDE));
+        logInButton.setFocusPainted(false);
 
         cambioModoCorSignUp = new JButton();
+        cambioModoCorSignUp.setBorder(new BordeRedondo(RADIO_BORDE));
+        cambioModoCorSignUp.setFocusPainted(false);
 
         listadoIdiomasSignUp = new JComboBox<>();
         listadoIdiomasSignUp.setModel(modeloIdiomas);
@@ -464,13 +476,13 @@ public class LoginUI extends ElementoUI {
         //cards;
         logInCard.setBackground(modoColor.getFondo());
         signUpCard.setBackground(modoColor.getFondo());
-        logInButton.setBackground(modoColor.getFondo());
+        logInButton.setBackground(modoColor.getSeparador());
         logInButton.setForeground(modoColor.getTexto());
-        signUpButton.setBackground(modoColor.getFondo());
+        signUpButton.setBackground(modoColor.getSeparador());
         signUpButton.setForeground(modoColor.getTexto());
-        submitLogIn.setBackground(modoColor.getFondo());
+        submitLogIn.setBackground(modoColor.getSeparador());
         submitLogIn.setForeground(modoColor.getTexto());
-        submitSignUp.setBackground(modoColor.getFondo());
+        submitSignUp.setBackground(modoColor.getSeparador());
         submitSignUp.setForeground(modoColor.getTexto());
         //usernameLogIn;
         unameLogInLabel.setForeground(modoColor.getTexto());
@@ -482,9 +494,9 @@ public class LoginUI extends ElementoUI {
         pswdSignUpLabel.setForeground(modoColor.getTexto());
         //confirmPassword;
         confirmPswdLabel.setForeground(modoColor.getTexto());
-        cambioModoCorLogIn.setBackground(modoColor.getFondo());
+        cambioModoCorLogIn.setBackground(modoColor.getSeparador());
         cambioModoCorLogIn.setForeground(modoColor.getTexto());
-        cambioModoCorSignUp.setBackground(modoColor.getFondo());
+        cambioModoCorSignUp.setBackground(modoColor.getSeparador());
         cambioModoCorSignUp.setForeground(modoColor.getTexto());
 
     }

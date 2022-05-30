@@ -7,8 +7,8 @@ import java.awt.Color;
  */
 public enum ModoColorUI {
 
-    MODO_OSCURO(new Color(20, 54, 66), Color.WHITE, Color.PINK, Color.WHITE, Color.GRAY, new Color(155,200,155), new Color(155, 200, 155)),
-    MODO_CLARO(Color.WHITE, Color.DARK_GRAY, Color.RED, Color.BLACK, Color.GRAY, new Color(155,200,155), new Color(155, 200, 155));
+    MODO_OSCURO(new Color(45, 47, 76), new Color(239, 215, 157), new Color(239, 215, 157), new Color(240, 163, 157), new Color(153, 139, 150), new Color(233,224,207), new Color(34, 34, 58)),
+    MODO_CLARO(new Color(233, 224, 207), new Color(77, 50, 71), new Color(77, 50, 71), new Color(211, 45, 47), new Color(239, 150, 70), new Color(211, 45, 47), new Color(249, 189, 85));
 
     private Color fondo;
     private Color texto;

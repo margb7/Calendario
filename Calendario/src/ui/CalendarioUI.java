@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -97,8 +98,8 @@ public class CalendarioUI extends ElementoUI {
         frame = new JFrame(); //Ventá da aplicación
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
-        frame.setMinimumSize(new Dimension(600, 400));
+        frame.setSize(1050, 700);
+        frame.setMinimumSize(new Dimension(1050, 700));
         frame.setIconImage(new ImageIcon(FileSystems.getDefault().getPath("Imaxes", "icono.png").toString()).getImage());
         frame.setLayout(new GridBagLayout());//layout manager para organizar elementos en cuadrícula
         
@@ -115,11 +116,13 @@ public class CalendarioUI extends ElementoUI {
         panelLateral.setLayout(new BoxLayout(panelLateral, BoxLayout.PAGE_AXIS));
         
         cambioModoCor = new JButton();
+        cambioModoCor.setBorder(new BordeRedondo(RADIO_BORDE));
         cambioModoCor.setAlignmentX(Component.CENTER_ALIGNMENT);
         cambioModoCor.setFocusPainted(false);
         panelLateral.add(cambioModoCor);
 
         textoDia = new JLabel("", JLabel.CENTER);
+        textoDia.setFont(FONTE_RESALTE);
         textoDia.setAlignmentX(Component.CENTER_ALIGNMENT);//Parece un pouco a machada isto
         panelLateral.add(textoDia);
 
@@ -136,11 +139,15 @@ public class CalendarioUI extends ElementoUI {
         frame.add(panelContido, gbc);
         
         avanzarMes = new JButton();
+        avanzarMes.setBorder(new BordeRedondo(RADIO_BORDE));
         avanzarMes.setText(">");
+        avanzarMes.setFocusPainted(false);
         panelContido.add(avanzarMes, BorderLayout.EAST);
 
         retrocederMes = new JButton();
+        retrocederMes.setBorder(new BordeRedondo(RADIO_BORDE));
         retrocederMes.setText("<");
+        retrocederMes.setFocusPainted(false);
         panelContido.add(retrocederMes, BorderLayout.WEST);
 
         panelCalendario = new JPanel(new GridBagLayout());
@@ -155,7 +162,7 @@ public class CalendarioUI extends ElementoUI {
         gbc.gridy = 0;
         
         textoMes = new JButton();//nome de mes
-
+        textoMes.setFont(FONTE_RESALTE);
         textoMes.setFocusPainted(false);
         textoMes.setBorderPainted(false);
         panelCalendario.add(textoMes, gbc);
@@ -203,6 +210,8 @@ public class CalendarioUI extends ElementoUI {
             }
 
         }
+
+        
 
     }
 
@@ -500,7 +509,7 @@ public class CalendarioUI extends ElementoUI {
 
         panelLateral.setBackground(modoColor.getFondo());
 
-        cambioModoCor.setBackground(modoColor.getFondo());
+        cambioModoCor.setBackground(modoColor.getSeparador());
         cambioModoCor.setForeground(modoColor.getTexto());
 
         panelContido.setBackground(new Color(0, 255, 0));
@@ -508,19 +517,20 @@ public class CalendarioUI extends ElementoUI {
         panelLateral.setBackground(modoColor.getFondo());
         panelLateral.setForeground(modoColor.getTexto());
         panelContido.setBackground(modoColor.getFondo());
-        cambioModoCor.setBackground(modoColor.getFondo());
-        cambioModoCor.setForeground(modoColor.getTexto());
 
         // Para botóns de cambio de mes
         avanzarMes.setForeground(modoColor.getAcento());
         avanzarMes.setBackground(modoColor.getSeparador());
+        avanzarMes.setBorderPainted(false);
 
         retrocederMes.setForeground(modoColor.getAcento());
         retrocederMes.setBackground(modoColor.getSeparador());
+        retrocederMes.setBorderPainted(false);
 
 
         panelCalendario.setBackground(modoColor.getFondo());
         panelCalendario.setForeground(modoColor.getTexto());
+        panelCalendario.setBorder(new LineBorder(modoColor.getBordes(), 2));
 
         textoMes.setForeground(modoColor.getTextoResalte());
         textoMes.setBackground(modoColor.getFondo());
