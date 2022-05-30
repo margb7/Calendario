@@ -34,7 +34,7 @@ public abstract class Evento {
 
     /**
      * Devolve o id do creador deste evento
-     * @return un int co id
+     * @return un <code>int</code> co id
      */
     public final int getCreador() {
         return creador;
@@ -58,7 +58,7 @@ public abstract class Evento {
 
     /**
      * Devolve o id do evento
-     * @return un int co id do evento
+     * @return un <code>int</code> co id do evento
      */
     public final int getId() {
         return id;
