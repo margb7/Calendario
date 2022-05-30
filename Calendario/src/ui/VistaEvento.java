@@ -7,8 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.nio.file.FileSystems;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -56,6 +58,7 @@ public class VistaEvento extends ElementoUI {
     private void init() {
 
         dialogo = new JDialog();
+        dialogo.setIconImage(new ImageIcon(FileSystems.getDefault().getPath("Imaxes", "evento.png").toString()).getImage());
 
         contido = new JPanel(new BorderLayout());
 

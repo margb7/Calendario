@@ -30,7 +30,7 @@ M10-Octubre
 M11-Noviembre
 M12-Diciembre
 
--- CALENDARIOUI (solo o título por agora)
+-- CALENDARIOUI
 C01-Calendario
 C02-Cambiar modo de color
 C03-Público
@@ -51,7 +51,7 @@ L09-Modo claro
 L10-Confirma la contraseña
 L11-¿Ya estás registrado?
 
--- ERRORUI  (estos valores úsanse dende o calendario)
+-- ERRORUI
 E01-Credenciales incorrectas
 E02-El usuario no está registrado
 E03-La contraseña no es válida

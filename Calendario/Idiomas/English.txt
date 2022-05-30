@@ -30,11 +30,11 @@ M10-October
 M11-November
 M12-December
 
--- CALENDARIOUI (solo o título por agora)
+-- CALENDARIOUI
 C01-Calendar
 C02-Change color mode
 C03-Public
-C04-Grupal
+C04-Groupal
 C05-Private
 C06-of
 
@@ -51,7 +51,7 @@ L09-Light mode
 L10-Confirm password
 L11-Already signed up?
 
--- ERRORUI  (estos valores úsanse dende o calendario)
+-- ERRORUI
 E01-Wrong credentials
 E02-User is not registered yet
 E03-Invalid password
