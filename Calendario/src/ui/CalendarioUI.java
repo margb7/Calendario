@@ -15,13 +15,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import calendario.Calendario;
+import model.Datos;
 import model.Evento;
+import model.Usuario;
 import utilidades.Dia;
 import utilidades.Mes;
 
 import java.nio.file.FileSystems;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -434,6 +436,8 @@ public class CalendarioUI extends ElementoUI {
         int offset = Calendario.getDataCalendario().getDayOfWeek().ordinal();
         data = Calendario.getDataCalendario().minusDays(offset);
 
+        Usuario user = Calendario.getUsuario();//Para usar no coloreado dos días
+
         for(int i = 0; i < celdasDias.length; i++ ) {
 
             JButton celda = celdasDias[i];
@@ -446,7 +450,18 @@ public class CalendarioUI extends ElementoUI {
                 if(celdasDias[i].getText().equals("1") ) {
 
                     primerDia = true;
-                    celdasDias[i].setForeground(modoColor.getTexto());
+
+                    
+
+                    if (user != null && Datos.getEventosDia(data, Calendario.getUsuario()).length > 0) {
+
+                        celdasDias[i].setForeground(modoColor.getTextoResalte());
+
+                    } else {
+
+                        celdasDias[i].setForeground(modoColor.getTexto());
+
+                    }
 
                 } else {
 
@@ -463,7 +478,15 @@ public class CalendarioUI extends ElementoUI {
 
                 } else {
 
-                    celdasDias[i].setForeground(modoColor.getTexto());
+                    if (user != null && Datos.getEventosDia(data, Calendario.getUsuario()).length > 0) {
+
+                        celdasDias[i].setForeground(modoColor.getTextoResalte());
+
+                    } else {
+
+                        celdasDias[i].setForeground(modoColor.getTexto());
+
+                    }
 
                 }
 
