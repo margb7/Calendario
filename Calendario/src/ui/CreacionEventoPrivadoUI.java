@@ -248,9 +248,9 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
         horaEventoValor.getEditor().getComponent(0).setForeground(modoColor.getTexto());
         horaEventoValor.getComponent(2).setForeground(modoColor.getTexto());
         crearEventoButton.setForeground(modoColor.getTexto());
-        crearEventoButton.setBackground(modoColor.getFondo());
+        crearEventoButton.setBackground(modoColor.getSeparador());
         cancelarButton.setForeground(modoColor.getTexto());
-        cancelarButton.setBackground(modoColor.getFondo());
+        cancelarButton.setBackground(modoColor.getSeparador());
         
     }
     
