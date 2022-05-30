@@ -7,6 +7,16 @@ Aplicación feita en java con swing. Aplicación de calendario con varios usuari
 por día do usuario e tamén eventos "públicos" ou compartidos.
 - Pódese elixir entre tema claro e escuro.
 
+## Aplicación
+
+No modo oscuro:
+
+[modoOscuro](Docs/modoOscuro.png)
+
+No modo claro:
+
+[modoClaro](Docs/modoClaro.png)
+
 ## Enlaces
 
 - [Iconos con UIManager](http://en-human-begin.blogspot.com/2007/11/javas-icons-by-default.html)
