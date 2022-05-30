@@ -11,11 +11,11 @@ por día do usuario e tamén eventos "públicos" ou compartidos.
 
 No modo oscuro:
 
-[modoOscuro](Docs/modoOscuro.png)
+![modoOscuro](Docs/modoOscuro.png)
 
 No modo claro:
 
-[modoClaro](Docs/modoClaro.png)
+![modoClaro](Docs/modoClaro.png)
 
 ## Enlaces
 
