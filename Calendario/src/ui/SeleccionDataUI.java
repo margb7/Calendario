@@ -22,6 +22,9 @@ import java.awt.GridBagConstraints;
 
 import java.time.LocalDate;
 
+/**
+ * Interface para seleccionar un mes e un ano e posteriormente mostralo no calendario
+ */
 public class SeleccionDataUI extends ElementoUI {
     
     private JDialog seleccionData;
@@ -30,6 +33,9 @@ public class SeleccionDataUI extends ElementoUI {
     private JLabel de;
     private JButton ok;
 
+    /**
+     * Constructor da interface para seleccionar unha data
+     */
     public SeleccionDataUI() {
 
         initSeleccionData();
@@ -37,36 +43,10 @@ public class SeleccionDataUI extends ElementoUI {
 
     }
 
-    public JDialog getSeleccionData() {
-        return seleccionData;
-    }
-
-    public JButton getOk() {
-        return ok;
-    }
-
     /**
-     * @return the de
+     * Inicializa os compoñentes desta interface
      */
-    public JLabel getDe() {
-        return de;
-    }
-
-    /**
-     * @return the anos
-     */
-    public JSpinner getAnos() {
-        return anos;
-    }
-
-    /**
-     * @return the meses
-     */
-    public JComboBox<String> getMeses() {
-        return meses;
-    }
-
-    public void initSeleccionData() {
+    private void initSeleccionData() {
 
         seleccionData = new JDialog();
         seleccionData.setLayout(new GridBagLayout());
@@ -104,6 +84,9 @@ public class SeleccionDataUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicializa os listeners de eventos desta interface
+     */
     private void iniciarListeners() {
 
         String[] lista = Mes.getListaMeses();
@@ -155,6 +138,10 @@ public class SeleccionDataUI extends ElementoUI {
 
     }
 
+    /**
+     * Mostra a interface bloqueando o frame que chama a interface
+     * @param frame o frame que quedará bloqueado ata pechar a selección da data
+     */
     public void mostrarUI(JFrame frame ) {
 
         seleccionData.addWindowListener(new WindowAdapter() {

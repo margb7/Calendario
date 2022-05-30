@@ -59,7 +59,7 @@ public class Datos {
                 System.out.println("Non se puido conectar coa base de datos");
                 conexionBase = null;
                 out = false;
-                e.printStackTrace();
+
             }
             
         } catch (ClassNotFoundException e) {
@@ -361,6 +361,11 @@ public class Datos {
         return idiomas;
     }
 
+    /**
+     * Lee un ficheiro na ruta especificada e devolve un array con todas as cadeas que contiña
+     * @param path a ruta do arquivo
+     * @return un array de cadeas co contido do ficheiro
+     */
     public static String[] leerFichero(String path ) {
         
         Scanner sc;
@@ -394,6 +399,12 @@ public class Datos {
         return lineas.toArray(out);
     }
 
+    /**
+     * Obtén os eventos privados para un día determinado e un usuario determinado
+     * @param dia o día para buscar
+     * @param user o usuario do cal buscar eventos
+     * @return un ArrayList cos eventos privados do usuario
+     */
     public static ArrayList<Evento> getEventosPrivados(LocalDate dia, Usuario user ) {
 
         ArrayList<Evento> eventos = new ArrayList<>();
@@ -420,13 +431,17 @@ public class Datos {
         } catch (SQLException e) {
 
             System.out.println("Error coa consulta para obter eventos privados");
-            e.printStackTrace();
 
         }
 
         return eventos;
     }
 
+    /**
+     * Obtén os eventos públicos para un día determinado
+     * @param dia o día para buscar
+     * @return un ArrayList cos eventos públicos do día
+     */
     public static ArrayList<Evento> getEventosPublicos(LocalDate dia ) {
 
         ArrayList<Evento> eventos = new ArrayList<>();
@@ -453,13 +468,18 @@ public class Datos {
         } catch (SQLException e) {
 
             System.out.println("Error coa consulta para obter eventos públicos");
-            e.printStackTrace();
 
         }
 
         return eventos;
     }
 
+    /**
+     * Obtén os eventos grupais para un día determinado e un usuario determinado
+     * @param dia o día para buscar
+     * @param user o usuario do cal buscar eventos
+     * @return un ArrayList cos eventos grupais do usuario
+     */
     public static ArrayList<Evento> getEventosGrupales(LocalDate dia, Usuario user ) {
 
         ArrayList<Evento> eventos = new ArrayList<>();
@@ -486,7 +506,6 @@ public class Datos {
         } catch (SQLException e) {
 
             System.out.println("Error coa consulta para obter eventos grupais");
-            e.printStackTrace();
 
         }
 
@@ -562,13 +581,20 @@ public class Datos {
             }
 
             System.out.println("Erro ao intentar crear un evento grupal");
-            e.printStackTrace();
 
         }
 
         return out;
     }
 
+    /**
+     * Crea un evento privado e o rexistra na base de datos
+     * @param nome o nome do evento
+     * @param creador o usuario creador do evento
+     * @param data a data do evento
+     * @param hora a hora do evento
+     * @return o evento creado ou un valor null se non se puido crear
+     */
     public static EventoPrivado crearEventoPrivado(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
 
         EventoPrivado out;
@@ -604,6 +630,14 @@ public class Datos {
         return out;
     }
 
+    /**
+     * Crea un evento público e o rexistra na base de datos
+     * @param nome o nome do evento
+     * @param creador o usuario creador do evento
+     * @param data a data do evento
+     * @param hora a hora do evento
+     * @return o evento creado ou un valor null se non se puido crear
+     */
     public static EventoPublico crearEventoPublicoPrivado(String nome, Usuario creador, LocalDate data, LocalTime hora ) {
 
         EventoPublico out;
@@ -633,7 +667,6 @@ public class Datos {
             
             out = null;
             System.out.println("Erro ao intentar crear un evento publico");
-            e.printStackTrace();
 
         }
 

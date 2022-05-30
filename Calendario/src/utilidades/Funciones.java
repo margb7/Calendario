@@ -1,7 +1,15 @@
 package utilidades;
 
+/**
+ * Funcions que controlan que a entrada sexa válida
+ */
 public class Funciones {
     
+    /**
+     * Comproba que a cadea proporcionada sexa unha contrasinal válida
+     * @param str a cadea da contrasinal
+     * @return true se é unha contrasinal válida
+     */
     public static boolean contrasinalValida(String str) {
 
         boolean out = false;

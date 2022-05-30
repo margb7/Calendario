@@ -28,6 +28,9 @@ import excepcions.CredenciaisIncorrectasException.Tipo;
 import model.Usuario;
 import utilidades.Funciones;
 
+/**
+ * Interface para iniciar sesión ou rexistrar unha conta na aplicación
+ */
 public class LoginUI extends ElementoUI {
 
     private JFrame frame;
@@ -54,6 +57,9 @@ public class LoginUI extends ElementoUI {
     private JComboBox<String> listadoIdiomasSignUp;
     private DefaultComboBoxModel<String> modeloIdiomas;
 
+    /**
+     * Constructor da interface de login e rexistro
+     */
     public LoginUI() {
 
         init();
@@ -61,6 +67,9 @@ public class LoginUI extends ElementoUI {
 
     }
 
+    /**
+     * Inicializa os compoñentes desta interface
+     */
     public void init() {
 
         frame = new JFrame();
