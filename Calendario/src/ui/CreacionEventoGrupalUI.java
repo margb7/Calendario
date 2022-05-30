@@ -155,9 +155,11 @@ public class CreacionEventoGrupalUI extends ElementoUI {
         panelLista.setColumnHeaderView(listaLabel);
 
         crearEventoButton = new JButton("default");
+        crearEventoButton.setBorder(new BordeRedondo(RADIO_BORDE));
         crearEventoButton.setFocusPainted(false);
 
         cancelarButton = new JButton("default");
+        cancelarButton.setBorder(new BordeRedondo(RADIO_BORDE));
         cancelarButton.setFocusPainted(false);
 
         gbc.gridx = 0;

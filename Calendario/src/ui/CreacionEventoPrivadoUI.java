@@ -91,8 +91,12 @@ public class CreacionEventoPrivadoUI extends ElementoUI {
         horaEventoValor.setEditor(editor);
 
         crearEventoButton = new JButton();
+        crearEventoButton.setBorder(new BordeRedondo(RADIO_BORDE));
+        crearEventoButton.setFocusPainted(false);
 
         cancelarButton = new JButton();
+        cancelarButton.setBorder(new BordeRedondo(RADIO_BORDE));        
+        cancelarButton.setFocusPainted(false);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
