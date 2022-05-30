@@ -23,7 +23,6 @@ import utilidades.Mes;
 
 import java.nio.file.FileSystems;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -455,11 +454,11 @@ public class CalendarioUI extends ElementoUI {
 
                     if (user != null && Datos.getEventosDia(data, Calendario.getUsuario()).length > 0) {
 
-                        celdasDias[i].setForeground(modoColor.getTextoResalte());
+                        celdasDias[i].setForeground(modoColor.getTextoResalte()); // Cor para día con evento
 
                     } else {
 
-                        celdasDias[i].setForeground(modoColor.getTexto());
+                        celdasDias[i].setForeground(modoColor.getTexto()); // Cor para día normal
 
                     }
 
@@ -480,11 +479,11 @@ public class CalendarioUI extends ElementoUI {
 
                     if (user != null && Datos.getEventosDia(data, Calendario.getUsuario()).length > 0) {
 
-                        celdasDias[i].setForeground(modoColor.getTextoResalte());
+                        celdasDias[i].setForeground(modoColor.getTextoResalte()); // Cor para día con evento
 
                     } else {
 
-                        celdasDias[i].setForeground(modoColor.getTexto());
+                        celdasDias[i].setForeground(modoColor.getTexto()); // Cor para día normal
 
                     }
 
